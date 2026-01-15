@@ -14,10 +14,13 @@ CODEX_PROMPTS_DIR="${CODEX_CONFIG_DIR}/prompts/awsome-slash"
 COMMANDS_DIR="${CODEX_PROMPTS_DIR}/commands"
 LIB_DIR="${CODEX_PROMPTS_DIR}/lib"
 
-# Detect OS
+# Detect OS and normalize paths
 if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
   IS_WINDOWS=true
+  # Convert Windows path to Unix-style for bash compatibility
   CODEX_CONFIG_DIR="${USERPROFILE}/.codex"
+  # Replace backslashes with forward slashes
+  CODEX_CONFIG_DIR="${CODEX_CONFIG_DIR//\\//}"
   CODEX_PROMPTS_DIR="${CODEX_CONFIG_DIR}/prompts/awsome-slash"
   COMMANDS_DIR="${CODEX_PROMPTS_DIR}/commands"
   LIB_DIR="${CODEX_PROMPTS_DIR}/lib"

@@ -13,10 +13,13 @@ OPENCODE_CONFIG_DIR="${HOME}/.opencode"
 OPENCODE_COMMANDS_DIR="${OPENCODE_CONFIG_DIR}/commands/awsome-slash"
 LIB_DIR="${OPENCODE_COMMANDS_DIR}/lib"
 
-# Detect OS
+# Detect OS and normalize paths
 if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
   IS_WINDOWS=true
+  # Convert Windows path to Unix-style for bash compatibility
   OPENCODE_CONFIG_DIR="${USERPROFILE}/.opencode"
+  # Replace backslashes with forward slashes
+  OPENCODE_CONFIG_DIR="${OPENCODE_CONFIG_DIR//\\//}"
   OPENCODE_COMMANDS_DIR="${OPENCODE_CONFIG_DIR}/commands/awsome-slash"
   LIB_DIR="${OPENCODE_COMMANDS_DIR}/lib"
 else
