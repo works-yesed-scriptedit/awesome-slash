@@ -5,7 +5,9 @@
   "main": "lib/platform/detect-platform.js",
   "type": "commonjs",
   "scripts": {
-    "test": "echo \"Tests coming soon\" && exit 0",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "detect": "node lib/platform/detect-platform.js",
     "verify": "node lib/platform/verify-tools.js"
   },
@@ -36,6 +38,8 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
   "dependencies": {}
 }
