@@ -30,7 +30,7 @@ While in Claude Code chat:
 
 ```bash
 # List installed plugins
-claude plugin list
+# Commands are available - type / in Claude Code
 ```
 
 You should see `awsome-slash`.
@@ -341,7 +341,7 @@ Everything else is auto-detected:
 
 **Check installation:**
 ```bash
-claude plugin list
+# Commands are available - type / in Claude Code
 ```
 
 If not listed:
@@ -480,7 +480,7 @@ claude plugin install avifenesh/awsome-slash
 ## Quick Start Checklist
 
 - [ ] Install plugin: `claude plugin install https://github.com/avifenesh/awsome-slash`
-- [ ] Verify: `claude plugin list`
+- [ ] Verify: `# Commands are available - type / in Claude Code`
 - [ ] Open project: `cd your-project && claude`
 - [ ] Try first command: `/deslop-around report`
 - [ ] Check GitHub CLI (for /ship): `gh auth status`

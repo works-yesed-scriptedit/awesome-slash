@@ -7,25 +7,39 @@
   },
   "plugins": [
     {
-      "name": "awsome-slash",
-      "source": "./plugins/awsome-slash",
-      "description": "Professional-grade slash commands for Claude Code that work across any project",
+      "name": "deslop-around",
+      "source": "./plugins/deslop-around",
+      "description": "AI slop cleanup with minimal diffs and behavior preservation",
       "version": "1.0.0",
-      "author": {
-        "name": "Avi Fenesh",
-        "url": "https://github.com/avifenesh"
-      },
-      "category": "productivity",
-      "tags": [
-        "ci-cd",
-        "deployment",
-        "code-review",
-        "automation",
-        "developer-productivity",
-        "pr-workflow",
-        "task-management",
-        "code-quality"
-      ]
+      "category": "development"
+    },
+    {
+      "name": "next-task",
+      "source": "./plugins/next-task",
+      "description": "Intelligent task prioritization with code validation",
+      "version": "1.0.0",
+      "category": "productivity"
+    },
+    {
+      "name": "project-review",
+      "source": "./plugins/project-review",
+      "description": "Multi-agent iterative code review until zero issues remain",
+      "version": "1.0.0",
+      "category": "development"
+    },
+    {
+      "name": "ship",
+      "source": "./plugins/ship",
+      "description": "Complete PR workflow from commit to production with validation",
+      "version": "1.0.0",
+      "category": "deployment"
+    },
+    {
+      "name": "pr-merge",
+      "source": "./plugins/pr-merge",
+      "description": "Intelligent PR merge with validation and deployment testing",
+      "version": "1.0.0",
+      "category": "deployment"
     }
   ]
 }

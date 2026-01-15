@@ -23,7 +23,7 @@ claude plugin install awsome-slash@awsome-slash
 
 ```bash
 # Check it's installed
-claude plugin list
+# Commands are available - type / in Claude Code
 ```
 
 You should see `awsome-slash` in the list.

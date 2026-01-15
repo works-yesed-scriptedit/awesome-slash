@@ -21,7 +21,7 @@ claude plugin install awsome-slash@awsome-slash
 ### Verify
 
 ```bash
-claude plugin list
+# Commands are available - type / in Claude Code
 ```
 
 You should see `awsome-slash` listed.
@@ -383,7 +383,7 @@ Commands adapt based on what you have!
 **Solution**:
 ```bash
 # Verify plugin is installed
-claude plugin list
+# Commands are available - type / in Claude Code
 
 # If not listed, reinstall
 claude plugin install https://github.com/avifenesh/awsome-slash
@@ -483,7 +483,7 @@ claude plugin marketplace add avifenesh/awsome-slash
 claude plugin install awsome-slash@awsome-slash
 
 # 2. Verify (10 seconds)
-claude plugin list
+# Commands are available - type / in Claude Code
 
 # 3. Try it (1 minute)
 cd your-project/

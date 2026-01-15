@@ -33,7 +33,7 @@ That's it! Claude will:
 **Verify installation:**
 ```bash
 # List installed plugins
-claude plugin list
+# Commands are available - type / in Claude Code
 
 # You should see "awsome-slash"
 ```
