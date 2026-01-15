@@ -1,6 +1,6 @@
 {
   "name": "awesome-slash-commands",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Professional-grade slash commands for Claude Code that work across any project",
   "main": "lib/platform/detect-platform.js",
   "type": "commonjs",
