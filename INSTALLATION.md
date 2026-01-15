@@ -4,75 +4,76 @@ How to install and use awesome-slash-commands in Claude Code.
 
 ---
 
-## Option 1: Install from Claude Marketplace (Coming Soon)
+## Option 1: Install from GitHub URL (Easiest - Available Now!)
 
-Once published to the Claude marketplace, installation will be simple:
+Claude Code can install plugins directly from GitHub:
 
-### Via Claude Code CLI
+```bash
+# Install directly from GitHub
+claude plugin install https://github.com/avifenesh/awsome-slash
+
+# Or using short form
+claude plugin install avifenesh/awsome-slash
+```
+
+That's it! Claude will:
+1. Download the plugin
+2. Install it to the correct location
+3. Make it available immediately
+
+**Verify installation:**
+```bash
+# List installed plugins
+claude plugin list
+
+# You should see "awesome-slash-commands"
+```
+
+---
+
+## Option 2: Install from Claude Marketplace (Coming Soon)
+
+Once published to the Claude marketplace:
+
 ```bash
 claude plugin install awesome-slash-commands
 ```
 
-### Via Claude Web Interface
+Or via Claude Web Interface:
 1. Go to Claude Settings
-2. Navigate to "Plugins" or "Extensions"
+2. Navigate to "Plugins"
 3. Search for "awesome-slash-commands"
 4. Click "Install"
 
 ---
 
-## Option 2: Install Locally (Available Now)
+## Option 3: Manual Installation (Advanced)
 
-You can use this plugin locally right now before marketplace publication:
+If you prefer manual control:
 
-### Step 1: Clone the Repository
-
+### Clone and Link
 ```bash
 # Clone to your preferred location
-cd ~
-git clone https://github.com/avifenesh/awsome-slash.git
-```
+git clone https://github.com/avifenesh/awsome-slash.git ~/awsome-slash
 
-### Step 2: Install as Local Plugin
-
-**Method A: Symlink (Recommended)**
-```bash
-# Create Claude plugins directory if it doesn't exist
+# Create Claude plugins directory
 mkdir -p ~/.claude/plugins
 
-# Create symlink to the repository
+# Create symlink
 ln -s ~/awsome-slash ~/.claude/plugins/awesome-slash-commands
 ```
 
-**Method B: Copy**
-```bash
-# Copy the repository to Claude plugins directory
-mkdir -p ~/.claude/plugins
-cp -r ~/awsome-slash ~/.claude/plugins/awesome-slash-commands
-```
+### Set Environment Variable (Optional)
 
-### Step 3: Set Environment Variable
-
-Add this to your shell configuration (~/.bashrc, ~/.zshrc, etc.):
-
+Add to ~/.bashrc or ~/.zshrc:
 ```bash
 export CLAUDE_PLUGIN_ROOT="$HOME/.claude/plugins/awesome-slash-commands"
 ```
 
-Then reload:
+### Restart Claude Code
 ```bash
-source ~/.bashrc  # or ~/.zshrc
-```
-
-### Step 4: Restart Claude Code
-
-If Claude Code is running, restart it to load the plugin:
-```bash
-# Kill Claude Code if running
-pkill claude
-
-# Start Claude Code again
-claude
+# Restart Claude to load the plugin
+claude restart
 ```
 
 ---

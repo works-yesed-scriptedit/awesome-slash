@@ -9,19 +9,17 @@ A Claude marketplace plugin providing powerful, zero-configuration slash command
 
 ## Quick Start
 
-### Install Locally (Available Now)
+### Install from GitHub (One Command!)
 
 ```bash
-# Clone and symlink
-git clone https://github.com/avifenesh/awsome-slash.git ~/awsome-slash
-mkdir -p ~/.claude/plugins
-ln -s ~/awsome-slash ~/.claude/plugins/awesome-slash-commands
+# Install directly from GitHub URL
+claude plugin install https://github.com/avifenesh/awsome-slash
 
-# Set environment variable (add to ~/.bashrc or ~/.zshrc)
-export CLAUDE_PLUGIN_ROOT="$HOME/.claude/plugins/awesome-slash-commands"
-
-# Restart Claude Code
+# Or using the shorthand
+claude plugin install avifenesh/awsome-slash
 ```
+
+That's it! Restart Claude Code and start using the commands.
 
 ### Install from Marketplace (Coming Soon)
 
@@ -29,7 +27,19 @@ export CLAUDE_PLUGIN_ROOT="$HOME/.claude/plugins/awesome-slash-commands"
 claude plugin install awesome-slash-commands
 ```
 
-**See [INSTALLATION.md](./INSTALLATION.md) for detailed instructions.**
+### Verify Installation
+
+```bash
+# Check plugin is installed
+claude plugin list
+
+# Test in any project
+claude
+> /help
+# Should show all 5 commands
+```
+
+**See [INSTALLATION.md](./INSTALLATION.md) for detailed instructions and troubleshooting.**
 
 ### Prerequisites
 
