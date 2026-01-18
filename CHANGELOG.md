@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.4.1] - 2026-01-18
 
 ### Added
-- Published to npm as `awsome-slash` for easier installation
+- Published to npm as `awesome-slash` for easier installation
 - Added `.npmignore` and `files` field for optimized package size (191KB → 143KB)
 
 ### Changed

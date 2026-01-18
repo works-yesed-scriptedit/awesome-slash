@@ -1,12 +1,12 @@
 {
-  "name": "awsome-slash",
+  "name": "awesome-slash",
   "description": "Professional-grade slash commands for Claude Code with cross-platform support (OpenCode, Codex CLI)",
   "version": "2.4.1",
   "owner": {
     "name": "Avi Fenesh",
     "url": "https://github.com/avifenesh"
   },
-  "repository": "https://github.com/avifenesh/awsome-slash",
+  "repository": "https://github.com/avifenesh/awesome-slash",
   "keywords": ["workflow", "automation", "code-review", "pr", "deployment", "mcp"],
   "plugins": [
     {

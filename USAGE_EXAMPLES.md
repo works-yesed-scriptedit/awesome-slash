@@ -1,6 +1,6 @@
 # Usage Examples
 
-Real-world examples of using awsome-slash in Claude Code.
+Real-world examples of using awesome-slash in Claude Code.
 
 ---
 

@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 set -e
 
-# OpenCode Installer for awsome-slash commands
+# OpenCode Installer for awesome-slash commands
 # This script installs all 5 slash commands for use with OpenCode
 
-echo "🚀 Installing awsome-slash commands for OpenCode..."
+echo "🚀 Installing awesome-slash commands for OpenCode..."
 echo
 
 # Configuration
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 OPENCODE_CONFIG_DIR="${HOME}/.opencode"
-OPENCODE_COMMANDS_DIR="${OPENCODE_CONFIG_DIR}/commands/awsome-slash"
+OPENCODE_COMMANDS_DIR="${OPENCODE_CONFIG_DIR}/commands/awesome-slash"
 LIB_DIR="${OPENCODE_COMMANDS_DIR}/lib"
 
 # Detect OS and normalize paths
@@ -20,7 +20,7 @@ if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
   OPENCODE_CONFIG_DIR="${USERPROFILE}/.opencode"
   # Replace backslashes with forward slashes
   OPENCODE_CONFIG_DIR="${OPENCODE_CONFIG_DIR//\\//}"
-  OPENCODE_COMMANDS_DIR="${OPENCODE_CONFIG_DIR}/commands/awsome-slash"
+  OPENCODE_COMMANDS_DIR="${OPENCODE_CONFIG_DIR}/commands/awesome-slash"
   LIB_DIR="${OPENCODE_COMMANDS_DIR}/lib"
 else
   IS_WINDOWS=false
@@ -112,7 +112,7 @@ echo
 echo "📝 Creating environment setup..."
 cat > "$OPENCODE_COMMANDS_DIR/env.sh" << 'EOF'
 #!/usr/bin/env bash
-# Environment variables for awsome-slash commands in OpenCode
+# Environment variables for awesome-slash commands in OpenCode
 
 # Set the root directory for commands to find libraries
 export OPENCODE_COMMANDS_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -121,8 +121,8 @@ export OPENCODE_COMMANDS_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 export NODE_PATH="${OPENCODE_COMMANDS_ROOT}/lib:${NODE_PATH}"
 
 # Platform detection helpers
-export AWSOME_SLASH_PLATFORM_SCRIPT="${OPENCODE_COMMANDS_ROOT}/lib/platform/detect-platform.js"
-export AWSOME_SLASH_TOOLS_SCRIPT="${OPENCODE_COMMANDS_ROOT}/lib/platform/verify-tools.js"
+export AWESOME_SLASH_PLATFORM_SCRIPT="${OPENCODE_COMMANDS_ROOT}/lib/platform/detect-platform.js"
+export AWESOME_SLASH_TOOLS_SCRIPT="${OPENCODE_COMMANDS_ROOT}/lib/platform/verify-tools.js"
 EOF
 
 chmod +x "$OPENCODE_COMMANDS_DIR/env.sh"
@@ -131,9 +131,9 @@ echo
 
 # Create README
 cat > "$OPENCODE_COMMANDS_DIR/README.md" << 'EOF'
-# awsome-slash for OpenCode
+# awesome-slash for OpenCode
 
-This directory contains the awsome-slash commands adapted for OpenCode.
+This directory contains the awesome-slash commands adapted for OpenCode.
 
 ## Available Commands
 
@@ -179,21 +179,21 @@ Example:
 
 Commands use the shared library at:
 ```
-~/.opencode/commands/awsome-slash/lib/
+~/.opencode/commands/awesome-slash/lib/
 ```
 
 ## Updates
 
 To update commands, re-run the installer:
 ```bash
-cd /path/to/awsome-slash
+cd /path/to/awesome-slash
 ./adapters/opencode/install.sh
 ```
 
 ## Support
 
-- Repository: https://github.com/avifenesh/awsome-slash
-- Issues: https://github.com/avifenesh/awsome-slash/issues
+- Repository: https://github.com/avifenesh/awesome-slash
+- Issues: https://github.com/avifenesh/awesome-slash/issues
 EOF
 
 echo "  ✓ Created README"

@@ -1,5 +1,5 @@
 {
-  "name": "awsome-slash",
+  "name": "awesome-slash",
   "version": "2.4.1",
   "description": "Professional-grade slash commands for Claude Code that work across any project",
   "main": "lib/platform/detect-platform.js",
@@ -27,7 +27,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/avifenesh/awsome-slash.git"
+    "url": "git+https://github.com/avifenesh/awesome-slash.git"
   },
   "keywords": [
     "claude",
@@ -51,9 +51,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/avifenesh/awsome-slash/issues"
+    "url": "https://github.com/avifenesh/awesome-slash/issues"
   },
-  "homepage": "https://github.com/avifenesh/awsome-slash#readme",
+  "homepage": "https://github.com/avifenesh/awesome-slash#readme",
   "engines": {
     "node": ">=18.0.0"
   },

@@ -1,6 +1,6 @@
 # Manual Testing Guide
 
-How to manually test the awsome-slash commands in your own projects.
+How to manually test the awesome-slash commands in your own projects.
 
 ---
 
@@ -20,7 +20,7 @@ How to manually test the awsome-slash commands in your own projects.
 ```bash
 # Clone this repository
 cd ~/
-git clone https://github.com/avifenesh/awsome-slash.git
+git clone https://github.com/avifenesh/awesome-slash.git
 
 # Link it as a local plugin
 # Method depends on Claude Code plugin system
@@ -31,14 +31,14 @@ git clone https://github.com/avifenesh/awsome-slash.git
 
 ```bash
 # If Claude Code supports GitHub plugins
-claude plugin install avifenesh/awsome-slash
+claude plugin install avifenesh/awesome-slash
 ```
 
 ### Option 3: Manual Copy
 
 ```bash
 # Copy to Claude Code plugins directory
-cp -r awsome-slash ~/.claude/plugins/awsome-slash
+cp -r awesome-slash ~/.claude/plugins/awesome-slash
 ```
 
 ---
@@ -49,7 +49,7 @@ cp -r awsome-slash ~/.claude/plugins/awsome-slash
 
 ```bash
 # In any project directory
-node /path/to/awsome-slash/lib/platform/detect-platform.js
+node /path/to/awesome-slash/lib/platform/detect-platform.js
 ```
 
 **Expected Output**:
@@ -74,7 +74,7 @@ node /path/to/awsome-slash/lib/platform/detect-platform.js
 ### Test Tool Verification
 
 ```bash
-node /path/to/awsome-slash/lib/platform/verify-tools.js
+node /path/to/awesome-slash/lib/platform/verify-tools.js
 ```
 
 **Expected Output**: JSON with available tools (git, gh, node, npm, python, cargo, etc.)
@@ -432,10 +432,10 @@ gh auth login
 **Solution**:
 ```bash
 # Make sure you're running from correct directory
-cd /path/to/awsome-slash
+cd /path/to/awesome-slash
 
 # Or use absolute paths
-node /full/path/to/awsome-slash/lib/platform/detect-platform.js
+node /full/path/to/awesome-slash/lib/platform/detect-platform.js
 ```
 
 ### Issue: Commands don't work in Claude Code
@@ -585,7 +585,7 @@ If you find bugs during manual testing:
 
 3. **Report on GitHub**:
 ```bash
-gh issue create --repo avifenesh/awsome-slash \
+gh issue create --repo avifenesh/awesome-slash \
   --title "Bug: Command X failed with Y" \
   --body "Detailed description here"
 ```

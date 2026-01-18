@@ -1,12 +1,12 @@
-# awsome-slash for Codex CLI
+# awesome-slash for Codex CLI
 
 Professional-grade slash commands adapted for OpenAI's Codex CLI.
 
 ## Quick Install
 
 ```bash
-git clone https://github.com/avifenesh/awsome-slash.git
-cd awsome-slash
+git clone https://github.com/avifenesh/awesome-slash.git
+cd awesome-slash
 ./adapters/codex/install.sh
 ```
 
@@ -105,7 +105,7 @@ codex
 ## Installation Details
 
 The installer:
-1. Creates `~/.codex/prompts/awsome-slash/`
+1. Creates `~/.codex/prompts/awesome-slash/`
 2. Copies command files with path adjustments
 3. Installs shared libraries (platform detection, patterns)
 4. Creates environment setup scripts
@@ -113,7 +113,7 @@ The installer:
 ### File Structure
 
 ```
-~/.codex/prompts/awsome-slash/
+~/.codex/prompts/awesome-slash/
 ├── commands/
 │   ├── deslop-around.md
 │   ├── next-task.md
@@ -196,7 +196,7 @@ Use alongside Codex's built-in commands:
 - `/compact` - Summarize conversation
 - `/model` - Switch models
 
-awsome-slash commands complement these.
+awesome-slash commands complement these.
 
 ---
 
@@ -218,7 +218,7 @@ Node.js · Python · Rust · Go · Java
 To update commands:
 
 ```bash
-cd /path/to/awsome-slash
+cd /path/to/awesome-slash
 git pull origin main
 ./adapters/codex/install.sh
 ```
@@ -229,7 +229,7 @@ git pull origin main
 
 ### Commands not showing up
 1. Restart Codex CLI
-2. Check installation: `ls ~/.codex/prompts/awsome-slash/commands/`
+2. Check installation: `ls ~/.codex/prompts/awesome-slash/commands/`
 3. Re-run installer
 
 ### Path errors
@@ -254,8 +254,8 @@ gh auth status
 
 ## Support
 
-- **Repository**: https://github.com/avifenesh/awsome-slash
-- **Issues**: https://github.com/avifenesh/awsome-slash/issues
+- **Repository**: https://github.com/avifenesh/awesome-slash
+- **Issues**: https://github.com/avifenesh/awesome-slash/issues
 - **Codex CLI Docs**: https://developers.openai.com/codex/cli
 
 ---
@@ -264,7 +264,7 @@ gh auth status
 
 - [Codex CLI Slash Commands](https://developers.openai.com/codex/cli/slash-commands/)
 - [Custom Prompts](https://developers.openai.com/codex/custom-prompts/)
-- [awsome-slash Main README](../../README.md)
+- [awesome-slash Main README](../../README.md)
 - [Multi-Tool Adapters](../README.md)
 
 ---

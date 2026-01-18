@@ -10,7 +10,7 @@ Be respectful and inclusive. We're all here to make better tools.
 
 ### Reporting Bugs
 
-1. Check if the bug already exists in [Issues](https://github.com/avifenesh/awsome-slash/issues)
+1. Check if the bug already exists in [Issues](https://github.com/avifenesh/awesome-slash/issues)
 2. If not, create a new issue with:
    - Clear description of the bug
    - Steps to reproduce
@@ -20,7 +20,7 @@ Be respectful and inclusive. We're all here to make better tools.
 
 ### Suggesting Features
 
-1. Check [Issues](https://github.com/avifenesh/awsome-slash/issues) and [Discussions](https://github.com/avifenesh/awsome-slash/discussions)
+1. Check [Issues](https://github.com/avifenesh/awesome-slash/issues) and [Discussions](https://github.com/avifenesh/awesome-slash/discussions)
 2. Create a new discussion or issue describing:
    - The problem you're trying to solve
    - Your proposed solution
@@ -64,8 +64,8 @@ Be respectful and inclusive. We're all here to make better tools.
 
 ```bash
 # Clone your fork
-git clone https://github.com/YOUR-USERNAME/awsome-slash.git
-cd awsome-slash
+git clone https://github.com/YOUR-USERNAME/awesome-slash.git
+cd awesome-slash
 
 # Install dependencies
 npm install
@@ -83,7 +83,7 @@ node lib/platform/verify-tools.js
 ### Project Structure
 
 ```
-awsome-claude-slash/
+awesome-slash/
 ├── .claude-plugin/      # Plugin manifest
 ├── lib/                 # CANONICAL shared libraries (edit here!)
 │   ├── platform/        # Platform detection
@@ -272,8 +272,8 @@ test(platform): add tests for CI detection
 
 ## Getting Help
 
-- **Questions**: Use [Discussions](https://github.com/avifenesh/awsome-slash/discussions)
-- **Bugs**: Use [Issues](https://github.com/avifenesh/awsome-slash/issues)
+- **Questions**: Use [Discussions](https://github.com/avifenesh/awesome-slash/discussions)
+- **Bugs**: Use [Issues](https://github.com/avifenesh/awesome-slash/issues)
 - **Chat**: (Coming soon)
 
 ## Recognition

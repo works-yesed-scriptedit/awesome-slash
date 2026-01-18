@@ -25,11 +25,11 @@ Use the plugins directly:
 
 ```bash
 # Clone the repository
-git clone https://github.com/avifenesh/awsome-slash.git
+git clone https://github.com/avifenesh/awesome-slash.git
 
 # Install in Claude Code
-claude --add-plugin /path/to/awsome-slash/plugins/next-task
-claude --add-plugin /path/to/awsome-slash/plugins/ship
+claude --add-plugin /path/to/awesome-slash/plugins/next-task
+claude --add-plugin /path/to/awesome-slash/plugins/ship
 ```
 
 ### Available Commands
@@ -57,9 +57,9 @@ Add to your OpenCode MCP config:
   "mcpServers": {
     "awesome-slash": {
       "command": "node",
-      "args": ["/path/to/awsome-slash/mcp-server/index.js"],
+      "args": ["/path/to/awesome-slash/mcp-server/index.js"],
       "env": {
-        "PLUGIN_ROOT": "/path/to/awsome-slash"
+        "PLUGIN_ROOT": "/path/to/awesome-slash"
       }
     }
   }
@@ -111,7 +111,7 @@ Add to your Codex config:
   "mcpServers": {
     "awesome-slash": {
       "command": "node",
-      "args": ["/path/to/awsome-slash/mcp-server/index.js"]
+      "args": ["/path/to/awesome-slash/mcp-server/index.js"]
     }
   }
 }
@@ -127,7 +127,7 @@ name: next-task
 description: Intelligent task prioritization with code validation
 trigger: "find next task|what should I work on|prioritize tasks"
 script: |
-  node /path/to/awsome-slash/scripts/next-task-runner.js
+  node /path/to/awesome-slash/scripts/next-task-runner.js
 ```
 
 ## MCP Server Tools

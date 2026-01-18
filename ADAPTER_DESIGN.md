@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document describes the adapter layer for supporting awsome-slash commands across multiple AI coding tools.
+This document describes the adapter layer for supporting awesome-slash commands across multiple AI coding tools.
 
 ## Supported Tools
 
@@ -29,7 +29,7 @@ Since all tools use markdown, we don't need format converters. Instead, we provi
 ### Directory Structure
 
 ```
-awsome-slash/
+awesome-slash/
 ├── plugins/                      # Claude Code plugins (current)
 │   ├── deslop-around/
 │   ├── next-task/
@@ -53,16 +53,16 @@ awsome-slash/
 ### Claude Code (Current - No Changes)
 
 ```bash
-claude plugin marketplace add avifenesh/awsome-slash
-claude plugin install deslop-around@awsome-slash
+claude plugin marketplace add avifenesh/awesome-slash
+claude plugin install deslop-around@awesome-slash
 ```
 
 ### Codex CLI (NEW)
 
 ```bash
 # Clone repository
-git clone https://github.com/avifenesh/awsome-slash.git
-cd awsome-slash
+git clone https://github.com/avifenesh/awesome-slash.git
+cd awesome-slash
 
 # Run Codex installer
 ./adapters/codex/install.sh
@@ -75,8 +75,8 @@ cd awsome-slash
 
 ```bash
 # Clone repository
-git clone https://github.com/avifenesh/awsome-slash.git
-cd awsome-slash
+git clone https://github.com/avifenesh/awesome-slash.git
+cd awesome-slash
 
 # Run OpenCode installer
 ./adapters/opencode/install.sh
@@ -171,11 +171,11 @@ node ${CLAUDE_PLUGIN_ROOT}/lib/platform/detect-platform.js
 
 ```bash
 # Codex install.sh
-export CODEX_PROMPTS_DIR="$HOME/.codex/prompts/awsome-slash"
+export CODEX_PROMPTS_DIR="$HOME/.codex/prompts/awesome-slash"
 sed "s|\${CLAUDE_PLUGIN_ROOT}|$CODEX_PROMPTS_DIR|g" ...
 
 # OpenCode install.sh
-export OPENCODE_COMMANDS_DIR="$HOME/.opencode/commands/awsome-slash"
+export OPENCODE_COMMANDS_DIR="$HOME/.opencode/commands/awesome-slash"
 sed "s|\${CLAUDE_PLUGIN_ROOT}|$OPENCODE_COMMANDS_DIR|g" ...
 ```
 

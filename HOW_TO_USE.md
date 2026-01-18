@@ -10,10 +10,10 @@
 
 ```bash
 # Step 1: Add the marketplace
-claude plugin marketplace add avifenesh/awsome-slash
+claude plugin marketplace add avifenesh/awesome-slash
 
 # Step 2: Install the plugin
-claude plugin install awsome-slash@awsome-slash
+claude plugin install awesome-slash@awesome-slash
 ```
 
 **That's it!** The plugin is now installed.
@@ -24,7 +24,7 @@ claude plugin install awsome-slash@awsome-slash
 # Commands are available - type / in Claude Code
 ```
 
-You should see `awsome-slash` listed.
+You should see `awesome-slash` listed.
 
 ---
 
@@ -371,7 +371,7 @@ Commands adapt based on what you have!
 # Commands are available - type / in Claude Code
 
 # If not listed, reinstall
-claude plugin install https://github.com/avifenesh/awsome-slash
+claude plugin install https://github.com/avifenesh/awesome-slash
 
 # Restart Claude
 exit
@@ -427,7 +427,7 @@ echo "config" > .toolrc
 # ... 10 more steps
 
 # This plugin:
-claude plugin install avifenesh/awsome-slash
+claude plugin install avifenesh/awesome-slash
 # Done!
 ```
 
@@ -463,8 +463,8 @@ No vague suggestions!
 
 ```bash
 # 1. Install (30 seconds)
-claude plugin marketplace add avifenesh/awsome-slash
-claude plugin install awsome-slash@awsome-slash
+claude plugin marketplace add avifenesh/awesome-slash
+claude plugin install awesome-slash@awesome-slash
 
 # 2. Verify (10 seconds)
 # Commands are available - type / in Claude Code

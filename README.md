@@ -4,10 +4,10 @@
 
 A cross-platform plugin providing powerful, zero-configuration slash commands for development workflows. Works with **Claude Code**, **Codex CLI**, and **OpenCode**.
 
-[![npm](https://img.shields.io/npm/v/awsome-slash?color=red)](https://www.npmjs.com/package/awsome-slash)
+[![npm](https://img.shields.io/npm/v/awesome-slash?color=red)](https://www.npmjs.com/package/awesome-slash)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-2.4.1-blue)](https://github.com/avifenesh/awsome-slash/releases)
-[![GitHub stars](https://img.shields.io/github/stars/awsome-slash?style=flat&color=yellow)](https://github.com/avifenesh/awsome-slash/stargazers)
+[![Version](https://img.shields.io/badge/version-2.4.1-blue)](https://github.com/avifenesh/awesome-slash/releases)
+[![GitHub stars](https://img.shields.io/github/stars/awesome-slash?style=flat&color=yellow)](https://github.com/avifenesh/awesome-slash/stargazers)
 [![Claude Code](https://img.shields.io/badge/Claude-Code%20Plugin-blue)](https://docs.anthropic.com/en/docs/claude-code)
 [![Codex CLI](https://img.shields.io/badge/Codex-CLI%20Compatible-green)](https://developers.openai.com/codex/cli)
 [![OpenCode](https://img.shields.io/badge/OpenCode-Compatible-orange)](https://opencode.ai)
@@ -25,40 +25,40 @@ A cross-platform plugin providing powerful, zero-configuration slash commands fo
 ### npm (Recommended)
 
 ```bash
-npm install awsome-slash
+npm install awesome-slash
 ```
 
 ### Claude Code
 
 ```bash
 # Option 1: npm (recommended)
-claude plugin add npm:awsome-slash
+claude plugin add npm:awesome-slash
 
 # Option 2: GitHub
-claude plugin add github:avifenesh/awsome-slash
+claude plugin add github:avifenesh/awesome-slash
 
 # Option 3: Local clone
-git clone https://github.com/avifenesh/awsome-slash.git
+git clone https://github.com/avifenesh/awesome-slash.git
 ./scripts/install/claude.sh
 ```
 
 ### OpenCode
 
 ```bash
-npm install awsome-slash
+npm install awesome-slash
 # or
-git clone https://github.com/avifenesh/awsome-slash.git
-cd awsome-slash
+git clone https://github.com/avifenesh/awesome-slash.git
+cd awesome-slash
 ./scripts/install/opencode.sh
 ```
 
 ### Codex CLI
 
 ```bash
-npm install awsome-slash
+npm install awesome-slash
 # or
-git clone https://github.com/avifenesh/awsome-slash.git
-cd awsome-slash
+git clone https://github.com/avifenesh/awesome-slash.git
+cd awesome-slash
 ./scripts/install/codex.sh
 ```
 
@@ -305,7 +305,7 @@ Workflows persist state in `.claude/.workflow-state.json`:
 ## Repository Structure
 
 ```
-awsome-slash/
+awesome-slash/
 ├── .claude-plugin/
 │   └── marketplace.json      # Claude Code marketplace manifest
 ├── plugins/
@@ -355,8 +355,8 @@ MIT © [Avi Fenesh](https://github.com/avifenesh)
 
 ## Support
 
-- **Issues:** https://github.com/avifenesh/awsome-slash/issues
-- **Discussions:** https://github.com/avifenesh/awsome-slash/discussions
+- **Issues:** https://github.com/avifenesh/awesome-slash/issues
+- **Discussions:** https://github.com/avifenesh/awesome-slash/discussions
 
 ---
 

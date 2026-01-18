@@ -10,10 +10,10 @@ Based on official Claude Code documentation.
 
 ```bash
 # Step 1: Add the marketplace
-claude plugin marketplace add avifenesh/awsome-slash
+claude plugin marketplace add avifenesh/awesome-slash
 
 # Step 2: Install the plugin
-claude plugin install awsome-slash@awsome-slash
+claude plugin install awesome-slash@awesome-slash
 ```
 
 **That's it!** Commands are immediately available. No restart needed.
@@ -22,8 +22,8 @@ claude plugin install awsome-slash@awsome-slash
 
 While in Claude Code chat:
 ```
-/plugin marketplace add avifenesh/awsome-slash
-/plugin install awsome-slash@awsome-slash
+/plugin marketplace add avifenesh/awesome-slash
+/plugin install awesome-slash@awesome-slash
 ```
 
 ### Verify Installation
@@ -33,7 +33,7 @@ While in Claude Code chat:
 # Commands are available - type / in Claude Code
 ```
 
-You should see `awsome-slash`.
+You should see `awesome-slash`.
 
 ---
 
@@ -64,7 +64,7 @@ Claude will execute the command automatically!
 
 When you install the plugin, command files are placed in:
 ```
-~/.claude/plugins/awsome-slash/commands/
+~/.claude/plugins/awesome-slash/commands/
   ├── deslop-around.md
   ├── next-task.md
   ├── project-review.md
@@ -93,7 +93,7 @@ When you type `/deslop-around`, Claude:
 ### 1. Install Plugin (30 seconds)
 
 ```bash
-claude plugin install https://github.com/avifenesh/awsome-slash
+claude plugin install https://github.com/avifenesh/awesome-slash
 ```
 
 ### 2. Open Your Project (10 seconds)
@@ -150,7 +150,7 @@ Found 5 issues:
 The plugin includes:
 
 ```
-awsome-slash/
+awesome-slash/
 ├── commands/              # Slash command files
 │   ├── deslop-around.md   # → /deslop-around
 │   ├── next-task.md       # → /next-task
@@ -328,7 +328,7 @@ Everything else is auto-detected:
 
 If not listed:
 ```bash
-claude plugin install https://github.com/avifenesh/awsome-slash
+claude plugin install https://github.com/avifenesh/awesome-slash
 ```
 
 ### "GitHub CLI not found"
@@ -350,10 +350,10 @@ git status  # Must show valid repo
 
 ```bash
 # View command source
-cat ~/.claude/plugins/awsome-slash/commands/deslop-around.md
+cat ~/.claude/plugins/awesome-slash/commands/deslop-around.md
 
 # View detection logic
-node ~/.claude/plugins/awsome-slash/lib/platform/detect-platform.js
+node ~/.claude/plugins/awesome-slash/lib/platform/detect-platform.js
 ```
 
 ---
@@ -361,7 +361,7 @@ node ~/.claude/plugins/awsome-slash/lib/platform/detect-platform.js
 ## Update Plugin
 
 ```bash
-claude plugin update awsome-slash
+claude plugin update awesome-slash
 ```
 
 Commands are updated immediately.
@@ -371,7 +371,7 @@ Commands are updated immediately.
 ## Uninstall
 
 ```bash
-claude plugin uninstall awsome-slash
+claude plugin uninstall awesome-slash
 ```
 
 ---
@@ -400,7 +400,7 @@ git push
 **This Plugin:**
 ```bash
 # Setup
-claude plugin install avifenesh/awsome-slash
+claude plugin install avifenesh/awesome-slash
 
 # Use
 /ship
@@ -448,20 +448,20 @@ claude plugin install avifenesh/awsome-slash
 - **USAGE_EXAMPLES.md**: 6 detailed usage examples
 - **INSTALLATION.md**: Complete installation guide
 - **README.md**: Feature overview
-- **GitHub**: [github.com/avifenesh/awsome-slash](https://github.com/avifenesh/awsome-slash)
+- **GitHub**: [github.com/avifenesh/awesome-slash](https://github.com/avifenesh/awesome-slash)
 
 ---
 
 ## Support
 
-- **GitHub Issues**: [github.com/avifenesh/awsome-slash/issues](https://github.com/avifenesh/awsome-slash/issues)
-- **Discussions**: [github.com/avifenesh/awsome-slash/discussions](https://github.com/avifenesh/awsome-slash/discussions)
+- **GitHub Issues**: [github.com/avifenesh/awesome-slash/issues](https://github.com/avifenesh/awesome-slash/issues)
+- **Discussions**: [github.com/avifenesh/awesome-slash/discussions](https://github.com/avifenesh/awesome-slash/discussions)
 
 ---
 
 ## Quick Start Checklist
 
-- [ ] Install plugin: `claude plugin install https://github.com/avifenesh/awsome-slash`
+- [ ] Install plugin: `claude plugin install https://github.com/avifenesh/awesome-slash`
 - [ ] Verify: `# Commands are available - type / in Claude Code`
 - [ ] Open project: `cd your-project && claude`
 - [ ] Try first command: `/deslop-around report`

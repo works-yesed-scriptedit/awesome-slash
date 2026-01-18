@@ -1,6 +1,6 @@
 # Quick Start - Test in 5 Minutes
 
-The fastest way to test awsome-slash manually.
+The fastest way to test awesome-slash manually.
 
 ---
 
@@ -8,8 +8,8 @@ The fastest way to test awsome-slash manually.
 
 ```bash
 # Clone the repo
-git clone https://github.com/avifenesh/awsome-slash.git
-cd awsome-slash
+git clone https://github.com/avifenesh/awesome-slash.git
+cd awesome-slash
 
 # Test platform detection (should detect this repo)
 node lib/platform/detect-platform.js
@@ -113,12 +113,12 @@ git commit -m "Add package.json"
 
 ```bash
 # From your test project
-node /path/to/awsome-slash/lib/platform/detect-platform.js
+node /path/to/awesome-slash/lib/platform/detect-platform.js
 ```
 
-**Replace `/path/to/awsome-slash` with actual path**, for example:
-- macOS/Linux: `~/awsome-slash/`
-- Windows: `C:/Users/YourName/awsome-slash/`
+**Replace `/path/to/awesome-slash` with actual path**, for example:
+- macOS/Linux: `~/awesome-slash/`
+- Windows: `C:/Users/YourName/awesome-slash/`
 
 **Expected Output**:
 ```json
@@ -169,9 +169,9 @@ TODO comments: 1
 
 In Claude Code chat:
 ```
-I have the awsome-slash repository. Can you test if the platform
+I have the awesome-slash repository. Can you test if the platform
 detection works by running:
-node /path/to/awsome-slash/lib/platform/detect-platform.js
+node /path/to/awesome-slash/lib/platform/detect-platform.js
 ```
 
 Replace path with your actual path.
@@ -240,10 +240,10 @@ git add bad-code.js
 **Solution**: Use absolute paths:
 ```bash
 # macOS/Linux
-node ~/awsome-slash/lib/platform/detect-platform.js
+node ~/awesome-slash/lib/platform/detect-platform.js
 
 # Windows
-node C:/Users/YourName/awsome-slash/lib/platform/detect-platform.js
+node C:/Users/YourName/awesome-slash/lib/platform/detect-platform.js
 ```
 
 ### "git: command not found"
@@ -277,7 +277,7 @@ git init
 
 After 5 minutes, you should have:
 
-- [x] ✅ Cloned awsome-slash repo
+- [x] ✅ Cloned awesome-slash repo
 - [x] ✅ Verified platform detection works
 - [x] ✅ Verified pattern libraries load
 - [x] ✅ Created test project
@@ -295,7 +295,7 @@ See [MANUAL_TESTING.md](./MANUAL_TESTING.md) for complete command testing.
 1. **Test on your real project**:
 ```bash
 cd ~/your-actual-project
-node /path/to/awsome-slash/lib/platform/detect-platform.js
+node /path/to/awesome-slash/lib/platform/detect-platform.js
 ```
 
 2. **Test slop detection on real code**:

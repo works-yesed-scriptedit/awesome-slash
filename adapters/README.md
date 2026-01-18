@@ -1,14 +1,14 @@
 # Multi-Tool Adapters
 
-This directory contains adapters for using awsome-slash commands with different AI coding tools.
+This directory contains adapters for using awesome-slash commands with different AI coding tools.
 
 ## Supported Tools
 
 ### ✅ Claude Code (Native)
 The primary target. Install via marketplace:
 ```bash
-claude plugin marketplace add avifenesh/awsome-slash
-claude plugin install deslop-around@awsome-slash
+claude plugin marketplace add avifenesh/awesome-slash
+claude plugin install deslop-around@awesome-slash
 ```
 
 See main [README.md](../README.md) for details.
@@ -20,8 +20,8 @@ OpenAI's Codex command-line interface.
 
 **Installation:**
 ```bash
-git clone https://github.com/avifenesh/awsome-slash.git
-cd awsome-slash
+git clone https://github.com/avifenesh/awesome-slash.git
+cd awesome-slash
 ./adapters/codex/install.sh
 ```
 
@@ -42,8 +42,8 @@ Open-source AI coding assistant.
 
 **Installation:**
 ```bash
-git clone https://github.com/avifenesh/awsome-slash.git
-cd awsome-slash
+git clone https://github.com/avifenesh/awesome-slash.git
+cd awesome-slash
 ./adapters/opencode/install.sh
 ```
 
@@ -82,12 +82,12 @@ node ${CLAUDE_PLUGIN_ROOT}/lib/platform/detect-platform.js
 
 **Codex CLI:**
 ```bash
-node ~/.codex/prompts/awsome-slash/lib/platform/detect-platform.js
+node ~/.codex/prompts/awesome-slash/lib/platform/detect-platform.js
 ```
 
 **OpenCode:**
 ```bash
-node ~/.opencode/commands/awsome-slash/lib/platform/detect-platform.js
+node ~/.opencode/commands/awesome-slash/lib/platform/detect-platform.js
 ```
 
 Installers automatically handle these substitutions.
@@ -129,8 +129,8 @@ Installers automatically handle these substitutions.
 ### Claude Code
 ```bash
 # Via marketplace (easiest)
-claude plugin marketplace add avifenesh/awsome-slash
-claude plugin install deslop-around@awsome-slash
+claude plugin marketplace add avifenesh/awesome-slash
+claude plugin install deslop-around@awesome-slash
 ```
 
 **Pros:**
@@ -193,7 +193,7 @@ Automatic via marketplace updates.
 
 ### Codex CLI & OpenCode
 ```bash
-cd /path/to/awsome-slash
+cd /path/to/awesome-slash
 git pull origin main
 ./adapters/codex/install.sh    # Or ./adapters/opencode/install.sh
 ```
@@ -204,11 +204,11 @@ git pull origin main
 
 ### Command not found
 **Codex CLI:**
-- Check `~/.codex/prompts/awsome-slash/commands/`
+- Check `~/.codex/prompts/awesome-slash/commands/`
 - Restart Codex CLI
 
 **OpenCode:**
-- Check `~/.opencode/commands/awsome-slash/`
+- Check `~/.opencode/commands/awesome-slash/`
 - Restart OpenCode TUI
 
 ### Path errors in commands
@@ -235,7 +235,7 @@ gh auth login
 
 Found a bug or want to add support for another tool?
 
-1. Open an issue: https://github.com/avifenesh/awsome-slash/issues
+1. Open an issue: https://github.com/avifenesh/awesome-slash/issues
 2. Submit a PR with:
    - New adapter directory: `adapters/[tool-name]/`
    - Installation script: `install.sh`
@@ -249,7 +249,7 @@ Found a bug or want to add support for another tool?
 - [Claude Code Documentation](https://code.claude.com/docs)
 - [Codex CLI Documentation](https://developers.openai.com/codex/cli)
 - [OpenCode Documentation](https://opencode.ai/docs)
-- [awsome-slash Repository](https://github.com/avifenesh/awsome-slash)
+- [awesome-slash Repository](https://github.com/avifenesh/awesome-slash)
 
 ---
 

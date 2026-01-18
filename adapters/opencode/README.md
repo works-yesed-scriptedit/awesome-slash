@@ -1,12 +1,12 @@
-# awsome-slash for OpenCode
+# awesome-slash for OpenCode
 
 Professional-grade slash commands adapted for OpenCode.
 
 ## Quick Install
 
 ```bash
-git clone https://github.com/avifenesh/awsome-slash.git
-cd awsome-slash
+git clone https://github.com/avifenesh/awesome-slash.git
+cd awesome-slash
 ./adapters/opencode/install.sh
 ```
 
@@ -105,7 +105,7 @@ opencode
 
 ## OpenCode-Specific Features
 
-OpenCode provides additional features you can combine with awsome-slash commands:
+OpenCode provides additional features you can combine with awesome-slash commands:
 
 ### File Includes with `@`
 
@@ -143,7 +143,7 @@ Analyzes tasks with PLAN.md content and current GitHub issues.
 ## Installation Details
 
 The installer:
-1. Creates `~/.opencode/commands/awsome-slash/`
+1. Creates `~/.opencode/commands/awesome-slash/`
 2. Copies command files with path adjustments
 3. Installs shared libraries (platform detection, patterns)
 4. Creates environment setup scripts
@@ -151,7 +151,7 @@ The installer:
 ### File Structure
 
 ```
-~/.opencode/commands/awsome-slash/
+~/.opencode/commands/awesome-slash/
 ├── deslop-around.md
 ├── next-task.md
 ├── project-review.md
@@ -231,7 +231,7 @@ Node.js · Python · Rust · Go · Java
 To update commands:
 
 ```bash
-cd /path/to/awsome-slash
+cd /path/to/awesome-slash
 git pull origin main
 ./adapters/opencode/install.sh
 ```
@@ -242,7 +242,7 @@ git pull origin main
 
 ### Commands not showing up
 1. Restart OpenCode TUI
-2. Check installation: `ls ~/.opencode/commands/awsome-slash/`
+2. Check installation: `ls ~/.opencode/commands/awesome-slash/`
 3. Re-run installer
 
 ### Commands only work in TUI
@@ -283,8 +283,8 @@ gh auth status
 
 ## Support
 
-- **Repository**: https://github.com/avifenesh/awsome-slash
-- **Issues**: https://github.com/avifenesh/awsome-slash/issues
+- **Repository**: https://github.com/avifenesh/awesome-slash
+- **Issues**: https://github.com/avifenesh/awesome-slash/issues
 - **OpenCode Docs**: https://opencode.ai/docs
 
 ---
@@ -293,7 +293,7 @@ gh auth status
 
 - [OpenCode Commands](https://opencode.ai/docs/commands/)
 - [OpenCode CLI](https://opencode.ai/docs/cli/)
-- [awsome-slash Main README](../../README.md)
+- [awesome-slash Main README](../../README.md)
 - [Multi-Tool Adapters](../README.md)
 
 ---

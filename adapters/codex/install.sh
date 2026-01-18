@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 set -e
 
-# Codex CLI Installer for awsome-slash commands
+# Codex CLI Installer for awesome-slash commands
 # This script installs all 5 slash commands for use with OpenAI Codex CLI
 
-echo "🚀 Installing awsome-slash commands for Codex CLI..."
+echo "🚀 Installing awesome-slash commands for Codex CLI..."
 echo
 
 # Configuration
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 CODEX_CONFIG_DIR="${HOME}/.codex"
 CODEX_PROMPTS_DIR="${CODEX_CONFIG_DIR}/prompts"
-CODEX_LIB_DIR="${CODEX_CONFIG_DIR}/awsome-slash/lib"
+CODEX_LIB_DIR="${CODEX_CONFIG_DIR}/awesome-slash/lib"
 
 # Detect OS and normalize paths
 if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
@@ -21,7 +21,7 @@ if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
   # Replace backslashes with forward slashes
   CODEX_CONFIG_DIR="${CODEX_CONFIG_DIR//\\//}"
   CODEX_PROMPTS_DIR="${CODEX_CONFIG_DIR}/prompts"
-  CODEX_LIB_DIR="${CODEX_CONFIG_DIR}/awsome-slash/lib"
+  CODEX_LIB_DIR="${CODEX_CONFIG_DIR}/awesome-slash/lib"
 else
   IS_WINDOWS=false
 fi
@@ -111,8 +111,8 @@ done
 echo
 
 # Create README
-cat > "$CODEX_CONFIG_DIR/AWSOME_SLASH_README.md" << 'EOF'
-# awsome-slash for Codex CLI
+cat > "$CODEX_CONFIG_DIR/AWESOME_SLASH_README.md" << 'EOF'
+# awesome-slash for Codex CLI
 
 Commands installed for OpenAI Codex CLI.
 
@@ -139,19 +139,19 @@ Or type `/prompts:` to see the menu.
 
 ## Libraries
 
-Shared libraries at: ~/.codex/awsome-slash/lib/
+Shared libraries at: ~/.codex/awesome-slash/lib/
 
 ## Updates
 
 ```bash
-cd /path/to/awsome-slash
+cd /path/to/awesome-slash
 ./adapters/codex/install.sh
 ```
 
 ## Support
 
-- Repository: https://github.com/avifenesh/awsome-slash
-- Issues: https://github.com/avifenesh/awsome-slash/issues
+- Repository: https://github.com/avifenesh/awesome-slash
+- Issues: https://github.com/avifenesh/awesome-slash/issues
 EOF
 
 echo "  ✓ Created README"
@@ -169,7 +169,7 @@ echo "📖 Next Steps:"
 echo "  1. Start Codex CLI: codex"
 echo "  2. Type: /prompts: (shows menu)"
 echo "  3. Select a command or type: /prompts:deslop-around"
-echo "  4. See help: cat $CODEX_CONFIG_DIR/AWSOME_SLASH_README.md"
+echo "  4. See help: cat $CODEX_CONFIG_DIR/AWESOME_SLASH_README.md"
 echo
 echo "💡 Pro Tip: Type /prompts: to see all available prompts"
 echo

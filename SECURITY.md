@@ -20,7 +20,7 @@ Please **do not** open a public issue. Security vulnerabilities should be report
 ### 2. Report Via GitHub Security Advisories
 
 Use GitHub's Security Advisory feature:
-1. Go to the [Security tab](https://github.com/avifenesh/awsome-slash/security/advisories)
+1. Go to the [Security tab](https://github.com/avifenesh/awesome-slash/security/advisories)
 2. Click "Report a vulnerability"
 3. Provide detailed information about the vulnerability
 

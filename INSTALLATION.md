@@ -1,6 +1,6 @@
 # Installation Guide
 
-How to install and use awsome-slash in Claude Code.
+How to install and use awesome-slash in Claude Code.
 
 ---
 
@@ -10,19 +10,19 @@ Claude Code installs plugins through marketplaces. Add the repository as a marke
 
 ```bash
 # Step 1: Add the marketplace
-claude plugin marketplace add avifenesh/awsome-slash
+claude plugin marketplace add avifenesh/awesome-slash
 
 # Step 2: Install the plugin
-claude plugin install awsome-slash@awsome-slash
+claude plugin install awesome-slash@awesome-slash
 ```
 
 **Or using full URL:**
 ```bash
 # Step 1: Add marketplace with full URL
-claude plugin marketplace add https://github.com/avifenesh/awsome-slash
+claude plugin marketplace add https://github.com/avifenesh/awesome-slash
 
 # Step 2: Install the plugin
-claude plugin install awsome-slash@awsome-slash
+claude plugin install awesome-slash@awesome-slash
 ```
 
 That's it! Claude will:
@@ -35,7 +35,7 @@ That's it! Claude will:
 # List installed plugins
 # Commands are available - type / in Claude Code
 
-# You should see "awsome-slash"
+# You should see "awesome-slash"
 ```
 
 ---
@@ -45,13 +45,13 @@ That's it! Claude will:
 Once published to the Claude marketplace:
 
 ```bash
-claude plugin install awsome-slash
+claude plugin install awesome-slash
 ```
 
 Or via Claude Web Interface:
 1. Go to Claude Settings
 2. Navigate to "Plugins"
-3. Search for "awsome-slash"
+3. Search for "awesome-slash"
 4. Click "Install"
 
 ---
@@ -63,20 +63,20 @@ If you prefer manual control:
 ### Clone and Link
 ```bash
 # Clone to your preferred location
-git clone https://github.com/avifenesh/awsome-slash.git ~/awsome-slash
+git clone https://github.com/avifenesh/awesome-slash.git ~/awesome-slash
 
 # Create Claude plugins directory
 mkdir -p ~/.claude/plugins
 
 # Create symlink
-ln -s ~/awsome-slash ~/.claude/plugins/awsome-slash
+ln -s ~/awesome-slash ~/.claude/plugins/awesome-slash
 ```
 
 ### Set Environment Variable (Optional)
 
 Add to ~/.bashrc or ~/.zshrc:
 ```bash
-export CLAUDE_PLUGIN_ROOT="$HOME/.claude/plugins/awsome-slash"
+export CLAUDE_PLUGIN_ROOT="$HOME/.claude/plugins/awesome-slash"
 ```
 
 ### Restart Claude Code
@@ -146,7 +146,7 @@ Claude should be able to run the platform detection and tell you about your proj
 
 Run this to see what you have:
 ```bash
-node ~/.claude/plugins/awsome-slash/lib/platform/verify-tools.js
+node ~/.claude/plugins/awesome-slash/lib/platform/verify-tools.js
 ```
 
 This will show all detected tools and their versions.
@@ -172,7 +172,7 @@ If you want to customize behavior, you can create a `.claude.config.json` in you
 
 ```json
 {
-  "awsome-slash": {
+  "awesome-slash": {
     "deslop-around": {
       "defaultMode": "report",
       "maxChanges": 5
@@ -299,12 +299,12 @@ Complete PR workflow from commit to production.
 
 ### From Marketplace (Future)
 ```bash
-claude plugin update awsome-slash
+claude plugin update awesome-slash
 ```
 
 ### Local Installation
 ```bash
-cd ~/.claude/plugins/awsome-slash
+cd ~/.claude/plugins/awesome-slash
 git pull origin main
 
 # Restart Claude Code
@@ -316,13 +316,13 @@ git pull origin main
 
 ### From Marketplace (Future)
 ```bash
-claude plugin uninstall awsome-slash
+claude plugin uninstall awesome-slash
 ```
 
 ### Local Installation
 ```bash
 # Remove symlink or directory
-rm -rf ~/.claude/plugins/awsome-slash
+rm -rf ~/.claude/plugins/awesome-slash
 
 # Remove from shell config
 # Delete the CLAUDE_PLUGIN_ROOT line from ~/.bashrc or ~/.zshrc
@@ -341,7 +341,7 @@ rm -rf ~/.claude/plugins/awsome-slash
 **Solutions**:
 1. Check installation path:
    ```bash
-   ls -la ~/.claude/plugins/awsome-slash
+   ls -la ~/.claude/plugins/awesome-slash
    ```
 
 2. Verify CLAUDE_PLUGIN_ROOT is set:
@@ -363,7 +363,7 @@ rm -rf ~/.claude/plugins/awsome-slash
 **Solution**:
 ```bash
 # Make sure CLAUDE_PLUGIN_ROOT points to correct location
-export CLAUDE_PLUGIN_ROOT="$HOME/.claude/plugins/awsome-slash"
+export CLAUDE_PLUGIN_ROOT="$HOME/.claude/plugins/awesome-slash"
 
 # Verify files exist
 ls -la $CLAUDE_PLUGIN_ROOT/lib/
@@ -425,12 +425,12 @@ These times include external operations (CI, deployments, etc.)
 - [CONTRIBUTING.md](./CONTRIBUTING.md) - Contribution guide
 
 ### Support
-- **GitHub Issues**: https://github.com/avifenesh/awsome-slash/issues
-- **Discussions**: https://github.com/avifenesh/awsome-slash/discussions
+- **GitHub Issues**: https://github.com/avifenesh/awesome-slash/issues
+- **Discussions**: https://github.com/avifenesh/awesome-slash/discussions
 
 ### Report Bugs
 ```bash
-gh issue create --repo avifenesh/awsome-slash \
+gh issue create --repo avifenesh/awesome-slash \
   --title "Bug: [description]" \
   --body "Detailed description with steps to reproduce"
 ```
@@ -465,6 +465,6 @@ If all checked, you're ready to use the plugin! 🚀
 
 ---
 
-**Enjoy using awsome-slash!**
+**Enjoy using awesome-slash!**
 
 If you find it useful, please ⭐ star the repository on GitHub!
