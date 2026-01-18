@@ -1,5 +1,9 @@
 # Multi-Tool Adapter Design
 
+> **Status:** Design Document - Implementation In Progress
+>
+> This is an architectural design document for internal reference. MCP server integration is complete and functional. Platform-specific installation scripts are available.
+
 ## Overview
 
 This document describes the adapter layer for supporting awesome-slash commands across multiple AI coding tools.
@@ -131,34 +135,35 @@ cd awesome-slash
 - ⚠️ Partial: Core features work, some advanced features may differ
 - ❌ Limited: Significant limitations
 
-## Implementation Plan
+## Implementation Status
 
-### Phase 1: Create Adapter Directory Structure ✓
+### Phase 1: Adapter Architecture ✅
 - [x] Research Codex CLI
 - [x] Research OpenCode
 - [x] Design adapter architecture
+- [x] MCP server implementation complete
 
-### Phase 2: Create Installation Scripts
-- [ ] Write `adapters/codex/install.sh`
-- [ ] Write `adapters/opencode/install.sh`
-- [ ] Test installation on both tools
+### Phase 2: Installation Scripts ✅
+- [x] Write `scripts/install/claude.sh`
+- [x] Write `scripts/install/codex.sh`
+- [x] Write `scripts/install/opencode.sh`
 
-### Phase 3: Create Symlink Strategy
-- [ ] Symlink command files to tool-specific directories
-- [ ] Handle path variable substitutions
-- [ ] Test commands on each tool
+### Phase 3: Integration Strategy 🚧
+- [x] MCP server for cross-platform tools
+- [x] Platform detection working
+- [ ] Full testing on Codex CLI
+- [ ] Full testing on OpenCode
 
-### Phase 4: Documentation
-- [ ] Write `adapters/README.md`
-- [ ] Write `adapters/codex/README.md`
-- [ ] Write `adapters/opencode/README.md`
-- [ ] Update main README with multi-tool support
+### Phase 4: Documentation ✅
+- [x] CROSS_PLATFORM.md complete
+- [x] Update main README with multi-tool support
+- [x] Installation guides for all platforms
 
-### Phase 5: Testing
-- [ ] Test all commands on Codex CLI
-- [ ] Test all commands on OpenCode
-- [ ] Document compatibility issues
-- [ ] Add troubleshooting guide
+### Phase 5: Testing 🚧
+- [x] Test all commands on Claude Code
+- [ ] Complete testing on Codex CLI
+- [ ] Complete testing on OpenCode
+- [x] Add troubleshooting guides
 
 ## Path Variable Strategy
 

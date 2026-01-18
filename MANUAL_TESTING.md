@@ -273,11 +273,17 @@ node /full/path/to/awesome-slash/lib/platform/detect-platform.js
 
 ## Performance Notes
 
-Command runtime depends on repo size and CI/deploy latency:
-- `/deslop-around`: ~30-60 seconds
-- `/project-review`: ~2-5 minutes
-- `/next-task`: ~10-30 minutes (full workflow)
-- `/ship`: ~5-15 minutes (including CI wait)
+Command runtime varies based on:
+- Repository size and complexity
+- CI/deployment platform latency
+- Network conditions
+- Number of files to analyze
+
+**Expected behavior:**
+- `/deslop-around`: Fast codebase scan
+- `/project-review`: Thorough multi-agent analysis
+- `/next-task`: Full autonomous workflow with multiple phases
+- `/ship`: Includes CI wait time and deployment validation
 
 ---
 

@@ -6,12 +6,12 @@ Complete guide to using awesome-slash commands with real-world examples.
 
 ## Command Overview
 
-| Command | Purpose | Time |
-|---------|---------|------|
-| `/deslop-around` | Clean up debugging code, TODOs | 30-60 sec |
-| `/next-task` | Find and implement prioritized tasks | 10-30 min |
-| `/project-review` | Multi-agent code review | 2-5 min |
-| `/ship` | Complete PR workflow to production | 5-15 min |
+| Command | Purpose | Scope |
+|---------|---------|-------|
+| `/deslop-around` | Clean up debugging code, TODOs | Fast codebase scan |
+| `/next-task` | Find and implement prioritized tasks | Full autonomous workflow |
+| `/project-review` | Multi-agent code review | Thorough analysis |
+| `/ship` | Complete PR workflow to production | CI, deployment, validation |
 
 ---
 
@@ -76,20 +76,25 @@ Complete task-to-production automation with state management.
 /next-task --implement            # Start implementing selected task
 ```
 
-**13-Phase Workflow:**
-1. Policy Selection → Ask user preferences
+**18-Phase Workflow:**
+1. Policy Selection → Configure workflow policy
 2. Task Discovery → Find and prioritize tasks
 3. Worktree Setup → Create isolated environment
 4. Exploration → Deep codebase analysis
 5. Planning → Design implementation plan
 6. **User Approval → Get plan approval (LAST human interaction)**
 7. Implementation → Execute the plan
-8. Pre-Review Gates → deslop-work + test-coverage-checker
-9. Review Loop → Multi-agent review until approved
-10. Delivery Validation → Autonomous completion check
-11. Docs Update → Auto-update documentation
-12. Ship → PR creation, CI monitoring, merge
-13. Cleanup → Remove worktree, update state
+8. Review Loop → Multi-agent review until approved
+9. Delivery Approval → Autonomous completion validation
+10. Ship Prep → Prepare for shipping
+11. Create PR → Create pull request
+12. CI Wait → Wait for continuous integration
+13. Comment Fix → Address PR feedback
+14. Merge → Merge pull request
+15. Production CI → Production pipeline validation
+16. Deploy → Deploy to production
+17. Production Release → Production release validation
+18. Complete → Finalize and cleanup
 
 ---
 
@@ -127,17 +132,17 @@ Complete PR workflow from commit to production.
 /ship --state-file PATH           # Integrate with next-task workflow
 ```
 
-**12-Phase Workflow:**
+**Stages:**
 1. Pre-flight checks and platform detection
 2. Commit with AI-generated message
 3. Create PR with context
-4. Wait for CI
-5. Multi-agent review
+4. Wait for CI and address PR feedback
+5. Multi-agent review (standalone mode only)
 6. Merge PR
-7. Deploy to development
-8. Validate development
-9. Deploy to production
-10. Validate production
+7. Deploy to development (if configured)
+8. Validate development deployment
+9. Deploy to production (if configured)
+10. Validate production deployment
 11. Cleanup
 12. Completion report
 
@@ -195,13 +200,13 @@ Top 5 Priority Tasks:
 1. [P1] Fix authentication timeout bug (#142)
    Status: Not implemented
    Priority Score: 85
-   Estimated effort: Small (30 minutes)
+   Estimated effort: Small
    Files: src/auth/session.ts
 
 2. [P2] Add dark mode to settings (#89)
    Status: Partially done
    Priority Score: 60
-   Estimated effort: Medium (2 hours)
+   Estimated effort: Medium
    Files: src/components/Settings.tsx
 
 Which task would you like to work on?
@@ -288,7 +293,7 @@ Phase 3: Creating PR
 URL: https://github.com/youruser/repo/pull/156
 
 Phase 4: Waiting for CI...
-✓ All checks passed (2m 34s)
+✓ All checks passed
 
 Phase 5: Review agents...
 ✓ code-reviewer: approved
@@ -306,7 +311,6 @@ Phase 9-10: Deploying to production...
 ✓ Production healthy
 
 ✓ DEPLOYMENT COMPLETE!
-Total time: 8 minutes
 ```
 
 ---

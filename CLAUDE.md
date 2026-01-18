@@ -49,8 +49,8 @@ The main orchestrator **MUST spawn these agents in order**:
 | 1 | `policy-selector` | haiku | AskUserQuestion | Configure workflow policy |
 | 2 | `task-discoverer` | sonnet | Bash(gh:*), Read | Find and prioritize tasks |
 | 3 | `worktree-manager` | haiku | Bash(git:*) | Create isolated worktree |
-| 4 | `exploration-agent` | opus | Read, Grep, Glob, LSP | Deep codebase analysis |
-| 5 | `planning-agent` | opus | Read, Grep, EnterPlanMode | Design implementation plan |
+| 4 | `exploration-agent` | opus | Read, Grep, Glob, LSP, Task | Deep codebase analysis |
+| 5 | `planning-agent` | opus | Read, Grep, EnterPlanMode, Task | Design implementation plan |
 | 6 | **USER APPROVAL** | - | - | Last human touchpoint |
 | 7 | `implementation-agent` | opus | Read, Write, Edit, Bash | Execute plan |
 | 8 | `deslop-work` | sonnet | Read, Grep, Task(simple-fixer) | Clean AI slop |

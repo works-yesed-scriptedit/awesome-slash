@@ -172,23 +172,32 @@ Everything "just works" based on your project structure!
 
 ### Optional: Custom Settings
 
-Create `.claude.config.json` in your project:
+Create `.awesomeslashrc.json` in your home directory or project root:
 
 ```json
 {
-  "awesome-slash": {
-    "deslop-around": {
-      "defaultMode": "report",
-      "maxChanges": 5
-    },
-    "next-task": {
-      "defaultFilter": null,
-      "includeBlocked": false
-    },
-    "ship": {
-      "defaultStrategy": "squash",
-      "skipTests": false
-    }
+  "logging": {
+    "level": "debug"
+  },
+  "tasks": {
+    "defaultSource": "gh-issues",
+    "defaultStoppingPoint": "merged"
+  },
+  "deslop-around": {
+    "defaultMode": "report",
+    "maxChanges": 5
+  },
+  "next-task": {
+    "defaultFilter": null,
+    "includeBlocked": false
+  },
+  "ship": {
+    "defaultStrategy": "squash",
+    "skipTests": false
+  },
+  "performance": {
+    "cacheSize": 100,
+    "cacheTTL": 200
   }
 }
 ```
@@ -306,15 +315,15 @@ Check for marker files:
 - `Cargo.toml` for Rust
 - `go.mod` for Go
 
-### Commands Are Slow
+### Command Performance
 
-This is normal for some commands:
-- `/ship`: 5-15 minutes (includes CI wait time)
-- `/project-review`: 2-5 minutes (thorough analysis)
-- `/next-task`: 10-30 minutes (full workflow with review)
-- `/deslop-around`: 30-60 seconds (scans codebase)
+Some commands are longer-running due to external operations:
+- `/ship`: Includes CI wait time and deployment validation
+- `/project-review`: Performs thorough multi-agent analysis
+- `/next-task`: Full autonomous workflow with multiple quality gates
+- `/deslop-around`: Fast codebase scanning
 
-These times include external operations (CI, deployments, etc.)
+Performance depends on repository size, CI/deployment latency, and network conditions.
 
 ---
 

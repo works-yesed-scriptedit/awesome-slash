@@ -39,10 +39,10 @@ claude --add-plugin /path/to/awesome-slash/plugins/ship
 ### Available Agents (18 Total)
 
 **Core Workflow (Opus):**
-- `exploration-agent` - Deep codebase analysis
-- `planning-agent` - Design implementation plans
-- `implementation-agent` - Execute plans with quality code
-- `review-orchestrator` - Multi-agent code review with iteration
+- `exploration-agent` - Deep codebase analysis (tools: Read, Grep, Glob, LSP, Task)
+- `planning-agent` - Design implementation plans (tools: Read, Grep, EnterPlanMode, Task)
+- `implementation-agent` - Execute plans with quality code (tools: Read, Write, Edit, Bash, Task)
+- `review-orchestrator` - Multi-agent code review with iteration (tools: Task)
 
 **Quality Gates (Sonnet):**
 - `deslop-work` - Clean AI slop from committed but unpushed changes
@@ -86,14 +86,13 @@ Add to your OpenCode MCP config:
 
 ### Option 2: Agent Configuration
 
-Copy agent definitions to OpenCode format:
+Create agent definitions in OpenCode format:
 
 ```bash
 # Global agents
 mkdir -p ~/.config/opencode/agent/
 
-# Convert Claude Code agent to OpenCode format
-# See scripts/convert-agents.js
+# Agent files follow OpenCode markdown format (see below)
 ```
 
 **OpenCode Agent Format** (`.opencode/agent/workflow.md`):
@@ -113,9 +112,9 @@ tools:
 You are a workflow orchestrator that manages development tasks.
 
 When invoked, you should:
-1. Check for existing workflow state in .claude/.workflow-state.json
+1. Check for existing workflow state in .claude/workflow-state.json
 2. Continue from the last checkpoint if resuming
-3. Follow the 13-phase workflow (/next-task) or 12-phase workflow (/ship) from task discovery to completion
+3. Follow the 18-phase workflow from policy selection to completion
 ```
 
 ## Codex CLI Integration
@@ -137,15 +136,14 @@ Add to your Codex config:
 
 ### Option 2: Custom Skills
 
-Create Codex skills that wrap our functionality:
+Create Codex skills that invoke the MCP server tools:
 
 ```yaml
 # ~/.codex/skills/next-task.yaml
 name: next-task
 description: Intelligent task prioritization with code validation
 trigger: "find next task|what should I work on|prioritize tasks"
-script: |
-  node /path/to/awesome-slash/scripts/next-task-runner.js
+mcp_tool: workflow_start
 ```
 
 ## MCP Server Tools
@@ -205,21 +203,21 @@ lib/
 
 ### From Claude Code to OpenCode
 
-1. Export workflow state: `node lib/state/workflow-state.js --export`
-2. Convert agents: `node scripts/convert-agents.js --target opencode`
-3. Install MCP server or copy converted agents
+1. Copy workflow state file: `.claude/workflow-state.json`
+2. Install MCP server (recommended) or use agent conversion script
+3. Configure OpenCode MCP settings
 
 ### From Claude Code to Codex
 
-1. Export workflow state
-2. Convert to Codex skills: `node scripts/convert-agents.js --target codex`
-3. Install MCP server or copy converted skills
+1. Copy workflow state file: `.claude/workflow-state.json`
+2. Install MCP server (recommended)
+3. Configure Codex MCP settings
 
 ## Contributing
 
 To add support for a new platform:
 
-1. Create converter in `scripts/convert-agents.js`
-2. Add platform detection to `lib/platform/detect-platform.js`
-3. Test with the target platform
+1. Create installation script in `scripts/install/<platform>.sh`
+2. Add platform-specific configuration examples
+3. Test MCP server integration with the target platform
 4. Submit PR with documentation
