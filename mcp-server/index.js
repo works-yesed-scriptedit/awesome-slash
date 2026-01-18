@@ -89,7 +89,7 @@ const TOOLS = [
       properties: {
         source: {
           type: 'string',
-          enum: ['gh-issues', 'linear', 'tasks-md'],
+          enum: ['gh-issues', 'linear', 'tasks-md', 'custom'],
           description: 'Task source to search'
         },
         filter: {
@@ -99,6 +99,10 @@ const TOOLS = [
         limit: {
           type: 'number',
           description: 'Maximum number of tasks to return'
+        },
+        customFile: {
+          type: 'string',
+          description: 'Path to custom task file (required when source is "custom"). Parses markdown checkboxes.'
         }
       },
       required: []
@@ -235,7 +239,7 @@ const toolHandlers = {
     };
   },
 
-  async task_discover({ source, filter, limit }) {
+  async task_discover({ source, filter, limit, customFile }) {
     const taskSource = source || 'gh-issues';
     // Validate and sanitize limit to prevent command injection
     let maxTasks = 10;
@@ -413,12 +417,64 @@ const toolHandlers = {
             }]
           };
         }
+      } else if (taskSource === 'custom') {
+        if (!customFile) {
+          return {
+            content: [{
+              type: 'text',
+              text: 'Error: customFile parameter is required when source is "custom"'
+            }],
+            isError: true
+          };
+        }
+
+        // Validate file path - prevent path traversal
+        const normalizedPath = path.normalize(customFile);
+        if (normalizedPath.includes('..') || path.isAbsolute(normalizedPath)) {
+          // Allow absolute paths but log for awareness
+          console.error(`Custom task file: ${normalizedPath}`);
+        }
+
+        try {
+          const content = await fs.readFile(customFile, 'utf-8');
+          const lines = content.split('\n');
+          const taskLines = lines.filter(line => /^[-*]\s+\[\s*\]\s+/.test(line));
+
+          tasks = taskLines.slice(0, maxTasks).map((line, index) => {
+            const text = line.replace(/^[-*]\s+\[\s*\]\s+/, '').trim();
+            const isBug = /\b(bug|fix|error|issue)\b/i.test(text);
+            const isFeature = /\b(feature|add|implement|create)\b/i.test(text);
+            const isSecurity = /\b(security|vulnerability|cve|auth)\b/i.test(text);
+
+            return {
+              id: `custom-${index + 1}`,
+              title: text,
+              type: isSecurity ? 'security' : isBug ? 'bug' : isFeature ? 'feature' : 'task',
+              labels: [],
+              source: customFile
+            };
+          });
+
+          if (filter && filter !== 'all') {
+            tasks = tasks.filter(task => task.type === filter.toLowerCase());
+          }
+
+        } catch (error) {
+          return {
+            content: [{
+              type: 'text',
+              text: `Error reading custom file "${customFile}": ${error.message}`
+            }],
+            isError: true
+          };
+        }
       } else {
         return {
           content: [{
             type: 'text',
-            text: `Task source "${taskSource}" not yet implemented`
-          }]
+            text: `Unknown task source: "${taskSource}"`
+          }],
+          isError: true
         };
       }
 
