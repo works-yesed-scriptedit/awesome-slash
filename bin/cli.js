@@ -125,14 +125,20 @@ function installForClaude(installDir) {
       // May already exist
     }
 
-    // Install plugins
+    // Install or update plugins
     const plugins = ['next-task', 'ship', 'deslop-around', 'project-review', 'reality-check'];
     for (const plugin of plugins) {
       console.log(`  Installing ${plugin}...`);
       try {
+        // Try install first
         execSync(`claude plugin install ${plugin}@awesome-slash`, { stdio: 'pipe' });
       } catch {
-        // May already be installed
+        // If install fails (already installed), try update
+        try {
+          execSync(`claude plugin update ${plugin}@awesome-slash`, { stdio: 'pipe' });
+        } catch {
+          // Ignore if update also fails
+        }
       }
     }
 
