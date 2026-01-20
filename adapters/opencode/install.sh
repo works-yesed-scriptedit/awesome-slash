@@ -90,7 +90,6 @@ COMMAND_MAPPINGS=(
   "project-review:project-review:project-review"
   "ship:ship:ship"
   "reality-check-scan:reality-check:scan"
-  "reality-check-set:reality-check:set"
 )
 
 for mapping in "${COMMAND_MAPPINGS[@]}"; do

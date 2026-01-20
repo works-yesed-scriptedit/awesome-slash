@@ -223,7 +223,6 @@ Deep repository analysis to identify where documented plans diverge from actual 
 /reality-check:scan                        # Full scan (default)
 /reality-check:scan --sources github,docs  # Specific sources
 /reality-check:scan --depth quick          # Quick scan
-/reality-check:set                         # Show available flags
 ```
 
 **Architecture:**
