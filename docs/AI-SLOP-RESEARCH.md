@@ -83,7 +83,7 @@ Additionally, several purpose-built tools were discovered:
 3. **Claims without evidence** - Documentation that doesn't match reality
 4. **Structure without function** - Frameworks and patterns used incorrectly
 
-The key insight is that AI slop is **not** about syntax errors, type mismatches, or style violations (which eslint/tsc/clippy already catch). It's about **semantic problems** - code that compiles and passes linters but is fundamentally misguided, wasteful, or misleading.
+The key insight is that AI slop is **not** about syntax errors or style violations (which traditional linters catch), but about **semantic problems** - code that is technically correct but fundamentally misguided.
 
 ---
 
@@ -128,26 +128,39 @@ After (human cleanup target):
 
 ---
 
-### Category 2: Phantom References
+### Category 2: Hallucinations & Lies
 
-**Comments and docs referencing things that don't exist.**
+**Code that references things that don't exist.**
 
-> **Note**: Hallucinated imports and fake API calls are caught by TypeScript/rustc/eslint/clippy. This category focuses on what linters miss.
+#### Types of Hallucinations
 
-#### What Linters Miss
+1. **Hallucinated Imports**
+   ```python
+   # AI might generate:
+   from nonexistent_package import magic_function
+   import utils.helpers.deep.nested.thing  # Path doesn't exist
+   ```
 
-```javascript
-// Comments referencing non-existent issues:
-// Fixed in #395 (issue doesn't exist)
-// See PR #667 for context (PR doesn't exist)
-// As discussed in ARCHITECTURE.md (file doesn't exist)
-// Per the design doc in docs/auth-flow.md (file doesn't exist)
-```
+2. **Phantom References**
+   ```javascript
+   // Comments referencing non-existent issues:
+   // Fixed in #395 (issue doesn't exist)
+   // See PR #667 for context (PR doesn't exist)
+   // As discussed in ARCHITECTURE.md (file doesn't exist)
+   ```
+
+3. **Fake API Usage**
+   ```python
+   # Using API methods that don't exist:
+   response.get_data_safely()  # Method doesn't exist
+   config.deep_merge(other)    # Not a real method
+   ```
 
 #### Detection Approach
 
-- Validate issue/PR numbers against GitHub API
-- Check file path references in comments actually exist
+- Static analysis of import statements against installed packages
+- Link/reference validation for issue/PR numbers
+- API method verification against type definitions
 
 ---
 
@@ -157,49 +170,29 @@ After (human cleanup target):
 
 #### Common Patterns
 
-```typescript
-// Pattern 1: Empty function body
-function importantFunction(): void {
-  // TODO
-}
+```python
+# Pattern 1: Empty with pass
+def important_function():
+    pass
 
-// Pattern 2: Throw that will never be implemented
-function criticalFeature(): Result {
-  throw new Error('TODO: implement this');
-}
+# Pattern 2: NotImplementedError that will never be implemented
+def critical_feature():
+    raise NotImplementedError("TODO: implement this")
 
-// Pattern 3: Stub returns
-function calculateTotal(items: Item[]): number {
-  return 0; // Always returns 0
-}
+# Pattern 3: Stub returns
+def calculate_total(items):
+    return 0  # Always returns 0
 
-// Pattern 4: Placeholder logic
-function validateInput(data: unknown): boolean {
-  return true; // Always returns true
-}
+# Pattern 4: Placeholder logic
+def validate_input(data):
+    return True  # Always returns True
 
-// Pattern 5: Comment-only functions
-function processData(data: UserData): ProcessedData {
-  // This function processes the data
-  // It handles all edge cases
-  // And returns the processed result
-  return data as ProcessedData;
-}
-```
-
-```rust
-// Rust equivalents:
-fn important_function() {
-    todo!() // or unimplemented!()
-}
-
-fn calculate_total(_items: &[Item]) -> u32 {
-    0 // Always returns 0
-}
-
-fn validate_input(_data: &str) -> bool {
-    true // Always returns true
-}
+# Pattern 5: Comment-only functions
+def process_data(data):
+    # This function processes the data
+    # It handles all edge cases
+    # And returns the processed result
+    pass
 ```
 
 #### Why This Is Worse Than Missing Code
@@ -252,30 +245,35 @@ Result: BUZZWORD INFLATION DETECTED
 #### Patterns
 
 1. **Disproportionate Documentation**
-   ```typescript
-   /**
-    * Add two numbers together.
-    *
-    * This function takes two numeric arguments and returns their sum.
-    * It uses the built-in addition operator to perform the calculation.
-    * The function supports both integers and floating-point numbers.
-    *
-    * @param a - The first number to add. Can be integer or float.
-    * @param b - The second number to add. Can be integer or float.
-    * @returns The sum of a and b. Type matches input types.
-    * @throws {TypeError} If inputs are not numeric.
-    * @example
-    * ```ts
-    * add(2, 3) // => 5
-    * add(1.5, 2.5) // => 4.0
-    * ```
-    */
-   function add(a: number, b: number): number {
-     return a + b;
-   }
+   ```python
+   def add(a, b):
+       """
+       Add two numbers together.
+
+       This function takes two numeric arguments and returns their sum.
+       It uses the built-in addition operator to perform the calculation.
+       The function supports both integers and floating-point numbers.
+
+       Args:
+           a: The first number to add. Can be int or float.
+           b: The second number to add. Can be int or float.
+
+       Returns:
+           The sum of a and b. Type matches input types.
+
+       Raises:
+           TypeError: If inputs are not numeric.
+
+       Example:
+           >>> add(2, 3)
+           5
+           >>> add(1.5, 2.5)
+           4.0
+       """
+       return a + b
    ```
 
-   **19 lines of JSDoc for 1 line of code.**
+   **23 lines of documentation for 1 line of code.**
 
 2. **Security Theater Documentation**
    - 195-line SECURITY_TESTS_README for a coverage tool
@@ -308,37 +306,23 @@ LDR > 3.0 = Under-documented (separate concern)
 
 #### Examples
 
-```typescript
-// Database configured but never queried
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
-// ... no actual database operations anywhere
+```python
+# Database configured but never queried
+from sqlalchemy import create_engine
+engine = create_engine('postgresql://...')
+# ... no actual database operations anywhere
 
-// Logger configured but never used
-import pino from 'pino';
-const logger = pino({ level: 'debug' });
-// ... logger.info() never called
+# Logging configured but never used
+import logging
+logging.basicConfig(level=logging.DEBUG, format='...')
+logger = logging.getLogger(__name__)
+# ... logger.X() never called
 
-// Auth middleware installed but bypassed
-app.use(async (req, res, next) => {
-  // TODO: implement authentication
-  next();
-});
-```
-
-```rust
-// Rust equivalent:
-use sqlx::PgPool;
-
-async fn setup() -> PgPool {
-    PgPool::connect("postgres://...").await.unwrap()
-}
-// ... pool never used for queries
-
-// Tracing configured but never used
-use tracing_subscriber;
-tracing_subscriber::init();
-// ... tracing::info!() never called
+# Auth middleware installed but bypassed
+@app.middleware
+def auth_middleware(request):
+    # TODO: implement authentication
+    return True
 ```
 
 #### The "Neo4j Pattern" (from vibe-check-mcp)
@@ -362,55 +346,26 @@ tracing_subscriber::init();
 
 #### The Pattern
 
-```typescript
-function readConfigFile(path: string): Config {
-  // Unnecessary: path already validated 3 levels up
-  if (!path) {
-    throw new Error('Path cannot be null');
-  }
+```python
+def read_config_file(path):
+    # Unnecessary: path already validated 3 levels up
+    if path is None:
+        raise ValueError("Path cannot be None")
 
-  // Unnecessary: fs.existsSync already called by caller
-  if (!fs.existsSync(path)) {
-    throw new Error(`File not found: ${path}`);
-  }
+    # Unnecessary: os.path.exists already called
+    if not os.path.exists(path):
+        raise FileNotFoundError(f"File not found: {path}")
 
-  // Unnecessary: this is a config reader, not a web server
-  if (path.includes('..')) {
-    throw new Error('Path traversal detected!');
-  }
+    # Unnecessary: this is a config reader, not a web server
+    if '../' in path:
+        raise SecurityError("Path traversal detected!")
 
-  // Unnecessary: we control the input
-  if (path.length > 10000) {
-    throw new Error('Path too long - possible attack');
-  }
+    # Unnecessary: we control the input
+    if len(path) > 10000:
+        raise ValueError("Path too long - possible attack")
 
-  // Finally, the actual logic (1 line)
-  return JSON.parse(fs.readFileSync(path, 'utf-8'));
-}
-```
-
-```rust
-// Rust equivalent:
-fn read_config_file(path: &Path) -> Result<Config, Error> {
-    // Unnecessary: path already validated by caller
-    if path.as_os_str().is_empty() {
-        return Err(Error::new("Path cannot be empty"));
-    }
-
-    // Unnecessary: already checked
-    if !path.exists() {
-        return Err(Error::new("File not found"));
-    }
-
-    // Unnecessary: this is internal tooling
-    if path.to_string_lossy().contains("..") {
-        return Err(Error::new("Path traversal detected!"));
-    }
-
-    // Finally, the actual logic
-    let content = std::fs::read_to_string(path)?;
-    serde_json::from_str(&content).map_err(Into::into)
-}
+    # Finally, the actual logic (1 line)
+    return json.load(open(path))
 ```
 
 ---
@@ -422,69 +377,43 @@ fn read_config_file(path: &Path) -> Result<Config, Error> {
 #### Anti-Patterns
 
 1. **Single-Implementation Interface**
-   ```typescript
-   interface DataProcessor {
-     process(data: Data): void;
-   }
+   ```java
+   interface DataProcessor { void process(Data d); }
    class DataProcessorImpl implements DataProcessor { ... }
    // Only one implementation exists or will ever exist
    ```
 
 2. **Factory for One Product**
-   ```typescript
-   class ConnectionFactory {
-     createConnection(): DatabaseConnection {
-       return new DatabaseConnection();
-     }
-   }
-   // Only creates one type, no configuration, no variation
+   ```python
+   class ConnectionFactory:
+       def create_connection(self):
+           return DatabaseConnection()
+   # Only creates one type, no configuration, no variation
    ```
 
 3. **Strategy Pattern with One Strategy**
-   ```typescript
-   interface SortStrategy<T> {
-     sort(items: T[]): T[];
-   }
+   ```python
+   class SortStrategy(ABC):
+       @abstractmethod
+       def sort(self, items): pass
 
-   class QuickSortStrategy<T> implements SortStrategy<T> {
-     sort(items: T[]): T[] {
-       return [...items].sort();
-     }
-   }
-   // Only one strategy, never extended, just call .sort()
+   class QuickSortStrategy(SortStrategy):
+       def sort(self, items):
+           return sorted(items)
+
+   # Only one strategy, never extended, just call sorted()
    ```
 
 4. **Builder for Simple Objects**
-   ```typescript
-   const user = new UserBuilder()
-     .setName('John')
-     .setEmail('john@example.com')
-     .build();
+   ```python
+   user = UserBuilder()
+       .set_name("John")
+       .set_email("john@example.com")
+       .build()
 
-   // vs simply:
-   const user: User = { name: 'John', email: 'john@example.com' };
+   # vs simply:
+   user = User(name="John", email="john@example.com")
    ```
-
-```rust
-// Rust equivalents:
-
-// Trait with single implementation
-trait DataProcessor {
-    fn process(&self, data: &Data);
-}
-struct DataProcessorImpl;
-impl DataProcessor for DataProcessorImpl { ... }
-// Only one impl exists
-
-// Builder for simple struct
-let user = UserBuilder::new()
-    .name("John")
-    .email("john@example.com")
-    .build();
-
-// vs simply:
-let user = User { name: "John".into(), email: "john@example.com".into() };
-```
 
 ---
 
@@ -509,29 +438,15 @@ The core issue is not about using simple vs complex language - developers use te
 
 AI slop isn't about vocabulary choices alone. It's about **saying more than necessary**:
 
-```typescript
-// AI slop (bombastic, over-verbose):
-// This function is designed to facilitate the processing of user data
-// by leveraging advanced algorithms to ensure optimal performance.
-// It's worth noting that this implementation follows best practices
-// and has been carefully crafted to handle edge cases gracefully.
-function processUserData(data: UserData): ProcessedData { ... }
+```python
+# AI slop (bombastic, over-verbose):
+# This function is designed to facilitate the processing of user data
+# by leveraging advanced algorithms to ensure optimal performance.
+# It's worth noting that this implementation follows best practices
+# and has been carefully crafted to handle edge cases gracefully.
 
-// Direct (not slop):
-// Process user data. Returns cleaned object.
-function processUserData(data: UserData): ProcessedData { ... }
-```
-
-```rust
-/// AI slop (bombastic, over-verbose):
-/// This function is designed to facilitate the processing of user data
-/// by leveraging advanced algorithms to ensure optimal performance.
-/// It's worth noting that this implementation follows best practices.
-pub fn process_user_data(data: &UserData) -> ProcessedData { ... }
-
-/// Direct (not slop):
-/// Process user data. Returns cleaned struct.
-pub fn process_user_data(data: &UserData) -> ProcessedData { ... }
+# Direct (not slop):
+# Process user data. Returns cleaned dict.
 ```
 
 The difference: 4 lines of puffery vs 1 line of information. Both could use technical terms, but one inflates while the other communicates.
@@ -552,72 +467,51 @@ The test: **Does removing this text lose information?** If no, it's slop.
 
 #### Naming Patterns
 
-```typescript
-// Generic AI names (bad):
-const data = getData();
-const result = process(data);
-const item = fetchItem();
-const temp = calculateTemp();
-const value = getValue();
-const output = generateOutput();
+```python
+# Generic AI names (bad):
+data = get_data()
+result = process(data)
+item = fetch_item()
+temp = calculate_temp()
+value = get_value()
+output = generate_output()
 
-// Specific human names (good):
-const userProfile = fetchUserProfile(userId);
-const monthlyRevenue = calculateRevenue(transactions);
-const validatedEmail = normalizeEmail(rawInput);
-```
-
-```rust
-// Rust equivalent:
-// Generic AI names (bad):
-let data = get_data();
-let result = process(&data);
-let item = fetch_item();
-
-// Specific human names (good):
-let user_profile = fetch_user_profile(user_id);
-let monthly_revenue = calculate_revenue(&transactions);
-let validated_email = normalize_email(&raw_input);
+# Specific human names (good):
+user_profile = fetch_user_profile(user_id)
+monthly_revenue = calculate_revenue(transactions)
+validated_email = normalize_email(raw_input)
 ```
 
 #### Structural Tells
 
 1. **Inconsistent paradigms**: Mixing OOP and functional randomly
 2. **Over-consistent formatting**: Perfectly uniform where humans vary
-3. **Verbose method names**: `getUserDataFromDatabaseById` vs `getUser`
-4. **Unnecessary type annotations on obvious types**:
-   ```typescript
-   function add(a: number, b: number): number {
-     const result: number = a + b;
-     return result;
-   }
-   ```
-   ```rust
-   fn add(a: i32, b: i32) -> i32 {
-       let result: i32 = a + b;
-       result
-   }
-   // Type inference handles this: let result = a + b;
+3. **Verbose method names**: `getUserDataFromDatabaseById` vs `get_user`
+4. **Unnecessary type hints on obvious types**:
+   ```python
+   def add(a: int, b: int) -> int:
+       result: int = a + b
+       return result
    ```
 
 ---
 
 ## Professional Tools & Approaches
 
-### Tool 1: sloppylint
+### Tool 1: sloppylint (Python)
 
-**Purpose**: Detect AI-generated code anti-patterns (Python-focused, concepts transferable)
+**Purpose**: Detect AI-generated code anti-patterns in Python
 
 **Key Detection Areas**:
 1. **Noise** - Debug artifacts, redundant comments
 2. **Lies** - Hallucinations, placeholder functions
 3. **Soul** - Over-engineering, poor structure
-4. **Structure** - Language anti-patterns
+4. **Structure** - Language anti-patterns (bare except)
 
-**Transferable Concepts for TS/Rust** (beyond what linters catch):
-- Placeholder functions that compile but do nothing useful
-- Over-engineering detection
-- Comment/doc quality analysis
+**Critical Catches**:
+- Mutable default arguments
+- Bare exception handlers
+- Hallucinated imports
 
 ### Tool 2: AI-SLOP-Detector
 
@@ -626,7 +520,7 @@ let validated_email = normalize_email(&raw_input);
 **Detection Categories**:
 1. Placeholder code (14 patterns)
 2. Buzzword inflation (quality claims vs evidence)
-3. Documentation inflation (doc/code ratio)
+3. Docstring inflation (doc/code ratio)
 4. Hallucinated dependencies (unused imports by category)
 5. Context-based jargon (15+ evidence types)
 6. CI/CD integration (enforcement modes)
@@ -681,20 +575,19 @@ let validated_email = normalize_email(&raw_input);
 | Disabled linters | ✅ Detected | Low |
 | Placeholder text | ✅ Detected | Low |
 
-### Missing High-Impact Detection (What Linters Miss)
+### Missing High-Impact Detection
 
 | Pattern | Status | Impact | Difficulty |
 |---------|--------|--------|------------|
 | Over-engineering metrics | ❌ Missing | **Critical** | Medium |
-| Placeholder functions (compilable stubs) | ❌ Missing | **High** | Easy |
+| Hallucinated imports | ❌ Missing | **High** | Medium |
+| Placeholder functions | ❌ Missing | **High** | Easy |
 | Buzzword inflation | ❌ Missing | **High** | Hard |
 | Doc/code ratio | ❌ Missing | **Medium** | Easy |
 | Unnecessary abstraction | ❌ Missing | **Medium** | Hard |
 | Generic naming | ❌ Missing | **Medium** | Medium |
-| Phantom references in comments | ❌ Missing | **Medium** | Easy |
+| Phantom references | ❌ Missing | **Medium** | Easy |
 | Verbosity detection | ❌ Missing | **Medium** | Medium |
-
-> **Note**: Hallucinated imports, fake API calls, type errors are already caught by eslint/tsc/clippy.
 
 ---
 
@@ -703,12 +596,12 @@ let validated_email = normalize_email(&raw_input);
 ### Priority 1: Quick Wins (Easy, High Impact)
 
 1. **Placeholder Function Detection**
-   - Empty function bodies or `// TODO` only
-   - `throw new Error('not implemented')` / `todo!()` / `unimplemented!()`
-   - Functions returning hardcoded values (0, true, null, [])
+   - Empty functions with `pass`
+   - `NotImplementedError` without clear extension point
+   - Functions returning hardcoded values (0, True, None, [])
 
 2. **Doc/Code Ratio**
-   - Flag JSDoc/doc comments > function length
+   - Flag docstrings > function length
    - Detect boilerplate doc patterns
 
 3. **Phantom Reference Validation**
@@ -717,534 +610,39 @@ let validated_email = normalize_email(&raw_input);
 
 ### Priority 2: Medium Effort (Medium, High Impact)
 
-4. **Generic Naming Detection**
+4. **Import Validation**
+   - Check imports resolve
+   - Flag unused imports by category
+
+5. **Generic Naming Detection**
    - Flag excessive use of: data, result, item, temp, value, output
    - Suggest more specific names
 
-5. **Verbosity Detection**
+6. **Verbosity Detection**
    - Comment-to-code ratio per function
    - Flag comments that restate obvious code
    - Detect bombastic phrasing patterns
 
 ### Priority 3: Advanced (Hard, Critical Impact)
 
-6. **Over-Engineering Metrics**
+7. **Over-Engineering Metrics**
    - Lines per feature ratio
    - File count analysis
    - Abstraction depth measurement
 
-7. **Buzzword Inflation**
+8. **Buzzword Inflation**
    - Claim extraction from docs
    - Evidence search in code
    - Gap reporting
 
----
+### Implementation Approach
 
-## Detection Pipeline Architecture
+Given the project philosophy ("Minimal context/token consumption - Agents should be efficient"), detection should be:
 
-### Flow Overview
-
-```
-┌──────────────────────────────────────────────────────────────────┐
-│                    SLOP DETECTION PIPELINE                       │
-├──────────────────────────────────────────────────────────────────┤
-│  PHASE 1: Built-in Detection (zero-dep, pure JS)                 │
-│  ┌────────────┐ ┌────────────┐ ┌────────────┐ ┌────────────┐     │
-│  │ Metrics    │ │ Patterns   │ │ Text Slop  │ │ Structure  │     │
-│  │ (LDR, LOC) │ │ (46 rules) │ │ (phrases)  │ │ (imports)  │     │
-│  └─────┬──────┘ └─────┬──────┘ └─────┬──────┘ └─────┬──────┘     │
-│        └──────────────┴──────────────┴──────────────┘            │
-│                              ▼                                    │
-│                 ┌─────────────────────────┐                       │
-│                 │  Certainty-Tagged Report │                      │
-│                 │  • HIGH: definite issues │                      │
-│                 │  • MEDIUM: likely issues │                      │
-│                 │  • LOW: hot areas/hints  │                      │
-│                 └───────────┬─────────────┘                       │
-├─────────────────────────────┼────────────────────────────────────┤
-│  PHASE 2: Optional CLI Enhancement                               │
-│                             ▼                                     │
-│  ┌────────────┐ ┌────────────┐ ┌────────────┐                    │
-│  │ jscpd      │ │ madge      │ │ escomplex  │  ← If installed    │
-│  └─────┬──────┘ └─────┬──────┘ └─────┬──────┘                    │
-│        └──────────────┴──────────────┘                           │
-│                       ▼                                           │
-│         ┌─────────────────────────┐                               │
-│         │  Enhanced Metrics       │                               │
-│         │  (complexity, deps)     │                               │
-│         └───────────┬─────────────┘                               │
-├─────────────────────┼────────────────────────────────────────────┤
-│  PHASE 3: LLM Analysis (Required)                                │
-│                     ▼                                             │
-│  ┌──────────────────────────────────────────────────────────┐    │
-│  │  Agent receives:                                          │    │
-│  │  • Certainty-tagged findings                              │    │
-│  │  • Hot areas without certainty                            │    │
-│  │  • Thoroughness level (quick/normal/deep)                 │    │
-│  │                                                           │    │
-│  │  Agent completes:                                         │    │
-│  │  • Validates uncertain findings                           │    │
-│  │  • Semantic analysis (buzzword claims vs evidence)        │    │
-│  │  • Context-aware judgment (is this REALLY slop?)          │    │
-│  │  • Scopes to what automated tools can't catch             │    │
-│  └──────────────────────────────────────────────────────────┘    │
-└──────────────────────────────────────────────────────────────────┘
-```
-
-### Thoroughness Levels
-
-| Level | Built-in | CLI Tools | LLM Scope |
-|-------|----------|-----------|-----------|
-| **quick** | All patterns | Skip | HIGH certainty only |
-| **normal** | All patterns | If available | HIGH + MEDIUM + sample LOW |
-| **deep** | All patterns | If available | All findings + full semantic analysis |
-
----
-
-## Extracted Detection Patterns (From Research)
-
-### Sloppylint: 46 Patterns Across 4 Axes
-
-**Axis 1: Noise (10 patterns)**
-```typescript
-const NOISE_PATTERNS = {
-  redundantComments: /\/\/\s*(increment|decrement|set|get|return)\s+(the\s+)?\w+/i,
-  emptyDocstrings: /\/\*\*\s*\*\//,
-  genericDescriptions: /\/\/\s*(this|the)\s+(function|method|class)\s+(does|is|handles)/i,
-  debugStatements: /console\.(log|debug|info|warn|trace)\s*\(/,
-  breakpoints: /debugger\s*;/,
-  commentedCodeBlocks: /\/\/\s*(const|let|var|function|if|for|while|return)\s+/,
-  excessiveLogging: null, // Requires counting - flag if >5 log statements per function
-  unnecessaryPass: /\{\s*\}/, // Empty blocks
-  obviousTypeAnnotations: /:\s*(string|number|boolean)\s*=\s*(['"`]|[0-9]|true|false)/,
-  changelogInSource: /\*\s*(v?\d+\.\d+|changelog|version\s+history)/i,
-};
-```
-
-**Axis 2: Quality/Hallucinations (14 patterns)**
-```typescript
-const QUALITY_PATTERNS = {
-  // Placeholder patterns
-  todoFixme: /\/\/\s*(TODO|FIXME|HACK|XXX|BUG):/i,
-  notImplemented: /throw\s+new\s+Error\s*\(\s*['"`].*not\s+impl/i,
-  ellipsisPlaceholder: /\.\.\./,  // In function bodies
-  returnNonePlaceholder: /return\s+(null|undefined|None)\s*;?\s*\/\//, // with comment
-
-  // Stub returns (HIGH certainty)
-  stubReturns: /return\s+(0|true|false|\[\]|\{\}|''|"")\s*;?\s*$/,
-
-  // Magic values
-  magicNumbers: /[^a-zA-Z_]([2-9]\d{2,}|[1-9]\d{3,})[^a-zA-Z_0-9]/, // Numbers > 100
-  magicStrings: /['"`][a-zA-Z0-9_\-]{20,}['"`]/, // Long unexplained strings
-
-  // Assumption comments
-  assumptionComments: /\/\/\s*(assuming|assume|should\s+be|probably|i\s+think)/i,
-
-  // Mutable defaults (JS)
-  mutableDefaults: /=\s*\[\]|\{\}\s*\)/, // Default params with [] or {}
-
-  // Impossible conditions
-  impossibleConditions: /if\s*\(\s*(true|false|1|0)\s*\)/,
-};
-```
-
-**Axis 3: Style (10 patterns)**
-```typescript
-const STYLE_PATTERNS = {
-  // Overconfident language
-  overconfident: /\/\/\s*(obviously|clearly|simply|trivially|of\s+course)/i,
-
-  // Hedging phrases
-  hedging: /\/\/\s*(might|maybe|perhaps|possibly|could\s+be|should\s+work)/i,
-
-  // Apologetic tone
-  apologetic: /\/\/\s*(sorry|apolog|unfortunately|i\s+tried)/i,
-
-  // Bombastic verbs
-  bombastic: /\b(leverage|utilize|facilitate|orchestrate|synergize|streamline)\b/i,
-
-  // AI preambles (in comments)
-  aiPreambles: /\/\/\s*(certainly|i'd\s+be\s+happy|great\s+question|absolutely)/i,
-
-  // Function size (requires AST or line counting)
-  oversizedFunction: null, // Flag if >50 lines
-
-  // Excessive nesting
-  excessiveNesting: /^\s{16,}/, // >4 levels of indentation
-
-  // Nested ternary
-  nestedTernary: /\?[^:]+\?/,
-
-  // Single letter variables (not i,j,k,x,y,z)
-  singleLetterVars: /\b(const|let|var)\s+([a-hln-wA-HLN-W])\s*=/,
-};
-```
-
-**Axis 4: Structural (12 patterns)**
-```typescript
-const STRUCTURAL_PATTERNS = {
-  // Empty exception blocks
-  emptyExcept: /catch\s*\([^)]*\)\s*\{\s*\}/,
-
-  // Bare exception (catches everything)
-  bareExcept: /catch\s*\(\s*(e|err|error|ex)?\s*\)\s*\{/,
-
-  // Wildcard imports
-  wildcardImports: /import\s+\*\s+from/,
-
-  // Unused imports (requires tracking)
-  unusedImports: null, // Track imports vs usage
-
-  // Single-method classes
-  singleMethodClass: null, // Requires AST
-
-  // Unreachable code
-  unreachableCode: /return\s+[^;]+;\s*\n\s*[^}\s]/,
-
-  // Duplicate code blocks
-  duplicateCode: null, // Use hash-based detection
-};
-```
-
-### AI-SLOP-Detector: 6 Detection Mechanisms
-
-**1. Logic Density Ratio (LDR)**
-```typescript
-function calculateLDR(codeLines: number, docLines: number): LDRResult {
-  const ratio = docLines > 0 ? codeLines / docLines : Infinity;
-  return {
-    ratio,
-    severity: ratio < 0.3 ? 'critical' : ratio < 0.5 ? 'warning' : 'ok',
-    message: ratio < 0.3 ? 'Documentation bloat: more docs than code' : null,
-  };
-}
-```
-
-**2. Maintainability Index (from escomplex)**
-```typescript
-// MI = 171 - (3.42 × ln(effort)) - (0.23 × ln(cyclomatic)) - (16.2 × ln(loc))
-function calculateMaintainabilityIndex(
-  halsteadEffort: number,
-  cyclomaticComplexity: number,
-  logicalLoc: number
-): number {
-  let mi = 171
-    - (3.42 * Math.log(halsteadEffort))
-    - (0.23 * Math.log(cyclomaticComplexity))
-    - (16.2 * Math.log(logicalLoc));
-
-  // Clamp to 0-100 scale
-  mi = Math.max(0, Math.min(171, mi));
-  return (mi * 100) / 171;
-}
-```
-
-**3. Cyclomatic Complexity (increment count for each)**
-```typescript
-const COMPLEXITY_INCREMENTORS = {
-  ts: [
-    /\bif\s*\(/g,
-    /\belse\s+if\s*\(/g,
-    /\bfor\s*\(/g,
-    /\bwhile\s*\(/g,
-    /\bcase\s+/g,
-    /\bcatch\s*\(/g,
-    /\?\s*[^:]+\s*:/g,  // Ternary
-    /&&/g,
-    /\|\|/g,
-    /\?\?/g,  // Nullish coalescing
-  ],
-  rust: [
-    /\bif\s+/g,
-    /\belse\s+if\s+/g,
-    /\bfor\s+/g,
-    /\bwhile\s+/g,
-    /\bmatch\s+/g,
-    /=>\s*\{/g,  // Match arms
-    /\bcatch\b/g,
-    /&&/g,
-    /\|\|/g,
-  ],
-};
-
-function countCyclomaticComplexity(content: string, lang: 'ts' | 'rust'): number {
-  let complexity = 1; // Base complexity
-  for (const pattern of COMPLEXITY_INCREMENTORS[lang]) {
-    const matches = content.match(pattern);
-    if (matches) complexity += matches.length;
-  }
-  return complexity;
-}
-```
-
-**4. Buzzword Inflation Detection**
-```typescript
-const BUZZWORDS = [
-  'production-ready', 'enterprise-grade', 'battle-tested',
-  'scalable', 'robust', 'comprehensive', 'secure',
-  'high-performance', 'best-in-class', 'industry-standard',
-];
-
-const EVIDENCE_CHECKS = {
-  'production-ready': [/\.test\.|\.spec\.|__tests__/, /try\s*\{/, /logger\./],
-  'secure': [/validate|sanitize|escape/, /auth|permission/, /encrypt|hash/],
-  'scalable': [/async|await|Promise/, /cache|redis|memcache/, /queue|worker/],
-  'comprehensive': [/edge\s*case|boundary|error\s*handling/],
-};
-
-function detectBuzzwordInflation(docs: string, code: string): BuzzwordFinding[] {
-  const findings: BuzzwordFinding[] = [];
-
-  for (const word of BUZZWORDS) {
-    if (docs.toLowerCase().includes(word)) {
-      const checks = EVIDENCE_CHECKS[word] || [];
-      const evidenceFound = checks.some(pattern => pattern.test(code));
-
-      if (!evidenceFound) {
-        findings.push({
-          buzzword: word,
-          certainty: 'MEDIUM', // Agent should verify
-          message: `Claim "${word}" without supporting evidence`,
-        });
-      }
-    }
-  }
-  return findings;
-}
-```
-
-### Vibe-Check: Over-Engineering Detection
-
-**Infrastructure-Without-Implementation**
-```typescript
-const INFRASTRUCTURE_PATTERNS = [
-  // Database setup without queries
-  { setup: /new\s+(PrismaClient|Pool|Connection)/, usage: /\.(query|find|create|update)/ },
-  // Logger setup without usage
-  { setup: /(pino|winston|bunyan)\s*\(/, usage: /\.(info|warn|error|debug)\s*\(/ },
-  // Auth setup without protection
-  { setup: /passport\.|auth0|jwt\.sign/, usage: /isAuthenticated|requireAuth|protect/ },
-];
-
-function detectInfraWithoutImpl(content: string): InfraFinding[] {
-  const findings: InfraFinding[] = [];
-
-  for (const pattern of INFRASTRUCTURE_PATTERNS) {
-    if (pattern.setup.test(content) && !pattern.usage.test(content)) {
-      findings.push({
-        type: 'infrastructure-without-implementation',
-        certainty: 'LOW', // Agent should investigate
-        message: 'Infrastructure configured but appears unused',
-      });
-    }
-  }
-  return findings;
-}
-```
-
----
-
-## Language Support Matrix
-
-Primary support (lean toward): **TypeScript** and **Rust**
-Secondary support: JavaScript, Python, Go, Java
-
-| Detection | TS/JS | Rust | Python | Go |
-|-----------|-------|------|--------|-----|
-| Line counting | ✅ | ✅ | ✅ | ✅ |
-| Comment patterns | ✅ | ✅ | ✅ | ✅ |
-| Placeholder detection | ✅ | ✅ | ✅ | ✅ |
-| Import analysis | ✅ | ✅ | ✅ | ✅ |
-| Cyclomatic complexity | ✅ | ✅ | ⚠️ | ⚠️ |
-| Buzzword inflation | ✅ | ✅ | ✅ | ✅ |
-
----
-
-## Multi-Language Pattern Definitions
-
-### Comment Syntax by Language
-
-```typescript
-const COMMENT_SYNTAX = {
-  ts: { line: '//', blockStart: '/*', blockEnd: '*/', docStart: '/**' },
-  js: { line: '//', blockStart: '/*', blockEnd: '*/', docStart: '/**' },
-  rust: { line: '//', blockStart: '/*', blockEnd: '*/', docStart: '///' },
-  python: { line: '#', blockStart: '"""', blockEnd: '"""', docStart: '"""' },
-  go: { line: '//', blockStart: '/*', blockEnd: '*/', docStart: '//' },
-  java: { line: '//', blockStart: '/*', blockEnd: '*/', docStart: '/**' },
-};
-```
-
-### Placeholder Patterns by Language
-
-```typescript
-const PLACEHOLDER_PATTERNS = {
-  ts: [
-    /throw\s+new\s+Error\s*\(\s*['"`].*(?:TODO|implement|not\s+impl)/i,
-    /(?:function\s+\w+|=>\s*)\s*\{\s*\}/,
-    /return\s+(?:0|true|false|null|undefined|\[\]|\{\})\s*;?\s*$/m,
-    /\{\s*\/\/\s*TODO[^}]*\}/i,
-  ],
-  rust: [
-    /\btodo!\s*\(/,
-    /\bunimplemented!\s*\(/,
-    /\bpanic!\s*\(\s*["'].*(?:TODO|implement)/i,
-    /fn\s+\w+[^{]*\{\s*\}/,  // Empty fn body
-    /=>\s*\{\s*\}/,          // Empty match arm
-  ],
-  python: [
-    /raise\s+NotImplementedError/,
-    /pass\s*$/,
-    /\.\.\.\s*$/,  // Ellipsis
-    /return\s+None\s*$/,
-    /#\s*TODO/i,
-  ],
-  go: [
-    /panic\s*\(\s*["'].*(?:TODO|implement)/i,
-    /return\s+nil\s*$/,
-    /\/\/\s*TODO/i,
-    /func\s+\w+[^{]*\{\s*\}/,  // Empty func
-  ],
-};
-```
-
-### Debug Statement Patterns
-
-```typescript
-const DEBUG_PATTERNS = {
-  ts: [/console\.(log|debug|info|warn|trace)\s*\(/, /debugger\s*;/],
-  rust: [/dbg!\s*\(/, /println!\s*\(\s*["']debug/i, /#\[cfg\(debug_assertions\)\]/],
-  python: [/print\s*\(/, /pdb\.set_trace\(\)/, /breakpoint\(\)/],
-  go: [/fmt\.Print/, /log\.Print/, /debug\./],
-};
-```
-
----
-
-## Core Detection Functions (Zero-Dep)
-
-### Approach 3: Simple Duplicate Detection (Zero-Dep)
-
-Simplified Rabin-Karp - hash normalized line sequences:
-
-```typescript
-// Zero dependencies - simple duplicate detection
-function normalizeCode(line: string): string {
-  return line
-    .replace(/['"`][^'"`]*['"`]/g, 'STR')  // Normalize strings
-    .replace(/\b\d+\b/g, 'NUM')             // Normalize numbers
-    .replace(/\s+/g, ' ')                   // Normalize whitespace
-    .trim();
-}
-
-function findDuplicates(files: Map<string, string>, minLines = 5): Duplicate[] {
-  const hashMap = new Map<string, { file: string; start: number }[]>();
-  const duplicates: Duplicate[] = [];
-
-  for (const [filePath, content] of files) {
-    const lines = content.split('\n').map(normalizeCode);
-
-    // Create sliding window hashes
-    for (let i = 0; i <= lines.length - minLines; i++) {
-      const block = lines.slice(i, i + minLines).join('\n');
-      const hash = simpleHash(block);
-
-      if (!hashMap.has(hash)) {
-        hashMap.set(hash, []);
-      }
-      hashMap.get(hash)!.push({ file: filePath, start: i + 1 });
-    }
-  }
-
-  // Find duplicates (same hash, different locations)
-  for (const [hash, locations] of hashMap) {
-    if (locations.length > 1) {
-      duplicates.push({ hash, locations });
-    }
-  }
-  return duplicates;
-}
-
-function simpleHash(str: string): string {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    hash = ((hash << 5) - hash + str.charCodeAt(i)) | 0;
-  }
-  return hash.toString(16);
-}
-```
-
-**For heavy-duty duplicate detection**: Shell out to `jscpd` (user installs separately).
-
-### Approach 4: Simple Import Analysis (Zero-Dep)
-
-Extract imports with regex, build basic dependency map:
-
-```typescript
-// Zero dependencies - import extraction
-const IMPORT_PATTERNS = {
-  ts: /import\s+(?:(?:\{[^}]*\}|\*\s+as\s+\w+|\w+)\s+from\s+)?['"]([^'"]+)['"]/g,
-  rust: /use\s+((?:crate|super|self)?(?:::\w+)+)/g,
-};
-
-function extractImports(content: string, lang: 'ts' | 'rust'): string[] {
-  const imports: string[] = [];
-  const pattern = IMPORT_PATTERNS[lang];
-  let match;
-
-  while ((match = pattern.exec(content)) !== null) {
-    imports.push(match[1]);
-  }
-  return imports;
-}
-
-function analyzeImportDepth(files: Map<string, string[]>): DepthAnalysis {
-  // Count how deep import chains go
-  const depths = new Map<string, number>();
-
-  for (const [file, imports] of files) {
-    const localImports = imports.filter(i => i.startsWith('.') || i.startsWith('@/'));
-    depths.set(file, localImports.length);
-  }
-
-  const avgDepth = [...depths.values()].reduce((a, b) => a + b, 0) / depths.size;
-  const maxDepth = Math.max(...depths.values());
-
-  return { avgDepth, maxDepth, fileCount: files.size };
-}
-```
-
-| Metric | Threshold | Indicates |
-|--------|-----------|-----------|
-| Avg imports/file | > 15 | High coupling |
-| Max imports in single file | > 30 | God module |
-| Files with 0 importers | Many | Orphaned code |
-
-**For full dependency graphs**: Shell out to `madge` (user installs separately).
-
-### Generic Naming Detection (Regex-based)
-
-```typescript
-const GENERIC_NAMES = /\b(const|let|var)\s+(data|result|item|temp|value|output|response|obj|ret|res)\s*[=:]/gi;
-
-function detectGenericNames(content: string, filePath: string): GenericNameWarning[] {
-  const warnings: GenericNameWarning[] = [];
-  const lines = content.split('\n');
-
-  for (let i = 0; i < lines.length; i++) {
-    const matches = lines[i].matchAll(GENERIC_NAMES);
-    for (const match of matches) {
-      warnings.push({
-        file: filePath,
-        line: i + 1,
-        name: match[2],
-        certainty: 'LOW', // Agent should check context
-      });
-    }
-  }
-  return warnings;
-}
-```
+1. **Configurable** - Enable/disable categories
+2. **Efficient** - Fast static analysis, not AST parsing everything
+3. **Actionable** - Clear fix recommendations
+4. **Non-blocking** - Report mode by default, apply mode optional
 
 ---
 
@@ -1258,7 +656,7 @@ function detectGenericNames(content: string, filePath: string): GenericNameWarni
    - Key contribution: Concrete metrics and real-world examples
 
 2. **sloppylint**
-   - "AI Slop Detector" (Python-focused, concepts apply to any language)
+   - "Python AI Slop Detector"
    - URL: https://github.com/rsionnach/sloppylint
    - Key contribution: 4-category detection framework (Noise, Lies, Soul, Structure)
 
@@ -1284,36 +682,6 @@ function detectGenericNames(content: string, filePath: string): GenericNameWarni
 7. **ai-eng-system clean command**
    - URL: https://github.com/v1truv1us/ai-eng-system
    - Key contribution: Preamble/hedging language patterns
-
-### Automation Tools (Static Analysis)
-
-8. **escomplex**
-   - URL: https://github.com/jared-stilwell/escomplex
-   - Key contribution: Cyclomatic complexity, Halstead metrics, maintainability index for JS/TS
-
-9. **jscpd**
-   - URL: https://github.com/kucherenko/jscpd
-   - Key contribution: Rabin-Karp algorithm for duplicate/copy-paste detection (150+ languages)
-
-10. **madge**
-    - URL: https://github.com/pahen/madge
-    - Key contribution: Dependency graph analysis, circular dependency detection
-
-11. **dependency-cruiser**
-    - URL: https://github.com/sverweij/dependency-cruiser
-    - Key contribution: Rule-based dependency validation, architectural enforcement
-
-12. **ts-morph**
-    - URL: https://github.com/dsherret/ts-morph
-    - Key contribution: TypeScript AST manipulation for pattern detection
-
-13. **tree-sitter**
-    - URL: https://github.com/tree-sitter/tree-sitter
-    - Key contribution: Fast incremental parsing, multi-language AST
-
-14. **cloc / tokei**
-    - URLs: https://github.com/AlDanial/cloc, https://github.com/XAMPPRocky/tokei
-    - Key contribution: Fast line counting (code vs comments vs blanks)
 
 ### Secondary Sources (Blocked/Unavailable)
 
