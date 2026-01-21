@@ -8,6 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Doc/Code Ratio Detection** - New `doc_code_ratio_js` pattern flags JSDoc blocks that are disproportionately longer than the functions they document (threshold: 3x function length)
+  - Uses multi-pass analysis to compute actual doc/code ratio
+  - Skips tiny functions (< 3 lines) to avoid false positives
+  - Severity `medium`, autoFix `flag` (requires manual review)
+  - New `lib/patterns/slop-analyzers.js` module for structural code analysis
+- **Issue/PR Reference Cleanup** - New `issue_pr_references` pattern flags ANY mention of issue/PR/iteration numbers in code comments as slop (e.g., `#123`, `PR #456`, `iteration 5`)
+  - Context belongs in commits and PRs, not code comments
+  - Severity `medium`, autoFix `remove` (clear slop)
+  - Excludes markdown files where issue references are appropriate
+- **File Path Reference Detection** - New `file_path_references` pattern flags file path references in comments that may become outdated (e.g., `// see auth-flow.md`)
+  - Severity `low`, autoFix `flag` (may have valid documentation purpose)
+- **Multi-Pass Pattern Helper** - New `getMultiPassPatterns()` function to retrieve patterns requiring structural analysis
 - **Placeholder Function Detection** - New patterns for `/deslop-around` command (#98)
   - JavaScript/TypeScript: stub returns (0, true, false, null, [], {}), empty functions, throw Error("TODO")
   - Rust: todo!(), unimplemented!(), panic!("TODO")

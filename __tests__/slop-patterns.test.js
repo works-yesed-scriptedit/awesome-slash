@@ -1178,4 +1178,222 @@ describe('slop-patterns', () => {
       });
     });
   });
+
+  // ============================================================================
+  // Doc/Code Ratio and Phantom Reference Detection Tests (#P1-T2, #P1-T3)
+  // ============================================================================
+  describe('Doc/Code Ratio Detection (#P1-T2)', () => {
+    describe('doc_code_ratio_js pattern definition', () => {
+      it('should have pattern defined with correct metadata', () => {
+        expect(slopPatterns.doc_code_ratio_js).toBeDefined();
+        expect(slopPatterns.doc_code_ratio_js.pattern).toBeNull(); // Multi-pass
+        expect(slopPatterns.doc_code_ratio_js.severity).toBe('medium');
+        expect(slopPatterns.doc_code_ratio_js.autoFix).toBe('flag');
+        expect(slopPatterns.doc_code_ratio_js.language).toBe('javascript');
+        expect(slopPatterns.doc_code_ratio_js.requiresMultiPass).toBe(true);
+        expect(slopPatterns.doc_code_ratio_js.minFunctionLines).toBe(3);
+        expect(slopPatterns.doc_code_ratio_js.maxRatio).toBe(3.0);
+      });
+
+      it('should exclude test files and type definitions', () => {
+        const excludes = slopPatterns.doc_code_ratio_js.exclude;
+        expect(isFileExcluded('utils.test.js', excludes)).toBe(true);
+        expect(isFileExcluded('helper.spec.ts', excludes)).toBe(true);
+        expect(isFileExcluded('types.d.ts', excludes)).toBe(true);
+        expect(isFileExcluded('utils.js', excludes)).toBe(false);
+      });
+    });
+
+    describe('getMultiPassPatterns', () => {
+      const { getMultiPassPatterns } = require('../lib/patterns/slop-patterns');
+
+      it('should return patterns with requiresMultiPass: true', () => {
+        const multiPass = getMultiPassPatterns();
+        expect(multiPass).toHaveProperty('doc_code_ratio_js');
+        expect(multiPass).toHaveProperty('duplicate_strings');
+
+        // All returned patterns should have requiresMultiPass
+        Object.values(multiPass).forEach(pattern => {
+          expect(pattern.requiresMultiPass).toBe(true);
+        });
+      });
+
+      it('should not include patterns without requiresMultiPass', () => {
+        const multiPass = getMultiPassPatterns();
+        // console_debugging does not have requiresMultiPass
+        expect(multiPass).not.toHaveProperty('console_debugging');
+        expect(multiPass).not.toHaveProperty('placeholder_text');
+      });
+    });
+  });
+
+  describe('Phantom Reference Detection (#P1-T3)', () => {
+    describe('issue_pr_references pattern', () => {
+      const pattern = () => slopPatterns.issue_pr_references.pattern;
+
+      it('should have pattern defined with correct metadata', () => {
+        expect(slopPatterns.issue_pr_references).toBeDefined();
+        expect(slopPatterns.issue_pr_references.severity).toBe('medium');
+        expect(slopPatterns.issue_pr_references.autoFix).toBe('remove');
+        expect(slopPatterns.issue_pr_references.language).toBeNull(); // Universal
+      });
+
+      it('should match issue number references', () => {
+        expect(pattern().test('// Fixed in #123')).toBe(true);
+        expect(pattern().test('// fixes #456')).toBe(true);
+        expect(pattern().test('// See issue #789')).toBe(true);
+        expect(pattern().test('// issue 123')).toBe(true);
+      });
+
+      it('should match PR references', () => {
+        expect(pattern().test('// See PR #123')).toBe(true);
+        expect(pattern().test('// PR 456')).toBe(true);
+        expect(pattern().test('// pull request #789')).toBe(true);
+      });
+
+      it('should match closes/resolves references', () => {
+        expect(pattern().test('// closes #123')).toBe(true);
+        expect(pattern().test('// close #456')).toBe(true);
+        expect(pattern().test('// resolves #789')).toBe(true);
+        expect(pattern().test('// resolve #100')).toBe(true);
+      });
+
+      it('should match iteration references', () => {
+        expect(pattern().test('// iteration 5')).toBe(true);
+        expect(pattern().test('// iteration 12')).toBe(true);
+      });
+
+      it('should not match non-issue text', () => {
+        expect(pattern().test('// Fixed the bug')).toBe(false);
+        expect(pattern().test('// See the PR for details')).toBe(false);
+        expect(pattern().test('// This is a comment')).toBe(false);
+      });
+
+      it('should not match without comment prefix', () => {
+        expect(pattern().test('Fixed in #123')).toBe(false);
+        expect(pattern().test('closes #456')).toBe(false);
+      });
+
+      it('should exclude markdown files', () => {
+        const excludes = slopPatterns.issue_pr_references.exclude;
+        expect(isFileExcluded('README.md', excludes)).toBe(true);
+        expect(isFileExcluded('CHANGELOG.md', excludes)).toBe(true);
+        expect(isFileExcluded('CONTRIBUTING.md', excludes)).toBe(true);
+        expect(isFileExcluded('utils.js', excludes)).toBe(false);
+      });
+    });
+
+    describe('file_path_references pattern', () => {
+      const pattern = () => slopPatterns.file_path_references.pattern;
+
+      it('should have pattern defined with correct metadata', () => {
+        expect(slopPatterns.file_path_references).toBeDefined();
+        expect(slopPatterns.file_path_references.severity).toBe('low');
+        expect(slopPatterns.file_path_references.autoFix).toBe('flag');
+        expect(slopPatterns.file_path_references.language).toBeNull();
+      });
+
+      it('should match "see" file references', () => {
+        expect(pattern().test('// see auth-flow.md')).toBe(true);
+        expect(pattern().test('// See docs/API.md')).toBe(true);
+        expect(pattern().test('// see config.json')).toBe(true);
+      });
+
+      it('should match "documented in" references', () => {
+        expect(pattern().test('// documented in docs/spec.md')).toBe(true);
+        expect(pattern().test('// Documented in README.md')).toBe(true);
+      });
+
+      it('should match "refer to" references', () => {
+        expect(pattern().test('// refer to utils.js')).toBe(true);
+        expect(pattern().test('// Refer to helpers.ts')).toBe(true);
+      });
+
+      it('should match "per" references', () => {
+        expect(pattern().test('// per config.yaml')).toBe(true);
+        expect(pattern().test('// Per settings.toml')).toBe(true);
+      });
+
+      it('should match various file extensions', () => {
+        expect(pattern().test('// see file.md')).toBe(true);
+        expect(pattern().test('// see file.js')).toBe(true);
+        expect(pattern().test('// see file.ts')).toBe(true);
+        expect(pattern().test('// see file.json')).toBe(true);
+        expect(pattern().test('// see file.yaml')).toBe(true);
+        expect(pattern().test('// see file.yml')).toBe(true);
+        expect(pattern().test('// see file.toml')).toBe(true);
+        expect(pattern().test('// see file.txt')).toBe(true);
+      });
+
+      it('should not match non-file references', () => {
+        expect(pattern().test('// see the documentation')).toBe(false);
+        expect(pattern().test('// See above for details')).toBe(false);
+        expect(pattern().test('// refer to line 42')).toBe(false);
+      });
+
+      it('should exclude markdown and test files', () => {
+        const excludes = slopPatterns.file_path_references.exclude;
+        expect(isFileExcluded('docs.md', excludes)).toBe(true);
+        expect(isFileExcluded('README.md', excludes)).toBe(true);
+        expect(isFileExcluded('utils.test.js', excludes)).toBe(true);
+        expect(isFileExcluded('helper.spec.ts', excludes)).toBe(true);
+        expect(isFileExcluded('app.js', excludes)).toBe(false);
+      });
+    });
+
+    describe('ReDoS safety for reference patterns', () => {
+      const MAX_SAFE_TIME = 100;
+
+      it('issue_pr_references pattern should resist ReDoS', () => {
+        const pattern = slopPatterns.issue_pr_references.pattern;
+        const inputs = [
+          '// ' + '#123'.repeat(1000),
+          '// issue ' + '#'.repeat(1000) + '123',
+          '// ' + 'fixed in '.repeat(500) + '#123',
+          '// PR ' + '0'.repeat(10000)
+        ];
+
+        inputs.forEach(input => {
+          const start = Date.now();
+          pattern.test(input);
+          expect(Date.now() - start).toBeLessThan(MAX_SAFE_TIME);
+        });
+      });
+
+      it('file_path_references pattern should resist ReDoS', () => {
+        const pattern = slopPatterns.file_path_references.pattern;
+        const inputs = [
+          '// see ' + 'a'.repeat(10000) + '.md',
+          '// documented in ' + 'path/'.repeat(1000) + 'file.js',
+          '// see ' + 'file'.repeat(1000) + '.ts',
+          '// refer to ' + './'.repeat(500) + 'utils.json'
+        ];
+
+        inputs.forEach(input => {
+          const start = Date.now();
+          pattern.test(input);
+          expect(Date.now() - start).toBeLessThan(MAX_SAFE_TIME);
+        });
+      });
+    });
+  });
+
+  describe('analyzers module export', () => {
+    const { analyzers } = require('../lib/patterns/slop-patterns');
+
+    it('should export analyzers object', () => {
+      expect(analyzers).toBeDefined();
+      expect(typeof analyzers).toBe('object');
+    });
+
+    it('should have analyzeDocCodeRatio function', () => {
+      expect(analyzers.analyzeDocCodeRatio).toBeDefined();
+      expect(typeof analyzers.analyzeDocCodeRatio).toBe('function');
+    });
+
+    it('should have helper functions', () => {
+      expect(analyzers.findMatchingBrace).toBeDefined();
+      expect(analyzers.countNonEmptyLines).toBeDefined();
+    });
+  });
 });
