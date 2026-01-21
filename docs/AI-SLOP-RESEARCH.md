@@ -691,7 +691,7 @@ let validated_email = normalize_email(&raw_input);
 | Over-engineering metrics | ✅ **Committed** | **Critical** | Medium | main branch - `over_engineering_metrics` pattern |
 | Generic naming | ✅ **Merged** | **Medium** | Medium | main branch - 4 patterns for JS/TS/Python/Rust/Go |
 | Verbosity detection | ✅ **Committed** | **Medium** | Medium | main branch - 4 patterns (preambles, buzzwords, hedging, ratio) |
-| Buzzword inflation | ⏳ **TODO** | **High** | Hard | Priority 3 - Claim extraction vs evidence search |
+| Buzzword inflation | ✅ **PR #113** | **High** | Hard | 6 categories, claim extraction, evidence search |
 | Unnecessary abstraction | ⏳ **Future** | **Medium** | Hard | Post-release consideration |
 
 > **Note**: Hallucinated imports, fake API calls, type errors are already caught by eslint/tsc/clippy.
@@ -710,8 +710,8 @@ let validated_email = normalize_email(&raw_input);
 |----------|-------|--------|---------|
 | Priority 1 (Quick Wins) | 3 tasks | ✅ 100% Complete | Pending |
 | Priority 2 (Medium Effort) | 2 tasks | ✅ 100% Complete | Pending |
-| Priority 3 (Advanced) | 2 tasks | ⏳ 50% Complete | Pending |
-| **Total** | **7 tasks** | **6/7 (86%)** | **After 100%** |
+| Priority 3 (Advanced) | 2 tasks | ✅ 100% Complete | Pending |
+| **Total** | **7 tasks** | **7/7 (100%)** | **Ready for v2.7.0** |
 
 **Commits on main (not released):**
 - `5950ccb` - feat(deslop): add generic naming detection for JS/TS, Python, Rust, Go (#110)
@@ -763,7 +763,7 @@ let validated_email = normalize_email(&raw_input);
    - **Analyzer**: `analyzeVerbosityRatio()` in `lib/patterns/slop-analyzers.js`
    - **Status**: 70+ tests, comprehensive coverage
 
-### Priority 3: Advanced (Hard, Critical Impact) - ⏳ 50% COMPLETE
+### Priority 3: Advanced (Hard, Critical Impact) - ✅ 100% COMPLETE
 
 ~~6. **Over-Engineering Metrics**~~ ✅ **DONE** (Committed, not released)
    - Export-based detection: files-per-export (>20x), lines-per-export (>500:1), directory depth (>4 levels)
@@ -773,12 +773,14 @@ let validated_email = normalize_email(&raw_input);
    - **Analyzer**: `analyzeOverEngineering()` in `lib/patterns/slop-analyzers.js`
    - **Status**: 40+ tests, comprehensive coverage
 
-7. **Buzzword Inflation** ⏳ TODO
-   - Claim extraction from docs
-   - Evidence search in code
-   - Gap reporting
-   - **Difficulty**: Hard (semantic analysis, evidence gathering)
-   - **Impact**: Critical (validates documentation claims)
+~~7. **Buzzword Inflation**~~ ✅ **DONE** (PR #113)
+   - Claim extraction from docs with positive claim vs TODO/FIXME detection
+   - Evidence search in code (tests, error handling, logging, auth, validation, etc.)
+   - Gap reporting with severity levels (high for zero evidence, medium for partial)
+   - **Pattern**: `buzzword_inflation` in `lib/patterns/slop-patterns.js`
+   - **Analyzer**: `analyzeBuzzwordInflation()` in `lib/patterns/slop-analyzers.js`
+   - **Categories**: production, enterprise, security, scale, reliability, completeness
+   - **Status**: 50+ tests, comprehensive coverage
 
 ---
 
