@@ -16,29 +16,15 @@ Quick reference for AI assistants. Follow links for details.
 
 4. **PR reviews** - Wait 3 min for auto-reviewers, address ALL comments (Copilot, Claude, Gemini, Codex).
    *WHY: Skipping comments leads to merged issues. Every comment must be addressed or explained.*
+
+5. **Read checklists BEFORE multi-file changes** - MUST read the relevant checklist before starting:
+   - Release → `checklists/release.md`
+   - New command → `checklists/new-command.md`
+   - New agent → `checklists/new-agent.md`
+   - New lib module → `checklists/new-lib-module.md`
+   - MCP server update → `checklists/update-mcp.md`
+   *WHY: Multi-file changes have hidden dependencies. Checklists prevent missed updates.*
 </critical-rules>
-
-## Quick Links
-
-| Need To... | Go To |
-|------------|-------|
-| Release new version | [checklists/release.md](./checklists/release.md) |
-| Add slash command | [checklists/new-command.md](./checklists/new-command.md) |
-| Add agent | [checklists/new-agent.md](./checklists/new-agent.md) |
-| Add lib module | [checklists/new-lib-module.md](./checklists/new-lib-module.md) |
-| Update MCP server | [checklists/update-mcp.md](./checklists/update-mcp.md) |
-| Understand workflow | [agent-docs/workflow.md](./agent-docs/workflow.md) |
-| Full release guide | [agent-docs/release.md](./agent-docs/release.md) |
-
-## Knowledge Base
-
-| Topic | Document |
-|-------|----------|
-| Prompt design | [agent-docs/PROMPT-ENGINEERING-REFERENCE.md](./agent-docs/PROMPT-ENGINEERING-REFERENCE.md) |
-| MCP/tool patterns | [agent-docs/FUNCTION-CALLING-TOOL-USE-REFERENCE.md](./agent-docs/FUNCTION-CALLING-TOOL-USE-REFERENCE.md) |
-| Multi-agent systems | [agent-docs/MULTI-AGENT-SYSTEMS-REFERENCE.md](./agent-docs/MULTI-AGENT-SYSTEMS-REFERENCE.md) |
-| Token efficiency | [agent-docs/CONTEXT-OPTIMIZATION-REFERENCE.md](./agent-docs/CONTEXT-OPTIMIZATION-REFERENCE.md) |
-| Cross-platform | [lib/cross-platform/RESEARCH.md](./lib/cross-platform/RESEARCH.md) |
 
 ## Architecture
 
@@ -108,5 +94,7 @@ Cannot skip in /next-task:
 5. Simplicity
 
 <end-reminder>
-**REMEMBER**: No summary files. No `*_AUDIT.md`. No `*_SUMMARY.md`. Report completion verbally, update CHANGELOG.md if needed.
+**REMEMBER**:
+- No summary files (`*_AUDIT.md`, `*_SUMMARY.md`) - use CHANGELOG.md
+- Multi-file changes → Read checklist FIRST (`checklists/*.md`)
 </end-reminder>
