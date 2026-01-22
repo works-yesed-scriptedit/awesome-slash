@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.1] - 2026-01-22
+
+### Security
+- **Fixed Command Injection Vulnerabilities** - Replaced `execSync` with `execFileSync` in CLI enhancers
+  - Alert #8: jscpd command injection (cli-enhancers.js:348)
+  - Alert #9: escomplex command injection (cli-enhancers.js:479)
+  - Also fixed: madge command injection (cli-enhancers.js:432)
+  - `execFileSync` with argument arrays avoids shell interpretation entirely
+  - Previous escaping with `escapeDoubleQuotes` was insufficient for shell metacharacters
+
 ## [2.7.0] - 2026-01-22
 
 ### Added
