@@ -32,10 +32,10 @@ try {
 const crossPlatformPatterns = {
   hardcoded_claude_dir: {
     pattern: /\.claude\//,
-    exclude: /AI_STATE_DIR|\$\{.*STATE.*\}/i,
+    exclude: /AI_STATE_DIR|\$\{.*STATE.*\}|getStateDir\(\)|State directory is platform-aware/i,
     certainty: 'HIGH',
     issue: 'Hardcoded .claude/ directory',
-    fix: 'Use AI_STATE_DIR env var or platform detection'
+    fix: 'Use ${STATE_DIR}/ placeholder or getStateDir()'
   },
   claude_plugin_root: {
     pattern: /\$\{CLAUDE_PLUGIN_ROOT\}/,

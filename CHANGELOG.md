@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Cross-Platform Validation** - Internal tooling for Claude Code, OpenCode, Codex compatibility
+  - New `npm run validate:cross-platform` script scans all plugins for platform-specific code
+  - 4 new cross-platform patterns in agent-analyzer: hardcoded state dirs, plugin root paths, instruction file references
+  - Agents now use `${STATE_DIR}/` placeholder instead of hardcoded `.claude/` paths
+  - `scripts/validate-cross-platform.js` for CI integration
+
 - **Agent Prompt Optimizer** - New `/enhance:agent` command (#120)
   - Analyzes agent prompt files for prompt engineering best practices
   - 14 detection patterns across 6 categories: structure, tools, XML, CoT, examples, anti-patterns
