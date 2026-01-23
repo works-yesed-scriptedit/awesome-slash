@@ -45,7 +45,7 @@ This library consolidates best practices from Anthropic, OpenAI, Google, Microso
 #### ReAct (Reason + Act)
 Interleaves reasoning with actions in a step-by-step loop.
 
-```
+```text
 Thought: I need to find the user's recent commits
 Action: git log --oneline -5
 Observation: [commits listed]
@@ -57,7 +57,7 @@ Thought: Now I can analyze the changes...
 #### Plan-and-Execute
 Frontloads a structured plan before carrying it out.
 
-```
+```text
 Plan:
 1. Read the codebase structure
 2. Identify affected files
@@ -73,7 +73,7 @@ Execute: [follows plan sequentially]
 #### Orchestrator-Subagent
 Main agent delegates focused subtasks to specialized subagents.
 
-```
+```text
 Orchestrator: "Review this PR"
   -> Code-Reviewer Subagent: Check code quality
   -> Security-Scanner Subagent: Check vulnerabilities
@@ -133,7 +133,7 @@ Few-shot examples
 #### 2. Chain-of-Thought (CoT)
 Let Claude think through problems step by step:
 
-```
+```text
 Think through this problem step by step before providing your answer.
 ```
 
@@ -156,7 +156,7 @@ Provide examples of desired input/output pairs:
 - Demonstrate both good AND bad examples when relevant
 
 #### 4. Role Assignment
-```
+```text
 You are a senior security engineer specializing in code review.
 Focus on: authentication, input validation, injection vulnerabilities.
 ```
@@ -402,13 +402,13 @@ Order content by importance (most important first):
 ### Orchestration Patterns
 
 #### 1. Sequential Pipeline
-```
+```text
 Agent A -> Agent B -> Agent C -> Result
 ```
 **Use when:** Tasks have clear dependencies
 
 #### 2. Parallel Execution
-```
+```text
          ┌-> Agent B ─┐
 Agent A ─┼-> Agent C ─┼-> Aggregator -> Result
          └-> Agent D ─┘
@@ -416,7 +416,7 @@ Agent A ─┼-> Agent C ─┼-> Aggregator -> Result
 **Use when:** Independent subtasks can run simultaneously
 
 #### 3. Hierarchical Delegation
-```
+```text
 Orchestrator
     ├── Planner Agent
     ├── Executor Agent
@@ -461,7 +461,7 @@ Orchestrator
 
 ### Guardrails Framework
 
-```
+```text
 ┌────────────────┐
 │  User Input    │
 └───────┬────────┘
@@ -641,7 +641,7 @@ Place in project root to encode conventions:
 ### Permission Model
 
 Start from deny-all baseline:
-```
+```text
 Treat tool access like production IAM.
 Allowlist only needed commands per subagent.
 Require explicit confirmations for sensitive actions.
@@ -662,7 +662,7 @@ Extended thinking allows Claude to spend more computational effort on complex pr
 
 ### How It Works
 
-```
+```text
 User Query
     ↓
 ┌──────────────────────────┐
@@ -701,7 +701,7 @@ Final Response
 
 Claude 4 models can think between tool calls:
 
-```
+```text
 Think -> Tool Call -> Think -> Tool Call -> Response
 ```
 
@@ -724,12 +724,12 @@ Think -> Tool Call -> Think -> Tool Call -> Response
 
 > "Claude often performs better with high-level instructions to think deeply rather than step-by-step prescriptive guidance."
 
-```
+```text
 Think carefully about the security implications before proceeding.
 ```
 
 Is better than:
-```
+```text
 Step 1: List attack vectors
 Step 2: Analyze each one
 Step 3: ...

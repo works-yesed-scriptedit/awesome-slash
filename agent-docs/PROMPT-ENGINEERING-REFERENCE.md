@@ -43,7 +43,7 @@ The system prompt defines the AI's overall behavior, role, and boundaries. It ac
 
 Based on official documentation, effective system prompts typically include:
 
-```
+```text
 1. Role/Identity Definition
 2. Core Capabilities & Constraints
 3. Instruction Priority Rules
@@ -56,24 +56,24 @@ Based on official documentation, effective system prompts typically include:
 ### Good vs Bad Examples
 
 **Less Effective:**
-```
+```text
 Create an analytics dashboard
 ```
 
 **More Effective:**
-```
+```text
 Create an analytics dashboard. Include as many relevant features and
 interactions as possible. Go beyond the basics to create a fully-featured
 implementation.
 ```
 
 **Less Effective:**
-```
+```text
 NEVER use ellipses
 ```
 
 **More Effective:**
-```
+```text
 Your response will be read aloud by a text-to-speech engine, so never use
 ellipses since the text-to-speech engine will not know how to pronounce them.
 ```
@@ -120,7 +120,7 @@ Output: ...
 
 ### Decision Framework
 
-```
+```text
 Start with Zero-Shot
     |
     v
@@ -202,12 +202,12 @@ Research shows CoT can improve reasoning accuracy by up to 40% for multi-step ta
 ### Implementation Patterns
 
 **Zero-Shot CoT:**
-```
+```text
 Solve this problem step by step: [problem]
 ```
 
 **Explicit CoT:**
-```
+```text
 Before providing your answer, think through this problem:
 1. Identify the key variables
 2. Determine the relationships
@@ -277,12 +277,12 @@ The effectiveness of role prompting for accuracy is contested:
 ### Example
 
 **Less Effective:**
-```
+```text
 You are a physics expert. Solve this problem.
 ```
 
 **More Effective:**
-```
+```text
 Approach this physics problem systematically, showing your work at each step.
 Consider the relevant physical principles and verify your answer makes sense
 given the constraints.
@@ -314,7 +314,7 @@ given the constraints.
 ### Best Practices
 
 1. **Use clear format indicators**:
-```
+```text
 Respond with a JSON object containing exactly these fields:
 - name (string)
 - age (integer)
@@ -374,7 +374,7 @@ Respond with a JSON object containing exactly these fields:
 
 LLM applications should establish clear precedence:
 
-```
+```text
 1. System Instructions (highest priority)
 2. Developer/Application Instructions
 3. User Instructions
@@ -431,12 +431,12 @@ Recent work (ICLR 2025) focuses on training models to better respect instruction
 Research shows that negative instructions are often less effective than positive alternatives:
 
 **Less Effective:**
-```
+```text
 Do not use markdown in your response
 ```
 
 **More Effective:**
-```
+```text
 Your response should be composed of smoothly flowing prose paragraphs.
 ```
 
@@ -448,7 +448,7 @@ Your response should be composed of smoothly flowing prose paragraphs.
 
 ### Anti-Pattern Avoidance for Code
 
-```
+```text
 Generate a secure authentication function. Specifically avoid:
 - CWE-20: Improper Input Validation
 - CWE-89: SQL Injection
@@ -502,12 +502,12 @@ Extended thinking enables models to perform internal reasoning before responding
 ### Best Practices
 
 **Do:**
-```
+```text
 Think deeply about this problem before answering.
 ```
 
 **Don't:**
-```
+```text
 Think step-by-step: first do X, then Y, then Z.
 ```
 
@@ -515,7 +515,7 @@ Think step-by-step: first do X, then Y, then Z.
 
 While extended thinking is for *before* responding, the "think" tool lets agents pause *during* multi-step tasks:
 
-```
+```text
 When you receive tool results, use the think tool to:
 1. Verify the results match expectations
 2. Determine if you have enough information
@@ -676,7 +676,7 @@ For tasks spanning multiple context windows:
 
 ### Evaluation Framework
 
-```
+```text
 1. Define clear objectives
 2. Create representative datasets
 3. Select balanced metrics
@@ -742,7 +742,7 @@ Modern platforms use advanced models (GPT-5.1, Claude Sonnet 4.5) to score outpu
 
 ### Version Management Workflow
 
-```
+```text
 1. Edit prompt in development
 2. Run automated evaluations
 3. Promote to staging

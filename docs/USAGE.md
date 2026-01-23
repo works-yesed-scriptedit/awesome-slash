@@ -18,25 +18,25 @@ Complete guide to using awesome-slash commands with real-world examples.
 ## When to Use Each Command
 
 **Starting Your Day:**
-```
+```bash
 /next-task
 # Shows prioritized tasks from GitHub issues
 ```
 
 **Before Committing:**
-```
+```bash
 /deslop-around apply
 # Cleans up debugging code
 ```
 
 **Before Creating PR:**
-```
+```bash
 /project-review
 # Catches issues early
 ```
 
 **Ready to Deploy:**
-```
+```bash
 /ship
 # Handles everything: PR, CI, merge, deploy, validate
 ```
@@ -173,7 +173,7 @@ Complete PR workflow from commit to production.
 
 **Scenario**: Console.log statements and TODOs scattered in your code.
 
-```
+```text
 You: /deslop-around
 
 Claude:
@@ -207,7 +207,7 @@ Ready to commit!
 
 **Scenario**: 20 GitHub issues, need to prioritize.
 
-```
+```text
 You: /next-task
 
 Claude:
@@ -249,7 +249,7 @@ Implementing fix...
 
 **Scenario**: Finished login feature, want thorough review.
 
-```
+```text
 You: /project-review
 
 Claude:
@@ -292,7 +292,7 @@ Code is ready to ship!
 
 **Scenario**: Feature finished, want to deploy.
 
-```
+```text
 You: /ship
 
 Claude:
@@ -338,7 +338,7 @@ Phase 9-10: Deploying to production...
 
 **Scenario**: Quick security check before release.
 
-```
+```text
 You: /project-review --domain security --quick
 
 Claude:
@@ -374,7 +374,7 @@ Security issues resolved!
 
 ### Starting New Feature
 
-```
+```text
 1. /next-task --implement    # Pick task and start
 2. *develop feature*
 3. /deslop-around apply      # Clean up
@@ -384,7 +384,7 @@ Security issues resolved!
 
 ### Code Review Flow
 
-```
+```text
 1. /project-review --quick   # Quick check
 2. Fix issues
 3. /project-review           # Full review
@@ -394,7 +394,7 @@ Security issues resolved!
 
 ### Maintenance Day
 
-```
+```text
 1. /deslop-around report     # See all slop
 2. /deslop-around apply      # Clean it up
 3. /next-task                # See priorities
@@ -403,7 +403,7 @@ Security issues resolved!
 
 ### Ship Your Work
 
-```
+```text
 1. /ship --dry-run           # Preview
 2. /ship                     # Full workflow
 ```
@@ -426,7 +426,7 @@ Don't start with `/ship` on production immediately!
 
 ### Tip 2: Let Claude Explain
 
-```
+```text
 You: Can you explain what /ship will do in my project?
 
 Claude: *analyzes your project*
@@ -447,7 +447,7 @@ Here's what /ship will do:
 
 ### Tip 3: Combine Commands
 
-```
+```text
 You: Run /deslop-around, then /project-review, then /ship
 
 Claude:
@@ -460,7 +460,7 @@ Your code is cleaned, reviewed, and deployed!
 
 ### Tip 4: Use Filters
 
-```
+```bash
 /next-task bug              # Focus on bugs only
 /project-review --domain security   # Security review only
 /deslop-around apply src/ 10        # Limit scope

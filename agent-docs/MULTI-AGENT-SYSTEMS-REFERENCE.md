@@ -71,7 +71,7 @@ A research reference on multi-agent LLM orchestration patterns, frameworks, comm
 
 ### Decision Framework
 
-```
+```text
 Use Single Agent when:
 - Task is well-defined and linear
 - Response time < 2 seconds required
@@ -99,7 +99,7 @@ Research shows the benefits of multi-agent systems over single-agent diminish as
 
 Agents execute in linear order, each completing before the next begins.
 
-```
+```text
 Agent A --> Agent B --> Agent C --> Output
 ```
 
@@ -114,7 +114,7 @@ Agent A --> Agent B --> Agent C --> Output
 
 Multiple agents work simultaneously on independent tasks.
 
-```
+```text
          /--> Agent B --\
 Agent A -+--> Agent C --+-> Aggregator
          \--> Agent D --/
@@ -130,7 +130,7 @@ Agent A -+--> Agent C --+-> Aggregator
 
 Coordinator agent manages specialized worker agents.
 
-```
+```text
         Supervisor
        /    |    \
     Worker Worker Worker
@@ -152,7 +152,7 @@ Coordinator agent manages specialized worker agents.
 
 Agents dynamically pass control based on expertise, maintaining conversation continuity.
 
-```
+```text
 Entry -> Agent A <--> Agent B <--> Agent C
               ^                      |
               |______________________|
@@ -169,7 +169,7 @@ Entry -> Agent A <--> Agent B <--> Agent C
 
 Central agent analyzes requests and routes to appropriate specialists.
 
-```
+```text
         Router
        /  |   \
     Spec1 Spec2 Spec3
@@ -191,7 +191,7 @@ Agents share a common scratchpad, all work visible to all.
 
 One agent creates, another validates in iterative loops.
 
-```
+```text
 Generator --> Critic --> [Pass/Fail]
     ^                        |
     |_______[Refine]_________|
@@ -238,7 +238,7 @@ Single node triggers multiple downstream nodes, which converge on a single targe
 ### Shared State Management
 
 **Session State Patterns:**
-```
+```text
 Agent A writes -> Shared State <- Agent B reads
                       |
                  [Checkpoint]
@@ -293,7 +293,7 @@ Task decomposition uses divide-and-conquer:
 
 Recursively decomposes subtasks **as-needed** based on LLM capability:
 
-```
+```text
 Task --> Can LLM execute?
            |
     Yes: Execute directly
@@ -309,7 +309,7 @@ Task --> Can LLM execute?
 
 **Key innovation:** Dynamic subtask modification during execution
 
-```
+```text
 Complex Task --> Dynamic Decomposer --> Subtasks
                       |
               [Agent Generator] --> Specialized subagents
@@ -365,7 +365,7 @@ Task decomposition enables:
 
 ### Debate-Based Consensus
 
-```
+```text
 Round 1: Independent answers
 Round 2: Exchange arguments
 Round 3: Update positions based on stronger arguments
@@ -381,7 +381,7 @@ Round N: Convergence or time limit
 ### Delegation Patterns
 
 **Authority hierarchy:**
-```
+```text
 Level 1: Coordinator (full authority)
     |
 Level 2: Specialists (domain authority)
@@ -430,7 +430,7 @@ For mission-critical workflows:
 ### Recovery Strategies
 
 **1. Retry Mechanism**
-```
+```python
 try:
     execute_task()
 except TransientError:
@@ -439,14 +439,14 @@ except TransientError:
 ```
 
 **2. Task Reassignment**
-```
+```python
 if agent_fails:
     select_alternative_agent(by_availability, by_fit)
     reassign_task()
 ```
 
 **3. Checkpointing**
-```
+```python
 for step in long_task:
     execute(step)
     save_checkpoint(state)
@@ -457,7 +457,7 @@ on_failure:
 ```
 
 **4. Human Escalation**
-```
+```python
 if automated_recovery_fails:
     escalate_to_human_expert()
 ```
@@ -481,7 +481,7 @@ if automated_recovery_fails:
 ### Monitoring & Detection
 
 **Heartbeat mechanism:**
-```
+```python
 while agent_running:
     send_heartbeat(central_monitor)
     sleep(interval)
@@ -886,7 +886,7 @@ orchestrator = Agent(
 ### Context Management
 
 **Context explosion scenario:**
-```
+```text
 Root agent (10K tokens)
   -> Passes to Sub-agent A (15K tokens)
     -> Passes to Sub-agent B (22K tokens)
@@ -898,7 +898,7 @@ Root agent (10K tokens)
 ### Optimization Strategies
 
 **1. Tiered Model Selection**
-```
+```text
 Routine tasks -> Small/fast model (Haiku, GPT-3.5)
 Complex reasoning -> Large model (Opus, GPT-4)
 ```

@@ -44,7 +44,7 @@ Research from 2024-2025 shows that reasoning processes in LLMs are often unneces
 
 Not all tokens add equal value:
 
-```
+```text
 High-value tokens (preserve):
 - Customer identifiers
 - Specific technical requirements
@@ -81,7 +81,7 @@ Research from Stanford (2023-2024) and MIT (2025) established:
 ### Mitigation Strategies
 
 **Position-Aware Ordering**:
-```
+```text
 1. Place most critical information at START of context
 2. Place second-most critical information at END
 3. Put supporting/optional context in MIDDLE
@@ -89,7 +89,7 @@ Research from Stanford (2023-2024) and MIT (2025) established:
 ```
 
 **Practical Implementation**:
-```
+```text
 [CRITICAL: Main objective and constraints]
 [Supporting context and background]
 [Historical data and examples]
@@ -131,7 +131,7 @@ Rather than including all available context, dynamically select based on:
 ### Hierarchical Summarization
 
 **Progressive Compression Model**:
-```
+```text
 Turn 1-5:   Full verbatim (most recent)
 Turn 6-15:  Detailed summary (recent context)
 Turn 16-50: Condensed summary (historical)
@@ -142,7 +142,7 @@ Turn 50+:   Key decisions only (archive)
 
 Research shows recursive summarization preserves long-term coherence:
 
-```
+```text
 1. Summarize small dialogue chunks (5-10 turns)
 2. Combine chunk summaries into section summaries
 3. Generate meta-summary from section summaries
@@ -190,7 +190,7 @@ Compaction should preserve:
 | Semantic chunking | 0.913-0.919 | 0.15 | Complex narratives |
 
 **Recommended Starting Point**:
-```
+```text
 Method: RecursiveCharacterTextSplitter
 Size: 400-512 tokens
 Overlap: 10-20% (40-100 tokens)
@@ -213,7 +213,7 @@ Overlap: 10-20% (40-100 tokens)
 - Reduces "lost in the middle" effects
 
 **Recommended overlaps**:
-```
+```text
 Small chunks (256 tokens): 50-75 token overlap (20-30%)
 Medium chunks (512 tokens): 50-100 token overlap (10-20%)
 Large chunks (1024 tokens): 100-150 token overlap (10-15%)
@@ -241,7 +241,7 @@ Benefits:
 - Improves response quality by filtering noise
 
 **Compression flow**:
-```
+```text
 Query → Retrieve (10 docs) → Compress (to 3-5 summaries) → Generate
 ```
 
@@ -261,7 +261,7 @@ RAG can **cut context-related token usage by 70%+** by providing only relevant c
 - Up to 4 cache breakpoints per prompt
 
 **Cost Structure**:
-```
+```text
 5-minute cache write:  1.25x base input price
 1-hour cache write:    2.0x base input price
 Cache read:            0.1x base input price (90% savings)
@@ -272,7 +272,7 @@ Cache read:            0.1x base input price (90% savings)
 ### Cache Optimization Strategies
 
 **Prompt Structure for Caching**:
-```
+```text
 [CACHED: System prompt + tools + stable context]
     ↓ cache_control breakpoint
 [CACHED: Examples and few-shot demonstrations]
@@ -281,7 +281,7 @@ Cache read:            0.1x base input price (90% savings)
 ```
 
 **Cache Hierarchy** (changes invalidate downstream):
-```
+```text
 tools → system → messages
 ```
 
@@ -325,7 +325,7 @@ else:
 
 Route simpler queries to cheaper models:
 
-```
+```text
 Query → Router → [Simple?] → Small Model (GPT-4-mini, Haiku)
                  [Complex?] → Large Model (GPT-4, Opus)
 ```
@@ -335,7 +335,7 @@ Query → Router → [Simple?] → Small Model (GPT-4-mini, Haiku)
 ### Cascading Strategy
 
 Process queries through increasingly capable models:
-```
+```text
 Query → Haiku → [Confident?] → Return
                [Uncertain?] → Sonnet → [Confident?] → Return
                                        [Uncertain?] → Opus → Return
@@ -406,7 +406,7 @@ For organizations spending >$500/month on cloud APIs:
 
 ### Cost Efficiency Metrics
 
-```
+```text
 Cost per successful query = Total API cost / Successful responses
 Token efficiency = Useful output tokens / Total tokens consumed
 Cache hit rate = Cached responses / Total requests
