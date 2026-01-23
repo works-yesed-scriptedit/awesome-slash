@@ -16,6 +16,7 @@ This library consolidates best practices from Anthropic, OpenAI, Google, Microso
 6. [Instruction Following & Reliability](#6-instruction-following--reliability)
 7. [Claude Code Specifics](#7-claude-code-specifics)
 8. [Extended Thinking & Reasoning](#8-extended-thinking--reasoning)
+9. [Cross-Platform References](#9-cross-platform-references)
 
 ---
 
@@ -818,8 +819,45 @@ You are a [specialized role].
 
 ---
 
+## 9. Cross-Platform References
+
+### Platform Documentation
+
+| Platform | Reference Doc | Description |
+|----------|--------------|-------------|
+| **OpenCode** | [OPENCODE-REFERENCE.md](./OPENCODE-REFERENCE.md) | SST OpenCode integration: model selection, commands, MCP, agents |
+| **Claude Code** | [CLAUDE-CODE-REFERENCE.md](./CLAUDE-CODE-REFERENCE.md) | Claude Code specifics: hooks, skills, subagents |
+
+### Key Platform Differences
+
+| Feature | Claude Code | OpenCode | Codex CLI |
+|---------|-------------|----------|-----------|
+| Config file | `settings.json` | `opencode.jsonc` | `config.toml` |
+| State directory | `.claude/` | `.opencode/` | `.codex/` |
+| Command prefix | `/` | `/` | `$` |
+| Model selection | Anthropic only | 75+ providers | OpenAI |
+| User questions | Checkboxes | Numbered list | Numbered list |
+| Project instructions | `CLAUDE.md` | `AGENTS.md` | `CODEX.md` |
+
+### MCP Compatibility
+
+All platforms support MCP (Model Context Protocol):
+- Same tool definitions work across platforms
+- State isolation via `AI_STATE_DIR` environment variable
+- Local (stdio) and remote (HTTP) server types
+
+### Our Cross-Platform Strategy
+
+1. **Single codebase** - Commands/skills shared across platforms
+2. **Platform detection** - `lib/cross-platform/` handles differences
+3. **State abstraction** - Platform-specific directories, same file formats
+4. **MCP server** - Universal tool interface for all platforms
+
+---
+
 ## Changelog
 
+- **2026-01-24**: Added Cross-Platform References section, OpenCode research
 - **2026-01-22**: Initial compilation from 7 research agents
 - Sources: Anthropic, OpenAI, Google, Microsoft, arXiv, production implementations
 
