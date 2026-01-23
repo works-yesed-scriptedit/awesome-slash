@@ -109,6 +109,7 @@ The MCP server (`mcp-server/index.js`) exposes tools to all platforms:
 | `task_discover` | Find tasks from configured sources |
 | `review_code` | Run pipeline-based code review |
 | `slop_detect` | Detect AI slop with certainty levels |
+| `enhance_analyze` | Analyze plugins, agents, docs, prompts |
 
 **slop_detect** uses the full 3-phase pipeline:
 - Phase 1: Regex patterns (HIGH certainty)
@@ -234,7 +235,7 @@ Research documents informing the implementation (in `agent-docs/`):
 - [x] Codex CLI (MCP + skills)
 
 ### Testing ✅
-- [x] All 1036 tests passing
+- [x] All 1307 tests passing
 - [x] npm pack creates valid package (338 KB)
 - [x] Interactive installer works for all platforms
 

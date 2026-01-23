@@ -119,7 +119,7 @@ Complete task-to-production automation with state management.
 
 ### `/project-review`
 
-Comprehensive multi-agent code review.
+Comprehensive multi-agent code review that adapts to your project.
 
 ```bash
 /project-review                   # Full review with all agents
@@ -128,15 +128,20 @@ Comprehensive multi-agent code review.
 /project-review --recent          # Only recent changes
 ```
 
-**8 Specialized Agents:**
-- Security
-- Performance
-- Architecture
-- Testing
-- Error Handling
-- Code Quality
-- Type Safety
-- Documentation
+**8 Specialized Roles (2 always active, 6 conditional):**
+
+| Agent | When Active | Focus Area |
+|-------|-------------|------------|
+| security-expert | Always | Vulnerabilities, auth, secrets |
+| performance-engineer | Always | N+1 queries, memory, blocking ops |
+| test-quality-guardian | If tests exist | Coverage, edge cases, mocking |
+| architecture-reviewer | If 50+ files | Modularity, patterns, SOLID |
+| database-specialist | If DB detected | Queries, indexes, transactions |
+| api-designer | If API detected | REST, errors, pagination |
+| frontend-specialist | If frontend detected | Components, state, UX |
+| devops-reviewer | If CI/CD detected | Pipelines, configs, secrets |
+
+Only relevant agents run based on your codebase - no wasted analysis.
 
 ---
 

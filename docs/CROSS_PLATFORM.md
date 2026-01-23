@@ -34,12 +34,11 @@ All three platforms share:
 /plugin install ship@awesome-slash
 ```
 
-### Option 2: Local Clone
+### Option 2: npm Global Install
 
 ```bash
-git clone https://github.com/avifenesh/awesome-slash.git
-cd awesome-slash
-./scripts/install/claude.sh
+npm install -g awesome-slash@latest
+awesome-slash  # Select option 1 for Claude Code
 ```
 
 ### Option 3: Plugin Directory (Development)
@@ -55,42 +54,56 @@ claude --plugin-dir /path/to/awesome-slash/plugins/next-task
 - `/project-review` - Multi-agent code review
 - `/reality-check:scan` - Plan drift detection
 
-### Available Agents (14 Total)
+### Available Agents (21 Total)
 
-**Core Workflow (Opus):**
-- `exploration-agent` - Deep codebase analysis (tools: Read, Grep, Glob, LSP, Task)
-- `planning-agent` - Design implementation plans (tools: Read, Grep, Glob, Bash(git:*), Task)
-- `implementation-agent` - Execute plans with quality code (tools: Read, Write, Edit, Bash, Task)
-- `review-orchestrator` - Multi-agent code review with iteration (tools: Task)
+**next-task: Core Workflow (13 agents)**
 
-**Quality Gates (Sonnet):**
-- `deslop-work` - Clean AI slop from committed but unpushed changes
-- `test-coverage-checker` - Validate new work has test coverage
-- `delivery-validator` - Autonomous delivery validation
-- `docs-updater` - Update docs related to changes
+| Agent | Model | Purpose |
+|-------|-------|---------|
+| exploration-agent | opus | Deep codebase analysis |
+| planning-agent | opus | Design implementation plans |
+| implementation-agent | opus | Execute plans with quality code |
+| review-orchestrator | opus | Multi-agent review iteration |
+| deslop-work | sonnet | Clean AI slop from changes |
+| test-coverage-checker | sonnet | Validate test coverage |
+| delivery-validator | sonnet | Autonomous delivery validation |
+| docs-updater | sonnet | Update related documentation |
+| task-discoverer | sonnet | Find and prioritize tasks |
+| worktree-manager | haiku | Create isolated worktrees |
+| ci-monitor | haiku | Monitor CI status |
+| ci-fixer | sonnet | Fix CI failures and PR comments |
+| simple-fixer | haiku | Execute pre-defined fixes |
 
-**Operational (Sonnet/Haiku):**
-- `task-discoverer` - Find and prioritize tasks [sonnet]
-- `worktree-manager` - Create isolated worktrees [haiku]
-- `ci-monitor` - Monitor CI status with sleep loops [haiku]
-- `ci-fixer` - Fix CI failures and PR comments [sonnet]
-- `simple-fixer` - Execute pre-defined code fixes [haiku]
+**enhance: Quality Analyzers (7 agents)**
 
-**Reality Check (Opus):**
-- `plan-synthesizer` - Deep semantic analysis with full context [opus]
+| Agent | Model | Purpose |
+|-------|-------|---------|
+| enhancement-orchestrator | opus | Coordinate all analyzers |
+| plugin-enhancer | opus | Analyze plugin structures |
+| agent-enhancer | opus | Review agent prompts |
+| docs-enhancer | opus | Documentation quality |
+| claudemd-enhancer | opus | Project memory optimization |
+| prompt-enhancer | opus | General prompt quality |
+| enhancement-reporter | sonnet | Format unified reports |
 
-*Data collection handled by JavaScript collectors (lib/reality-check/collectors.js)*
+**reality-check: Drift Detection (1 agent)**
+
+| Agent | Model | Purpose |
+|-------|-------|---------|
+| plan-synthesizer | opus | Deep semantic analysis |
+
+*Data collection uses JavaScript collectors (77% token reduction vs multi-agent)*
 
 ## OpenCode Integration
 
-### Option 1: Automated Install (Recommended)
+### Option 1: npm Global Install (Recommended)
 
 ```bash
-cd /path/to/awesome-slash
-./scripts/install/opencode.sh
+npm install -g awesome-slash@latest
+awesome-slash  # Select option 2 for OpenCode
 ```
 
-This installs MCP server, slash commands (`/next-task`, `/ship`, `/review`, `/deslop`), and agents.
+This installs MCP server and slash commands (`/next-task`, `/ship`, `/deslop-around`, `/project-review`).
 
 ### Option 2: Manual MCP Config
 
@@ -149,14 +162,14 @@ When invoked, you should:
 
 > **Note:** Codex uses `$` prefix for skills instead of `/` slash commands (e.g., `$next-task`, `$ship`).
 
-### Option 1: Automated Install (Recommended)
+### Option 1: npm Global Install (Recommended)
 
 ```bash
-cd /path/to/awesome-slash
-./scripts/install/codex.sh
+npm install -g awesome-slash@latest
+awesome-slash  # Select option 3 for Codex CLI
 ```
 
-This installs MCP server config in `~/.codex/config.toml` and skills (`$next-task`, `$ship`, `$review`, `$deslop`).
+This installs MCP server config in `~/.codex/config.toml` and skills (`$next-task`, `$ship`, `$deslop-around`, `$project-review`).
 
 ### Option 2: Manual MCP Config
 
@@ -200,6 +213,8 @@ When using the MCP server integration, these tools become available:
 | `workflow_abort` | Cancel workflow and cleanup resources |
 | `task_discover` | Find and prioritize tasks from gh-issues, linear, or tasks-md |
 | `review_code` | Run pattern-based code review on changed files |
+| `slop_detect` | Detect AI slop with certainty levels (HIGH/MEDIUM/LOW) |
+| `enhance_analyze` | Analyze plugins, agents, docs, prompts for improvements |
 
 ## Shared Libraries
 
@@ -207,21 +222,20 @@ All integrations use the same core libraries:
 
 ```
 lib/
-├── config/
-│   ├── index.js               # Configuration management
-│   └── README.md              # Configuration documentation
-├── state/
-│   ├── workflow-state.js      # State management
-│   └── workflow-state.schema.json
-├── platform/
-│   ├── detect-platform.js     # Auto-detect project type
-│   └── verify-tools.js        # Check required tools
-├── patterns/
-│   ├── review-patterns.js     # Code review patterns
-│   └── slop-patterns.js       # AI slop detection
-└── utils/
-    ├── shell-escape.js        # Safe shell command construction
-    └── context-optimizer.js   # Git command optimization
+├── config/                    # Configuration management
+├── cross-platform/            # Platform detection, MCP helpers
+├── enhance/                   # Quality analyzer logic
+├── patterns/                  # 3-phase slop detection pipeline
+│   ├── pipeline.js            # Orchestrates phases
+│   ├── slop-patterns.js       # Regex patterns (HIGH certainty)
+│   └── slop-analyzers.js      # Multi-pass analyzers (MEDIUM)
+├── platform/                  # Project type detection
+├── reality-check/             # Drift detection collectors
+├── schemas/                   # JSON schemas for validation
+├── sources/                   # Task source discovery
+├── state/                     # Workflow state management
+├── types/                     # TypeScript-style type definitions
+└── utils/                     # Shell escape, context optimization
 ```
 
 ## Platform-Aware State Directories
@@ -266,13 +280,13 @@ The plugin auto-detects the platform and uses the appropriate directory. Overrid
 
 ### From Claude Code to OpenCode
 
-1. Run the OpenCode installer: `./scripts/install/opencode.sh`
+1. Run: `npm install -g awesome-slash && awesome-slash` (select option 2)
 2. State files will be created fresh in `.opencode/`
 3. Or copy state: `cp -r .claude/* .opencode/`
 
 ### From Claude Code to Codex
 
-1. Run the Codex installer: `./scripts/install/codex.sh`
+1. Run: `npm install -g awesome-slash && awesome-slash` (select option 3)
 2. State files will be created fresh in `.codex/`
 3. Or copy state: `cp -r .claude/* .codex/`
 

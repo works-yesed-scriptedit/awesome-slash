@@ -58,62 +58,35 @@ awesome-slash --remove            # Clean up configs
 
 ---
 
-## Manual Installation
+## Alternative Installation Methods
 
-### Claude Code
+### Local Development (Plugin Directory)
 
-See the [Claude Code (Recommended)](#claude-code-recommended) section above for marketplace installation.
-
-**Alternative methods:**
-
-### Option 1: Local Clone
-
-Clone the repository and run the install script:
-
-```bash
-git clone https://github.com/avifenesh/awesome-slash.git
-cd awesome-slash
-./scripts/install/claude.sh
-```
-
-### Option 3: Plugin Directory Flag
-
-For development or testing:
+For testing or development, load plugins directly:
 
 ```bash
 git clone https://github.com/avifenesh/awesome-slash.git
 claude --plugin-dir ./awesome-slash/plugins/next-task
 ```
 
----
+### OpenCode / Codex CLI
 
-## OpenCode
+Use the npm installer (recommended):
 
 ```bash
-git clone https://github.com/avifenesh/awesome-slash.git
-cd awesome-slash
-./scripts/install/opencode.sh
+npm install -g awesome-slash@latest
+awesome-slash
 ```
 
-This configures:
-- MCP server in `~/.config/opencode/opencode.json`
-- Slash commands in `~/.config/opencode/commands/`
+Select your platform when prompted. The installer configures:
 
----
-
-## Codex CLI
+| Platform | Config Location | State Directory |
+|----------|-----------------|-----------------|
+| Claude Code | Marketplace | `.claude/` |
+| OpenCode | `~/.config/opencode/` | `.opencode/` |
+| Codex CLI | `~/.codex/` | `.codex/` |
 
 > **Note:** Codex uses `$` prefix for skills (e.g., `$next-task` instead of `/next-task`).
-
-```bash
-git clone https://github.com/avifenesh/awesome-slash.git
-cd awesome-slash
-./scripts/install/codex.sh
-```
-
-This configures:
-- MCP server in `~/.codex/config.toml`
-- Skills in `~/.codex/skills/`
 
 ---
 
