@@ -1,4 +1,5 @@
 # Tests
+tests/
 __tests__/
 *.test.js
 *.spec.js
@@ -41,6 +42,9 @@ adapters/
 
 # Dev scripts (setup-hooks.js is kept for npm prepare)
 scripts/sync-lib.sh
+scripts/validate-plugins.js
+scripts/validate-cross-platform.js
+scripts/mcp-smoke-test.js
 
 # Misc
 *.tgz
