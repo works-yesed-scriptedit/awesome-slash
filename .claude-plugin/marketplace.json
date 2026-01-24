@@ -7,7 +7,7 @@
     "url": "https://github.com/avifenesh"
   },
   "repository": "https://github.com/avifenesh/awesome-slash",
-  "keywords": ["workflow", "automation", "code-review", "pr", "deployment", "mcp"],
+  "keywords": ["ai", "llm", "agents", "agentic", "claude-code", "opencode", "codex", "mcp", "automation", "workflow", "code-review", "multi-agent"],
   "plugins": [
     {
       "name": "next-task",
