@@ -15,7 +15,6 @@ grep -r '"version"' package.json .claude-plugin/ plugins/*/.claude-plugin/ mcp-s
 - [ ] `.claude-plugin/plugin.json` → `"version": "X.Y.Z"`
 - [ ] `.claude-plugin/marketplace.json` → `"version"` (6 occurrences)
 - [ ] `mcp-server/index.js` → `version: 'X.Y.Z'` (search: MCP_SERVER_VERSION)
-- [ ] `README.md` → Version badge + "What's New" section
 - [ ] `plugins/next-task/.claude-plugin/plugin.json`
 - [ ] `plugins/ship/.claude-plugin/plugin.json`
 - [ ] `plugins/deslop-around/.claude-plugin/plugin.json`
@@ -47,7 +46,6 @@ If adding a NEW MCP tool:
 ## Documentation Updates
 
 - [ ] `CHANGELOG.md` → New entry at top (Added/Changed/Fixed/Removed)
-- [ ] `README.md` → "What's New in vX.Y.Z" section
 - [ ] `docs/ARCHITECTURE.md` → If architecture changed
 
 ## Pre-Release Validation
