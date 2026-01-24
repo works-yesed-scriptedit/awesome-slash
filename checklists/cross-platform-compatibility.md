@@ -435,6 +435,4 @@ function ensureStateDir() {
 | Agent `.md` | 300 lines | Keep focused on single responsibility |
 | Skill `SKILL.md` | 500 lines | Use progressive disclosure |
 
-**Current violations to address:**
-- `next-task.md`: 822 lines (split references needed)
-- `enhance.md`: 941 lines (split references needed)
+**Note:** Check large files with `wc -l plugins/*/commands/*.md` and consider splitting if over limits.
