@@ -11,9 +11,9 @@ Complete reference for all agents in awesome-slash.
 | Plugin | Agents | Jump to |
 |--------|--------|---------|
 | next-task | 13 | [task-discoverer](#task-discoverer), [worktree-manager](#worktree-manager), [exploration-agent](#exploration-agent), [planning-agent](#planning-agent), [implementation-agent](#implementation-agent), [deslop-work](#deslop-work), [test-coverage-checker](#test-coverage-checker), [review-orchestrator](#review-orchestrator), [delivery-validator](#delivery-validator), [docs-updater](#docs-updater), [simple-fixer](#simple-fixer), [ci-monitor](#ci-monitor), [ci-fixer](#ci-fixer) |
-| project-review | 8 | [security-expert](#security-expert), [performance-engineer](#performance-engineer), [test-quality-guardian](#test-quality-guardian), [architecture-reviewer](#architecture-reviewer), [database-specialist](#database-specialist), [api-designer](#api-designer), [frontend-specialist](#frontend-specialist), [devops-reviewer](#devops-reviewer) |
+| audit-project | 8 | [security-expert](#security-expert), [performance-engineer](#performance-engineer), [test-quality-guardian](#test-quality-guardian), [architecture-reviewer](#architecture-reviewer), [database-specialist](#database-specialist), [api-designer](#api-designer), [frontend-specialist](#frontend-specialist), [devops-reviewer](#devops-reviewer) |
 | enhance | 7 | [enhancement-orchestrator](#enhancement-orchestrator), [plugin-enhancer](#plugin-enhancer), [agent-enhancer](#agent-enhancer), [claudemd-enhancer](#claudemd-enhancer), [docs-enhancer](#docs-enhancer), [prompt-enhancer](#prompt-enhancer), [enhancement-reporter](#enhancement-reporter) |
-| reality-check | 1 | [plan-synthesizer](#plan-synthesizer) |
+| drift-detect | 1 | [plan-synthesizer](#plan-synthesizer) |
 | External (pr-review-toolkit) | 3 | [code-reviewer](#external-agents), [silent-failure-hunter](#external-agents), [pr-test-analyzer](#external-agents) |
 
 **Design principle:** Each agent has a single responsibility. Complex work is decomposed into specialized agents that do one thing extremely well, then orchestrated together.
@@ -169,13 +169,13 @@ awesome-slash uses 29 specialized agents across 4 plugins, plus 3 external agent
 
 **What it does:**
 1. Analyzes git diff (only new changes)
-2. Invokes `/deslop-around` pipeline
+2. Invokes `/deslop` pipeline
 3. Applies HIGH certainty fixes
 4. Flags LOW certainty for review
 
 **Tools available:**
 - Bash (git only)
-- Skill (for /deslop-around)
+- Skill (for /deslop)
 - Read, Edit
 
 **Why sonnet:** Slop detection is pattern-based. Sonnet handles patterns well and is faster/cheaper than opus.
@@ -466,7 +466,7 @@ awesome-slash uses 29 specialized agents across 4 plugins, plus 3 external agent
 
 ---
 
-## reality-check Plugin Agent
+## drift-detect Plugin Agent
 
 ### plan-synthesizer
 
@@ -489,7 +489,7 @@ awesome-slash uses 29 specialized agents across 4 plugins, plus 3 external agent
 
 ---
 
-## project-review Plugin Agents
+## audit-project Plugin Agents
 
 These are role-based agents invoked via Task tool with specialized prompts. They use the built-in Explore subagent type with domain-specific instructions.
 

@@ -169,7 +169,7 @@ Both agents run in parallel:
 
 **deslop-work:**
 - Analyzes git diff (only new changes)
-- Invokes `/deslop-around` pipeline
+- Invokes `/deslop` pipeline
 - Applies HIGH certainty fixes automatically
 - Flags LOW certainty for manual review
 

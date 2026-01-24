@@ -17,9 +17,9 @@ grep -r '"version"' package.json .claude-plugin/ plugins/*/.claude-plugin/ mcp-s
 - [ ] `mcp-server/index.js` → `version: 'X.Y.Z'` (search: MCP_SERVER_VERSION)
 - [ ] `plugins/next-task/.claude-plugin/plugin.json`
 - [ ] `plugins/ship/.claude-plugin/plugin.json`
-- [ ] `plugins/deslop-around/.claude-plugin/plugin.json`
-- [ ] `plugins/project-review/.claude-plugin/plugin.json`
-- [ ] `plugins/reality-check/.claude-plugin/plugin.json`
+- [ ] `plugins/deslop/.claude-plugin/plugin.json`
+- [ ] `plugins/audit-project/.claude-plugin/plugin.json`
+- [ ] `plugins/drift-detect/.claude-plugin/plugin.json`
 - [ ] `plugins/enhance/.claude-plugin/plugin.json`
 
 ## New Plugin Checklist

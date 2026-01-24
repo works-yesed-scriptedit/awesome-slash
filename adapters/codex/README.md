@@ -19,15 +19,15 @@ cd awesome-slash
 
 ## Available Commands
 
-### 🧹 `/deslop-around` - AI Slop Cleanup
+### 🧹 `/deslop` - AI Slop Cleanup
 
 Remove debugging code, old TODOs, and other AI slop.
 
 ```bash
 codex
-> /deslop-around
-> /deslop-around apply
-> /deslop-around apply src/ 10
+> /deslop
+> /deslop apply
+> /deslop apply src/ 10
 ```
 
 **What it does:**
@@ -59,15 +59,15 @@ codex
 
 ---
 
-### 🔍 `/project-review` - Multi-Agent Code Review
+### 🔍 `/audit-project` - Multi-Agent Code Review
 
 Comprehensive review with specialized AI agents.
 
 ```bash
 codex
-> /project-review
-> /project-review --recent
-> /project-review --domain security
+> /audit-project
+> /audit-project --recent
+> /audit-project --domain security
 ```
 
 **What it does:**
@@ -115,9 +115,9 @@ The installer:
 ```
 ~/.codex/prompts/awesome-slash/
 ├── commands/
-│   ├── deslop-around.md
+│   ├── deslop.md
 │   ├── next-task.md
-│   ├── project-review.md
+│   ├── audit-project.md
 │   └── ship.md
 ├── lib/
 │   ├── platform/
@@ -139,7 +139,7 @@ The installer:
 ### Clean up debugging code
 ```bash
 codex
-> /deslop-around apply
+> /deslop apply
 
 # Changeset 1/5: Remove console.log statements
 # - src/app.js: Removed 3 console.log calls

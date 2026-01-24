@@ -26,11 +26,11 @@ AI models can write code. That's not the hard part anymore. The hard part is eve
 |---------|--------------|---------|
 | [`/next-task`](#next-task) | Picks a task, implements it, reviews it, ships it | [→](#next-task) |
 | [`/ship`](#ship) | Creates PR, monitors CI, addresses reviews, merges | [→](#ship) |
-| [`/deslop-around`](#deslop-around) | Finds and removes debug code, TODOs, AI artifacts | [→](#deslop-around) |
-| [`/project-review`](#project-review) | Multi-agent code review until issues resolved | [→](#project-review) |
-| [`/reality-check:scan`](#reality-checkscan) | Compares your docs to actual code state | [→](#reality-checkscan) |
+| [`/deslop`](#deslop) | Finds and removes debug code, TODOs, AI artifacts | [→](#deslop) |
+| [`/audit-project`](#audit-project) | Multi-agent code review until issues resolved | [→](#audit-project) |
+| [`/drift-detect`](#drift-detect) | Compares your docs to actual code state | [→](#drift-detect) |
 | [`/enhance`](#enhance) | Analyzes prompts, plugins, docs for improvements | [→](#enhance) |
-| [`/update-docs-around`](#update-docs-around) | Syncs documentation with code changes | [→](#update-docs-around) |
+| [`/sync-docs`](#sync-docs) | Syncs documentation with code changes | [→](#sync-docs) |
 
 ---
 
@@ -66,7 +66,7 @@ Every finding is tagged with a certainty level:
 - **MEDIUM** - Probably a problem. Needs context.
 - **LOW** - Might be a problem. Needs human judgment.
 
-This means you can run `/deslop-around apply` and trust that it won't break things.
+This means you can run `/deslop apply` and trust that it won't break things.
 
 ### 2. Review Loops Without Limits
 
@@ -87,7 +87,7 @@ If your session dies, `/next-task --resume` picks up exactly where you left off.
 ### 5. Token Efficiency
 
 - Compact output modes reduce tokens by 60-70%
-- `/reality-check:scan` uses JavaScript collectors + a single LLM call (77% reduction vs multi-agent approaches)
+- `/drift-detect` uses JavaScript collectors + a single LLM call (77% reduction vs multi-agent approaches)
 - Pre-indexed pattern maps give O(1) lookups instead of scanning
 
 ### 6. Cross-Platform
@@ -133,7 +133,7 @@ The slop detector returns findings with certainty levels. The agent doesn't need
 
 **5. Build tools where tools don't exist**
 
-Many tasks lack existing tools. JavaScript collectors for reality-check. Multi-pass analyzers for slop detection. The result: agents receive structured data, not raw problems to figure out.
+Many tasks lack existing tools. JavaScript collectors for drift-detect. Multi-pass analyzers for slop detection. The result: agents receive structured data, not raw problems to figure out.
 
 **6. Research-backed prompt engineering**
 
@@ -168,7 +168,7 @@ Agents don't just write code. They:
 - Update documentation (docs-updater)
 - Fix CI failures (ci-fixer)
 - Respond to review comments
-- Check for plan drift (reality-check)
+- Check for plan drift (drift-detect)
 - Analyze their own prompts (/enhance)
 
 If it can be specified, it can be delegated.
@@ -183,7 +183,7 @@ Claude Code, OpenCode, and Codex CLI have excellent built-in tooling. Read, Writ
 
 **13. Composable, not monolithic**
 
-Every command works standalone. `/deslop-around` cleans code without needing `/next-task`. `/ship` merges PRs without needing the full workflow. Pieces compose together, but each piece is useful on its own.
+Every command works standalone. `/deslop` cleans code without needing `/next-task`. `/ship` merges PRs without needing the full workflow. Pieces compose together, but each piece is useful on its own.
 
 ### What This Gets You
 
@@ -300,7 +300,7 @@ If something can't be fixed, the workflow replies explaining why and resolves th
 
 ---
 
-### /deslop-around
+### /deslop
 
 **Purpose:** Finds AI slop—debug statements, placeholder text, verbose comments, TODOs—and removes it.
 
@@ -333,9 +333,9 @@ Three phases run in sequence:
 **Usage:**
 
 ```bash
-/deslop-around              # Report only (safe)
-/deslop-around apply        # Fix HIGH certainty issues
-/deslop-around apply src/ 10  # Fix 10 issues in src/
+/deslop              # Report only (safe)
+/deslop apply        # Fix HIGH certainty issues
+/deslop apply src/ 10  # Fix 10 issues in src/
 ```
 
 **Thoroughness levels:**
@@ -348,7 +348,7 @@ Three phases run in sequence:
 
 ---
 
-### /project-review
+### /audit-project
 
 **Purpose:** Multi-agent code review that iterates until issues are resolved.
 
@@ -372,17 +372,17 @@ Findings are collected and categorized by severity (critical/high/medium/low). C
 **Usage:**
 
 ```bash
-/project-review                   # Full review
-/project-review --quick           # Single pass
-/project-review --domain security # Security focus only
-/project-review --recent          # Only recent changes
+/audit-project                   # Full review
+/audit-project --quick           # Single pass
+/audit-project --domain security # Security focus only
+/audit-project --recent          # Only recent changes
 ```
 
-[Agent reference →](./docs/reference/AGENTS.md#project-review-plugin-agents)
+[Agent reference →](./docs/reference/AGENTS.md#audit-project-plugin-agents)
 
 ---
 
-### /reality-check:scan
+### /drift-detect
 
 **Purpose:** Compares your documentation and plans to what's actually in the code.
 
@@ -410,8 +410,8 @@ Multi-agent collection wastes tokens on coordination. JavaScript collectors are 
 **Usage:**
 
 ```bash
-/reality-check:scan              # Full analysis
-/reality-check:scan --depth quick  # Quick scan
+/drift-detect              # Full analysis
+/drift-detect --depth quick  # Quick scan
 ```
 
 ---
@@ -447,7 +447,7 @@ Multi-agent collection wastes tokens on coordination. JavaScript collectors are 
 
 ---
 
-### /update-docs-around
+### /sync-docs
 
 **Purpose:** Sync documentation with actual code changes—find outdated refs, update CHANGELOG, flag stale examples.
 
@@ -483,10 +483,10 @@ You refactor `auth.js` into `auth/index.js`. Your README still says `import from
 **Usage:**
 
 ```bash
-/update-docs-around              # Check what docs need updates (safe)
-/update-docs-around apply        # Apply safe fixes
-/update-docs-around report src/  # Check docs related to src/
-/update-docs-around --all        # Full codebase scan
+/sync-docs              # Check what docs need updates (safe)
+/sync-docs apply        # Apply safe fixes
+/sync-docs report src/  # Check docs related to src/
+/sync-docs --all        # Full codebase scan
 ```
 
 **Scope options:**
@@ -502,8 +502,8 @@ You refactor `auth.js` into `auth/index.js`. Your README still says `import from
 **Standalone use:**
 
 ```bash
-/deslop-around apply       # Just clean up your code
-/update-docs-around        # Just check if docs need updates
+/deslop apply       # Just clean up your code
+/sync-docs        # Just check if docs need updates
 /ship                      # Just ship this branch
 ```
 

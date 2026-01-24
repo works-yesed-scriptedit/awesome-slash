@@ -28,7 +28,7 @@ cd awesome-slash
 **Usage:**
 ```bash
 codex
-> /deslop-around
+> /deslop
 > /next-task
 > /ship
 ```
@@ -50,7 +50,7 @@ cd awesome-slash
 **Usage:**
 ```bash
 opencode
-> /deslop-around
+> /deslop
 > /next-task bug
 > /ship --strategy rebase
 ```
@@ -117,9 +117,9 @@ Installers automatically handle these substitutions.
 
 | Command | Claude Code | Codex CLI | OpenCode | Notes |
 |---------|-------------|-----------|----------|-------|
-| `/deslop-around` | ✅ Full | ✅ Full | ✅ Full | Pure bash, 100% compatible |
+| `/deslop` | ✅ Full | ✅ Full | ✅ Full | Pure bash, 100% compatible |
 | `/next-task` | ✅ Full | ✅ Full | ✅ Full | Requires `gh` CLI |
-| `/project-review` | ✅ Full | ⚠️ Partial | ⚠️ Partial | Multi-agent may differ |
+| `/audit-project` | ✅ Full | ⚠️ Partial | ⚠️ Partial | Multi-agent may differ |
 | `/ship` | ✅ Full | ⚠️ Partial | ⚠️ Partial | CI/CD works, agents may vary |
 
 ---

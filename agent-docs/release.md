@@ -61,9 +61,9 @@ Update **ALL** these locations before release:
 | `.claude-plugin/marketplace.json` | `"version"` (appears 6x) |
 | `plugins/next-task/.claude-plugin/plugin.json` | `"version": "X.Y.Z"` |
 | `plugins/ship/.claude-plugin/plugin.json` | `"version": "X.Y.Z"` |
-| `plugins/deslop-around/.claude-plugin/plugin.json` | `"version": "X.Y.Z"` |
-| `plugins/project-review/.claude-plugin/plugin.json` | `"version": "X.Y.Z"` |
-| `plugins/reality-check/.claude-plugin/plugin.json` | `"version": "X.Y.Z"` |
+| `plugins/deslop/.claude-plugin/plugin.json` | `"version": "X.Y.Z"` |
+| `plugins/audit-project/.claude-plugin/plugin.json` | `"version": "X.Y.Z"` |
+| `plugins/drift-detect/.claude-plugin/plugin.json` | `"version": "X.Y.Z"` |
 | `CHANGELOG.md` | New entry at top |
 
 **Quick version grep:**

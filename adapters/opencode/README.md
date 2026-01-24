@@ -19,15 +19,15 @@ cd awesome-slash
 
 ## Available Commands
 
-### 🧹 `/deslop-around` - AI Slop Cleanup
+### 🧹 `/deslop` - AI Slop Cleanup
 
 Remove debugging code, old TODOs, and other AI slop.
 
 ```bash
 opencode
-> /deslop-around
-> /deslop-around apply
-> /deslop-around apply src/ 10
+> /deslop
+> /deslop apply
+> /deslop apply src/ 10
 ```
 
 **What it does:**
@@ -59,15 +59,15 @@ opencode
 
 ---
 
-### 🔍 `/project-review` - Multi-Agent Code Review
+### 🔍 `/audit-project` - Multi-Agent Code Review
 
 Comprehensive review with specialized AI agents.
 
 ```bash
 opencode
-> /project-review
-> /project-review --recent
-> /project-review --domain security
+> /audit-project
+> /audit-project --recent
+> /audit-project --domain security
 ```
 
 **What it does:**
@@ -113,7 +113,7 @@ Include file contents in your prompt:
 
 ```bash
 opencode
-> /project-review @src/main.py @tests/test_main.py
+> /audit-project @src/main.py @tests/test_main.py
 ```
 
 This adds the file contents to the context before running the review.
@@ -124,7 +124,7 @@ Include bash command output:
 
 ```bash
 opencode
-> /deslop-around apply !git diff --name-only
+> /deslop apply !git diff --name-only
 ```
 
 This runs `git diff --name-only` and includes the output in the prompt.
@@ -152,9 +152,9 @@ The installer:
 
 ```
 ~/.opencode/commands/awesome-slash/
-├── deslop-around.md
+├── deslop.md
 ├── next-task.md
-├── project-review.md
+├── audit-project.md
 ├── ship.md
 ├── lib/
 │   ├── platform/
@@ -176,7 +176,7 @@ The installer:
 ### Clean up with file filter
 ```bash
 opencode
-> /deslop-around apply @src/app.js
+> /deslop apply @src/app.js
 
 # Changeset 1/3: Remove console.log statements
 # - src/app.js: Removed 3 console.log calls
@@ -186,7 +186,7 @@ opencode
 ### Review specific files
 ```bash
 opencode
-> /project-review @src/auth.py @src/api.py
+> /audit-project @src/auth.py @src/api.py
 
 # Iteration 1: Found 4 issues (2 critical, 2 high)
 # ✓ Fixed SQL injection in auth.py:45

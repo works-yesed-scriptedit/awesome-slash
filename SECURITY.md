@@ -21,7 +21,7 @@ If you discover a security vulnerability:
 **Commands that modify your repository:**
 - `/ship` - Commits, pushes, creates and merges PRs
 - `/next-task` - Full workflow automation including code changes
-- `/deslop-around --apply` - Modifies source files
+- `/deslop --apply` - Modifies source files
 
 Always review changes with `git status` and `git diff` before running commands that commit or push.
 

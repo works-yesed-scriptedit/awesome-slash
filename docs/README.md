@@ -63,11 +63,11 @@ AI models can write code. The bottleneck is everything else—picking tasks, man
 |---------|---------|
 | `/next-task` | Task discovery → implementation → review → ship |
 | `/ship` | Push → PR → CI → reviews → merge → deploy |
-| `/deslop-around` | 3-phase slop detection and cleanup |
-| `/project-review` | Multi-agent code review |
-| `/reality-check:scan` | Compare docs to actual code |
+| `/deslop` | 3-phase slop detection and cleanup |
+| `/audit-project` | Multi-agent code review |
+| `/drift-detect` | Compare docs to actual code |
 | `/enhance` | Analyze prompts, plugins, docs |
-| `/update-docs-around` | Sync docs with code changes |
+| `/sync-docs` | Sync docs with code changes |
 
 ### State Files
 

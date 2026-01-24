@@ -56,11 +56,11 @@ awesome-slash/
 ├── plugins/                      # Claude Code plugins
 │   ├── next-task/
 │   ├── ship/
-│   ├── deslop-around/
-│   ├── project-review/
+│   ├── deslop/
+│   ├── audit-project/
 │   ├── enhance/                  # Code quality analyzers
-│   ├── reality-check/
-│   └── update-docs-around/       # Documentation sync
+│   ├── drift-detect/
+│   └── sync-docs/       # Documentation sync
 ├── bin/                          # CLI installer
 │   └── cli.js                    # Interactive installer
 ├── scripts/
@@ -146,7 +146,7 @@ awesome-slash  # Select option 1
 
 **Location:** `~/.claude/plugins/awesome-slash/`
 
-**Commands:** `/next-task`, `/ship`, `/deslop-around`, `/project-review`, `/reality-check:scan`, `/enhance`, `/update-docs-around`
+**Commands:** `/next-task`, `/ship`, `/deslop`, `/audit-project`, `/drift-detect`, `/enhance`, `/sync-docs`
 
 ### OpenCode
 
@@ -158,7 +158,7 @@ awesome-slash  # Select option 2
 - Config: `~/.config/opencode/opencode.json`
 - Commands: `~/.opencode/commands/awesome-slash/`
 
-**Commands:** `/next-task`, `/ship`, `/deslop-around`, `/project-review`, `/reality-check-scan`, `/enhance`, `/update-docs-around`
+**Commands:** `/next-task`, `/ship`, `/deslop`, `/audit-project`, `/drift-detect-scan`, `/enhance`, `/sync-docs`
 
 **MCP Config Added:**
 ```json
@@ -186,7 +186,7 @@ awesome-slash  # Select option 3
 - Config: `~/.codex/config.toml`
 - Skills: `~/.codex/skills/`
 
-**Skills:** `$next-task`, `$ship`, `$deslop-around`, `$project-review`, `$reality-check-scan`, `$enhance`, `$update-docs-around`
+**Skills:** `$next-task`, `$ship`, `$deslop`, `$audit-project`, `$drift-detect-scan`, `$enhance`, `$sync-docs`
 
 Note: Codex uses `$` prefix instead of `/`.
 
@@ -214,11 +214,11 @@ enabled = true
 |---------|-------------|----------|-----------|-------|
 | `/next-task` | ✅ Full | ✅ Full | ✅ Full | MCP tools available |
 | `/ship` | ✅ Full | ✅ Full | ✅ Full | Requires `gh` CLI |
-| `/deslop-around` | ✅ Full | ✅ Full | ✅ Full | Uses pipeline.js |
-| `/project-review` | ✅ Full | ✅ Full | ✅ Full | Multi-agent review |
-| `/reality-check:scan` | ✅ Full | ✅ Full | ✅ Full | JS collectors + Opus |
+| `/deslop` | ✅ Full | ✅ Full | ✅ Full | Uses pipeline.js |
+| `/audit-project` | ✅ Full | ✅ Full | ✅ Full | Multi-agent review |
+| `/drift-detect` | ✅ Full | ✅ Full | ✅ Full | JS collectors + Opus |
 | `/enhance` | ✅ Full | ✅ Full | ✅ Full | Orchestrates all enhancers |
-| `/update-docs-around` | ✅ Full | ✅ Full | ✅ Full | Documentation sync |
+| `/sync-docs` | ✅ Full | ✅ Full | ✅ Full | Documentation sync |
 
 ## Knowledge Base
 

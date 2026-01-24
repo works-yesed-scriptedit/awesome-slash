@@ -25,11 +25,11 @@ Add the marketplace and install plugins directly in Claude Code:
 /plugin marketplace add avifenesh/awesome-slash
 /plugin install next-task@awesome-slash
 /plugin install ship@awesome-slash
-/plugin install deslop-around@awesome-slash
-/plugin install project-review@awesome-slash
-/plugin install reality-check@awesome-slash
+/plugin install deslop@awesome-slash
+/plugin install audit-project@awesome-slash
+/plugin install drift-detect@awesome-slash
 /plugin install enhance@awesome-slash
-/plugin install update-docs-around@awesome-slash
+/plugin install sync-docs@awesome-slash
 ```
 
 **Scopes** (optional):
@@ -115,11 +115,11 @@ Select your platform when prompted. The installer configures:
 You should see commands:
 - `/next-task` - Master workflow orchestrator
 - `/ship` - Complete PR workflow
-- `/deslop-around` - AI slop cleanup
-- `/project-review` - Multi-agent code review
-- `/reality-check:scan` - Plan drift detection
+- `/deslop` - AI slop cleanup
+- `/audit-project` - Multi-agent code review
+- `/drift-detect` - Plan drift detection
 - `/enhance` - Enhancement analyzer suite
-- `/update-docs-around` - Documentation sync
+- `/sync-docs` - Documentation sync
 
 ### OpenCode / Codex
 

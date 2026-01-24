@@ -115,10 +115,10 @@ git add app.js
 git commit -m "Add test file"
 ```
 
-### Test `/deslop-around`
+### Test `/deslop`
 
 ```text
-/deslop-around
+/deslop
 ```
 
 **Expected**:
@@ -127,7 +127,7 @@ git commit -m "Add test file"
 - Does not modify files in report mode
 
 ```text
-/deslop-around apply . 3
+/deslop apply . 3
 ```
 
 **Expected**:
@@ -159,10 +159,10 @@ gh issue create --title "Fix timeout bug" --body "Users reporting timeouts"
 
 **Expected**: Only bug-labeled issues
 
-### Test `/project-review`
+### Test `/audit-project`
 
 ```text
-/project-review
+/audit-project
 ```
 
 **Expected**:
@@ -198,10 +198,10 @@ git add app.js
 - Waits for CI and reviews
 - Merges PR and cleans up
 
-### Test `/update-docs-around`
+### Test `/sync-docs`
 
 ```text
-/update-docs-around
+/sync-docs
 ```
 
 **Expected**:
@@ -218,10 +218,10 @@ git add app.js
 - Runs tests/build/lint checks where applicable
 - Reports pass/fail summary
 
-### Test `/reality-check:scan`
+### Test `/drift-detect`
 
 ```text
-/reality-check:scan
+/drift-detect
 ```
 
 **Expected**:
@@ -261,13 +261,13 @@ node /full/path/to/awesome-slash/lib/platform/detect-platform.js
 
 - [ ] Platform detection works on your project
 - [ ] Tool verification shows correct tools
-- [ ] `/deslop-around` finds and fixes slop
+- [ ] `/deslop` finds and fixes slop
 - [ ] `/next-task` lists prioritized tasks
-- [ ] `/project-review` finds real issues
+- [ ] `/audit-project` finds real issues
 - [ ] `/ship` creates PR and merges successfully
-- [ ] `/update-docs-around` reports documentation issues
+- [ ] `/sync-docs` reports documentation issues
 - [ ] `/delivery-approval` runs validation checks
-- [ ] `/reality-check:scan` produces a drift report
+- [ ] `/drift-detect` produces a drift report
 
 ---
 
@@ -280,8 +280,8 @@ Command runtime varies based on:
 - Number of files to analyze
 
 **Expected behavior:**
-- `/deslop-around`: Fast codebase scan
-- `/project-review`: Thorough multi-agent analysis
+- `/deslop`: Fast codebase scan
+- `/audit-project`: Thorough multi-agent analysis
 - `/next-task`: Full autonomous workflow with multiple phases
 - `/ship`: Includes CI wait time and deployment validation
 

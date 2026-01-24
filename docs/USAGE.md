@@ -25,11 +25,11 @@ You shouldn't have to repeat the same requests every session. These commands han
 |---------|---------|-------|
 | `/next-task` | Find and implement prioritized tasks | Full autonomous workflow |
 | `/ship` | Complete PR workflow to production | CI, deployment, validation |
-| `/deslop-around` | Clean up debugging code, TODOs | Fast codebase scan |
-| `/project-review` | Multi-agent code review | Thorough analysis |
-| `/reality-check:scan` | Compare docs to actual code | Plan drift detection |
+| `/deslop` | Clean up debugging code, TODOs | Fast codebase scan |
+| `/audit-project` | Multi-agent code review | Thorough analysis |
+| `/drift-detect` | Compare docs to actual code | Plan drift detection |
 | `/enhance` | Analyze prompts, plugins, docs | Quality improvement |
-| `/update-docs-around` | Sync docs with code changes | Documentation sync |
+| `/sync-docs` | Sync docs with code changes | Documentation sync |
 
 ---
 
@@ -43,13 +43,13 @@ You shouldn't have to repeat the same requests every session. These commands han
 
 **Before Committing:**
 ```bash
-/deslop-around apply
+/deslop apply
 # Cleans up debugging code
 ```
 
 **Before Creating PR:**
 ```bash
-/project-review
+/audit-project
 # Catches issues early
 ```
 
@@ -63,14 +63,14 @@ You shouldn't have to repeat the same requests every session. These commands han
 
 ## Command Reference
 
-### `/deslop-around`
+### `/deslop`
 
 Remove debugging code, old TODOs, and AI slop from your codebase with a 3-phase detection pipeline.
 
 ```bash
-/deslop-around                    # Report mode (safe, no changes)
-/deslop-around apply              # Apply fixes automatically
-/deslop-around apply src/ 10      # Fix 10 issues in src/ only
+/deslop                    # Report mode (safe, no changes)
+/deslop apply              # Apply fixes automatically
+/deslop apply src/ 10      # Fix 10 issues in src/ only
 ```
 
 **Architecture:**
@@ -131,15 +131,15 @@ Complete task-to-production automation with state management.
 
 ---
 
-### `/project-review`
+### `/audit-project`
 
 Comprehensive multi-agent code review that adapts to your project.
 
 ```bash
-/project-review                   # Full review with all agents
-/project-review --quick           # Single-pass review
-/project-review --domain security # Security review only
-/project-review --recent          # Only recent changes
+/audit-project                   # Full review with all agents
+/audit-project --quick           # Single-pass review
+/audit-project --domain security # Security review only
+/audit-project --recent          # Only recent changes
 ```
 
 **8 Specialized Roles (2 always active, 6 conditional):**
@@ -159,15 +159,15 @@ Only relevant agents run based on your codebase - no wasted analysis.
 
 ---
 
-### `/update-docs-around`
+### `/sync-docs`
 
 Sync documentation with actual code state. Find outdated references, update CHANGELOG, flag stale examples.
 
 ```bash
-/update-docs-around                    # Report mode (safe, no changes)
-/update-docs-around apply              # Apply auto-fixable issues
-/update-docs-around report src/        # Check docs related to src/
-/update-docs-around --all              # Full codebase scan
+/sync-docs                    # Report mode (safe, no changes)
+/sync-docs apply              # Apply auto-fixable issues
+/sync-docs report src/        # Check docs related to src/
+/sync-docs --all              # Full codebase scan
 ```
 
 **Phases:**
@@ -221,7 +221,7 @@ Complete PR workflow from commit to production.
 **Scenario**: Console.log statements and TODOs scattered in your code.
 
 ```text
-You: /deslop-around
+You: /deslop
 
 Claude:
 Detected: Node.js project, single-branch workflow
@@ -297,7 +297,7 @@ Implementing fix...
 **Scenario**: Finished login feature, want thorough review.
 
 ```text
-You: /project-review
+You: /audit-project
 
 Claude:
 Detected: React + TypeScript project
@@ -386,7 +386,7 @@ Phase 9-10: Deploying to production...
 **Scenario**: Quick security check before release.
 
 ```text
-You: /project-review --domain security --quick
+You: /audit-project --domain security --quick
 
 Claude:
 Running focused security review...
@@ -424,17 +424,17 @@ Security issues resolved!
 ```text
 1. /next-task --implement    # Pick task and start
 2. *develop feature*
-3. /deslop-around apply      # Clean up
-4. /project-review           # Get feedback
+3. /deslop apply      # Clean up
+4. /audit-project           # Get feedback
 5. /ship                     # Deploy
 ```
 
 ### Code Review Flow
 
 ```text
-1. /project-review --quick   # Quick check
+1. /audit-project --quick   # Quick check
 2. Fix issues
-3. /project-review           # Full review
+3. /audit-project           # Full review
 4. Iterate until clean
 5. /ship                     # Deploy
 ```
@@ -442,10 +442,10 @@ Security issues resolved!
 ### Maintenance Day
 
 ```text
-1. /deslop-around report     # See all slop
-2. /deslop-around apply      # Clean it up
+1. /deslop report     # See all slop
+2. /deslop apply      # Clean it up
 3. /next-task                # See priorities
-4. /project-review           # Full audit
+4. /audit-project           # Full audit
 ```
 
 ### Ship Your Work
@@ -464,10 +464,10 @@ Security issues resolved!
 Don't start with `/ship` on production immediately!
 
 **Try this order:**
-1. `/deslop-around report` - Just look, no changes
+1. `/deslop report` - Just look, no changes
 2. `/next-task` - See task prioritization
-3. `/deslop-around apply` - Make safe changes
-4. `/project-review --quick` - Quick feedback
+3. `/deslop apply` - Make safe changes
+4. `/audit-project --quick` - Quick feedback
 5. `/ship --dry-run` - Preview the workflow
 6. `/ship` - Full deployment
 
@@ -495,7 +495,7 @@ Here's what /ship will do:
 ### Tip 3: Combine Commands
 
 ```text
-You: Run /deslop-around, then /project-review, then /ship
+You: Run /deslop, then /audit-project, then /ship
 
 Claude:
 1. Cleaning up slop... ✓ Removed 5 issues
@@ -509,8 +509,8 @@ Your code is cleaned, reviewed, and deployed!
 
 ```bash
 /next-task bug              # Focus on bugs only
-/project-review --domain security   # Security review only
-/deslop-around apply src/ 10        # Limit scope
+/audit-project --domain security   # Security review only
+/deslop apply src/ 10        # Limit scope
 ```
 
 ---
@@ -567,6 +567,6 @@ Every finding includes:
 
 ## Next Steps
 
-- **Start with**: `/deslop-around report` - safest command, immediate value
+- **Start with**: `/deslop report` - safest command, immediate value
 - **For issues**: https://github.com/avifenesh/awesome-slash/issues
 - **Contributing**: See [CONTRIBUTING.md](../CONTRIBUTING.md)

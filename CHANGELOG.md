@@ -7,14 +7,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.0] - 2025-01-24
+
+### Breaking Changes - Command Renames
+All command names have been simplified for clarity:
+
+| Old Command | New Command | Reason |
+|-------------|-------------|--------|
+| `/deslop-around` | `/deslop` | "-around" suffix unnecessary |
+| `/update-docs-around` | `/sync-docs` | Clearer, describes the action |
+| `/reality-check:scan` | `/drift-detect` | Describes what it finds |
+| `/project-review` | `/audit-project` | Indicates deep analysis |
+
+**Migration:**
+- Update any scripts or aliases referencing old command names
+- Plugin directories renamed accordingly
+- All documentation updated to reflect new names
+
 ### Added
-- **Standalone /update-docs-around Command** - New plugin for documentation sync outside main workflow
+- **Standalone /sync-docs Command** - New plugin for documentation sync outside main workflow
   - Finds docs that reference changed files (imports, filenames, paths)
   - Checks for outdated imports, removed exports, version mismatches
   - Identifies commits that may need CHANGELOG entries
   - Two modes: `report` (default, safe) and `apply` (auto-fix safe issues)
   - Scope options: `--recent` (default), `--all`, or specific path
   - Works standalone or integrated with `/next-task` workflow
+
+### Changed
+- **Plugin directory structure** - Renamed to match new command names:
+  - `plugins/deslop-around/` → `plugins/deslop/`
+  - `plugins/update-docs-around/` → `plugins/sync-docs/`
+  - `plugins/reality-check/` → `plugins/drift-detect/`
+  - `plugins/project-review/` → `plugins/audit-project/`
+- **Library directory** - `lib/reality-check/` → `lib/drift-detect/`
 
 ## [2.10.1] - 2025-01-24
 
@@ -66,7 +91,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.9.1] - 2025-01-23
 
 ### Changed
-- **deslop-around skill** - Refactored to follow skill best practices
+- **deslop skill** - Refactored to follow skill best practices
   - Added `scripts/detect.js` CLI runner to invoke pipeline (instead of describing logic for LLM)
   - Added `references/slop-categories.md` for progressive disclosure
   - Moved constraints to top with explicit priority order (addresses "lost-in-the-middle")
@@ -246,13 +271,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **Phase 3**: LLM handoff with structured findings via `formatHandoffPrompt()`
   - Certainty levels: HIGH (regex), MEDIUM (multi-pass), LOW (CLI tools)
   - Thoroughness levels: quick (regex only), normal (+multi-pass), deep (+CLI)
-  - Mode inheritance from deslop-around: report (analyze only) vs apply (fix issues)
+  - Mode inheritance from deslop: report (analyze only) vs apply (fix issues)
   - New `runPipeline()` function in lib/patterns/pipeline.js
   - New `formatHandoffPrompt()` for token-efficient LLM handoff (compact output grouped by certainty)
   - New lib/patterns/cli-enhancers.js for optional tool detection
   - Graceful degradation when CLI tools not installed
 
-- **Buzzword Inflation Detection** - New project-level analyzer for `/deslop-around` command (#113)
+- **Buzzword Inflation Detection** - New project-level analyzer for `/deslop` command (#113)
   - Detects quality claims in documentation without supporting code evidence
   - 6 buzzword categories: production, enterprise, security, scale, reliability, completeness
   - Each category has specific evidence patterns to validate claims:
@@ -268,7 +293,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - New `analyzeBuzzwordInflation()` function in slop-analyzers.js
   - Comprehensive test suite with 50+ test cases
 
-- **Verbosity Detection** - New patterns for `/deslop-around` command to detect AI-generated verbose code
+- **Verbosity Detection** - New patterns for `/deslop` command to detect AI-generated verbose code
   - `verbosity_preambles` - AI preamble phrases in comments (e.g., "Certainly!", "I'd be happy to help")
   - `verbosity_buzzwords` - Marketing buzzwords that obscure meaning (e.g., "synergize", "paradigm shift", "game-changing")
     - Excludes standard SE terminology like "leverage", "utilize", "orchestrate"
@@ -277,7 +302,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Multi-language support for comment detection (JavaScript, Python, Rust, Go)
   - New `analyzeVerbosityRatio()` function in slop-analyzers.js
 
-- **Over-Engineering Metrics Detection** - New project-level analysis for `/deslop-around` command
+- **Over-Engineering Metrics Detection** - New project-level analysis for `/deslop` command
   - Detects three signals of over-engineering (the #1 AI slop indicator):
     - File proliferation: >20 files per export
     - Code density: >500 lines per export
@@ -287,7 +312,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Returns metrics with violations and severity (HIGH/MEDIUM/OK)
   - New `analyzeOverEngineering()` function in slop-analyzers.js
   - Severity `high`, autoFix `flag` (cannot auto-fix architectural issues)
-- **Generic Naming Detection** - New patterns for `/deslop-around` command to flag overly generic variable names
+- **Generic Naming Detection** - New patterns for `/deslop` command to flag overly generic variable names
   - JavaScript/TypeScript: `const/let/var data`, `result`, `item`, `temp`, `value`, `response`, etc.
   - Python: Generic assignments (excludes for-in loop variables)
   - Rust: `let`/`let mut` with generic names
@@ -306,7 +331,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **File Path Reference Detection** - New `file_path_references` pattern flags file path references in comments that may become outdated (e.g., `// see auth-flow.md`)
   - Severity `low`, autoFix `flag` (may have valid documentation purpose)
 - **Multi-Pass Pattern Helper** - New `getMultiPassPatterns()` function to retrieve patterns requiring structural analysis
-- **Placeholder Function Detection** - New patterns for `/deslop-around` command (#98)
+- **Placeholder Function Detection** - New patterns for `/deslop` command (#98)
   - JavaScript/TypeScript: stub returns (0, true, false, null, [], {}), empty functions, throw Error("TODO")
   - Rust: todo!(), unimplemented!(), panic!("TODO")
   - Python: raise NotImplementedError, pass-only functions, ellipsis bodies
@@ -348,7 +373,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Structured handoff via `formatHandoffPrompt()` reduces agent prompt verbosity
   - Clearer separation: pipeline collects findings, agent makes decisions
   - Improved maintainability with declarative tool instructions
-- **deslop-around Command** - Enhanced documentation for mode usage and pattern library (#116)
+- **deslop Command** - Enhanced documentation for mode usage and pattern library (#116)
   - Clarified report vs apply mode behavior
   - Added references to pattern library categories
   - Updated code smell detection section with latest patterns
@@ -398,29 +423,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Fixed Codex to use proper skills format with `SKILL.md` (name + description)
   - Fixed MCP server dependency installation
   - Cleans up deprecated files and old wrong locations on install/update
-  - Added all 7 skills: next-task, ship, deslop-around, project-review, reality-check-scan, delivery-approval, update-docs-around
+  - Added all 7 skills: next-task, ship, deslop, audit-project, drift-detect-scan, delivery-approval, sync-docs
 
 ### Changed
 - **Reality Check Architectural Refactor** - Replaced 4 LLM agents with JS collectors + single Opus call (#97)
-  - New `lib/reality-check/collectors.js` handles all data collection with pure JavaScript
+  - New `lib/drift-detect/collectors.js` handles all data collection with pure JavaScript
   - Deleted `issue-scanner.md`, `doc-analyzer.md`, `code-explorer.md` agents
-  - Deleted `reality-check-state.js` (510 lines of unnecessary state management)
+  - Deleted `drift-detect-state.js` (510 lines of unnecessary state management)
   - Enhanced `plan-synthesizer.md` to receive raw data and perform deep semantic analysis
-  - ~77% token reduction for reality-check scans
+  - ~77% token reduction for drift-detect scans
   - Command flags replace interactive settings: `--sources`, `--depth`, `--output`, `--file`
 - **Package Size** - Reduced npm package size by excluding adapters and dev scripts
 
 ### Breaking Changes
-- `.claude/reality-check.local.md` settings file is no longer used
-- Use command flags instead: `/reality-check:scan --sources github,docs --depth quick`
-- `/reality-check:set` command removed (use flags instead)
+- `.claude/drift-detect.local.md` settings file is no longer used
+- Use command flags instead: `/drift-detect --sources github,docs --depth quick`
+- `/drift-detect:set` command removed (use flags instead)
 
 ### Removed
-- `plugins/reality-check/agents/issue-scanner.md`
-- `plugins/reality-check/agents/doc-analyzer.md`
-- `plugins/reality-check/agents/code-explorer.md`
-- `plugins/reality-check/lib/state/reality-check-state.js`
-- `plugins/reality-check/commands/set.md` (use command flags instead)
+- `plugins/drift-detect/agents/issue-scanner.md`
+- `plugins/drift-detect/agents/doc-analyzer.md`
+- `plugins/drift-detect/agents/code-explorer.md`
+- `plugins/drift-detect/lib/state/drift-detect-state.js`
+- `plugins/drift-detect/commands/set.md` (use command flags instead)
 - `adapters/` and `scripts/install/` from npm package (CLI handles installation)
 
 ## [2.5.1] - 2026-01-19
@@ -609,7 +634,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - **Documentation sync** - Fixed outdated references across all documentation:
-  - Fixed plugin install commands in adapters/README.md (`deslop-around` → `awesome-slash`)
+  - Fixed plugin install commands in adapters/README.md (`deslop` → `awesome-slash`)
   - Updated phase counts in CROSS_PLATFORM.md (`17-phase` → `13/12-phase`)
   - Completed agent list in CROSS_PLATFORM.md (8 → 18 agents)
   - Updated version references throughout docs
@@ -672,9 +697,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Cross-references documented vs implemented features
   - Generates prioritized reconstruction plans (immediate, short-term, medium-term, backlog)
   - Interactive first-run setup with checkbox configuration
-  - Configurable via `.claude/reality-check.local.md` settings file
-  - Commands: `/reality-check:scan`, `/reality-check:set`
-  - Includes `reality-analysis` skill for drift detection patterns and prioritization frameworks
+  - Configurable via `.claude/drift-detect.local.md` settings file
+  - Commands: `/drift-detect`, `/drift-detect:set`
+  - Includes `drift-analysis` skill for drift detection patterns and prioritization frameworks
 
 ### Improved
 - **Test Coverage**: Enhanced `workflow-state.test.js` to verify state immutability after failed operations (#60)
@@ -730,7 +755,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - **Progressive Disclosure Refactoring** for reduced context consumption
   - `ship.md`: 1697 → 337 lines (-80%), split into 4 files
-  - `project-review.md`: 929 → 273 lines (-71%), split into 3 files
+  - `audit-project.md`: 929 → 273 lines (-71%), split into 3 files
   - All core command files now under 500 line limit per Claude Code best practices
   - Reference files loaded on-demand, reducing base context consumption
 - **Explicit Workflow State Updates** in next-task agents
@@ -846,7 +871,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `delivery-validator.md` - Autonomous delivery validation (NOT manual approval)
   - `docs-updater.md` - Update docs related to changes after delivery validation
 - **New Commands**
-  - `/update-docs-around` - Standalone docs sync command for entire repo
+  - `/sync-docs` - Standalone docs sync command for entire repo
   - `/delivery-approval` - Standalone delivery validation command
 - **SubagentStop Hooks** in plugin.json for automatic workflow phase transitions
 - **Workflow Automation** - No human intervention from plan approval until policy stop point
@@ -960,8 +985,8 @@ Initial release with full feature set.
   - Comprehensive test suite (21 tests)
   - Uses opus model for quality multiplier effect
 - `/next-task` command for intelligent task prioritization
-- `/deslop-around` command for AI slop cleanup
-- `/project-review` command for multi-agent code review (with Phase 8 GitHub issue creation)
+- `/deslop` command for AI slop cleanup
+- `/audit-project` command for multi-agent code review (with Phase 8 GitHub issue creation)
 - `/pr-merge` command for intelligent PR merge procedure
 - Platform detection scripts with caching
 - Tool verification system

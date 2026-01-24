@@ -51,9 +51,9 @@ lib/                    # Shared library (canonical source)
 plugins/                # Claude Code plugins
 ├── next-task/          # Master workflow (14 agents)
 ├── ship/               # PR workflow
-├── deslop-around/      # AI slop cleanup
-├── project-review/     # Multi-agent review
-└── reality-check/      # Plan drift detection
+├── deslop/      # AI slop cleanup
+├── audit-project/     # Multi-agent review
+└── drift-detect/      # Plan drift detection
 
 adapters/               # Platform-specific adapters
 ├── opencode-plugin/    # Native OpenCode plugin (auto-thinking, hooks)

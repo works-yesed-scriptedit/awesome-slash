@@ -37,14 +37,14 @@ When user runs `awesome-slash` and selects OpenCode:
 ```
 ~/.awesome-slash/           # Full package copy
 ~/.opencode/commands/awesome-slash/
-├── deslop-around.md        # From plugins/deslop-around/commands/
+├── deslop.md        # From plugins/deslop/commands/
 ├── enhance.md              # From plugins/enhance/commands/
 ├── next-task.md            # From plugins/next-task/commands/
 ├── delivery-approval.md
-├── update-docs-around.md
-├── project-review.md       # From plugins/project-review/commands/
+├── sync-docs.md
+├── audit-project.md       # From plugins/audit-project/commands/
 ├── ship.md                 # From plugins/ship/commands/
-└── reality-check-scan.md   # From plugins/reality-check/commands/scan.md
+└── drift-detect-scan.md   # From plugins/drift-detect/commands/scan.md
 
 ~/.config/opencode/opencode.json  # MCP config added
 ```
@@ -450,7 +450,7 @@ workflow_status
 ```bash
 # Should list awesome-slash commands
 /next-task
-/deslop-around
+/deslop
 /ship
 ```
 

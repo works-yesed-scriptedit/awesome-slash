@@ -37,14 +37,14 @@ When user runs `awesome-slash` and selects Codex:
 ```
 ~/.awesome-slash/           # Full package copy
 ~/.codex/skills/
-├── deslop-around/SKILL.md
+├── deslop/SKILL.md
 ├── enhance/SKILL.md
 ├── next-task/SKILL.md
 ├── delivery-approval/SKILL.md
-├── update-docs-around/SKILL.md
-├── project-review/SKILL.md
+├── sync-docs/SKILL.md
+├── audit-project/SKILL.md
 ├── ship/SKILL.md
-└── reality-check-scan/SKILL.md
+└── drift-detect-scan/SKILL.md
 
 ~/.codex/config.toml        # MCP config added
 ```
@@ -511,7 +511,7 @@ workflow_status
 ```bash
 # Should list installed skills
 $next-task
-$deslop-around
+$deslop
 $ship
 ```
 

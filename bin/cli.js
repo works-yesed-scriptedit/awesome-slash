@@ -135,7 +135,7 @@ function installForClaude() {
     }
 
     // PLUGINS_ARRAY - Install or update plugins
-    const plugins = ['next-task', 'ship', 'deslop-around', 'project-review', 'reality-check', 'enhance', 'update-docs-around'];
+    const plugins = ['next-task', 'ship', 'deslop', 'audit-project', 'drift-detect', 'enhance', 'sync-docs'];
     for (const plugin of plugins) {
       console.log(`  Installing ${plugin}...`);
       try {
@@ -152,7 +152,7 @@ function installForClaude() {
     }
 
     console.log('\n✅ Claude Code installation complete!\n');
-    console.log('Commands: /next-task, /ship, /deslop-around, /project-review, /reality-check:scan, /enhance');
+    console.log('Commands: /next-task, /ship, /deslop, /audit-project, /drift-detect, /enhance');
     return true;
   } catch (err) {
     console.log('❌ Auto-install failed. Manual installation:');
@@ -217,7 +217,7 @@ function installForOpenCode(installDir) {
   }
 
   // Remove old/deprecated command files
-  const oldCommands = ['reality-check-set.md', 'pr-merge.md'];
+  const oldCommands = ['drift-detect-set.md', 'pr-merge.md'];
   for (const oldCmd of oldCommands) {
     const oldPath = path.join(commandsDir, oldCmd);
     if (fs.existsSync(oldPath)) {
@@ -234,14 +234,14 @@ function installForOpenCode(installDir) {
 
   // OPENCODE_COMMAND_MAPPINGS - Sync command files
   const commandMappings = [
-    ['deslop-around.md', 'deslop-around', 'deslop-around.md'],
+    ['deslop.md', 'deslop', 'deslop.md'],
     ['enhance.md', 'enhance', 'enhance.md'],
     ['next-task.md', 'next-task', 'next-task.md'],
     ['delivery-approval.md', 'next-task', 'delivery-approval.md'],
-    ['update-docs-around.md', 'update-docs-around', 'update-docs-around.md'],
-    ['project-review.md', 'project-review', 'project-review.md'],
+    ['sync-docs.md', 'sync-docs', 'sync-docs.md'],
+    ['audit-project.md', 'audit-project', 'audit-project.md'],
     ['ship.md', 'ship', 'ship.md'],
-    ['reality-check-scan.md', 'reality-check', 'scan.md']
+    ['drift-detect.md', 'drift-detect', 'drift-detect.md']
   ];
 
   // Helper function to transform content for OpenCode
@@ -303,7 +303,7 @@ function installForOpenCode(installDir) {
   fs.mkdirSync(agentsDir, { recursive: true });
 
   console.log('  Installing agents for OpenCode...');
-  const pluginDirs = ['next-task', 'enhance', 'project-review', 'reality-check', 'ship', 'deslop-around'];
+  const pluginDirs = ['next-task', 'enhance', 'audit-project', 'drift-detect', 'ship', 'deslop'];
   let agentCount = 0;
 
   for (const pluginName of pluginDirs) {
@@ -380,7 +380,7 @@ function installForOpenCode(installDir) {
   console.log(`   Commands: ${commandsDir}`);
   console.log(`   Agents: ${agentsDir}`);
   console.log(`   Plugin: ${pluginDir}`);
-  console.log('   Access via: /next-task, /ship, /deslop-around, /project-review, /reality-check-scan, /enhance');
+  console.log('   Access via: /next-task, /ship, /deslop, /audit-project, /drift-detect, /enhance, /sync-docs');
   console.log('   MCP tools: workflow_status, workflow_start, workflow_resume, task_discover, review_code, slop_detect, enhance_analyze');
   console.log('   Native features: Auto-thinking selection, workflow enforcement, session compaction\n');
   return true;
@@ -447,9 +447,9 @@ AI_STATE_DIR = ".codex"
   // Remove old/deprecated prompts directory if it exists
   const oldPromptsDir = path.join(configDir, 'prompts');
   if (fs.existsSync(oldPromptsDir)) {
-    const oldFiles = ['next-task.md', 'ship.md', 'deslop-around.md', 'project-review.md',
-                      'reality-check-scan.md', 'delivery-approval.md', 'update-docs-around.md',
-                      'reality-check-set.md', 'pr-merge.md'];
+    const oldFiles = ['next-task.md', 'ship.md', 'deslop.md', 'audit-project.md',
+                      'drift-detect.md', 'delivery-approval.md', 'sync-docs.md',
+                      'drift-detect-set.md', 'pr-merge.md'];
     for (const file of oldFiles) {
       const oldPath = path.join(oldPromptsDir, file);
       if (fs.existsSync(oldPath)) {
@@ -460,7 +460,7 @@ AI_STATE_DIR = ".codex"
   }
 
   // Remove old/deprecated skills
-  const oldSkillDirs = ['deslop', 'review', 'reality-check-set', 'pr-merge'];
+  const oldSkillDirs = ['deslop', 'review', 'drift-detect-set', 'pr-merge'];
   for (const dir of oldSkillDirs) {
     const oldPath = path.join(skillsDir, dir);
     if (fs.existsSync(oldPath)) {
@@ -479,15 +479,15 @@ AI_STATE_DIR = ".codex"
       'Use when user asks to "find next task", "what should I work on", "automate workflow", "implement and ship", "run next-task". Orchestrates complete task-to-production workflow: discovery, implementation, review, and delivery.'],
     ['ship', 'ship', 'ship.md',
       'Use when user asks to "ship this", "create PR", "merge to main", "deploy changes", "push to production". Complete PR workflow: commit, create PR, monitor CI, merge, deploy, validate.'],
-    ['deslop-around', 'deslop-around', 'deslop-around.md',
+    ['deslop', 'deslop', 'deslop.md',
       'Use when user asks to "clean up slop", "remove AI artifacts", "deslop the codebase", "find debug statements", "remove console.logs", "repo hygiene". Detects and removes AI-generated slop patterns.'],
-    ['project-review', 'project-review', 'project-review.md',
+    ['audit-project', 'audit-project', 'audit-project.md',
       'Use when user asks to "review my code", "check for issues", "run code review", "analyze PR quality". Multi-agent iterative review that loops until all critical/high issues are resolved.'],
-    ['reality-check-scan', 'reality-check', 'scan.md',
+    ['drift-detect', 'drift-detect', 'drift-detect.md',
       'Use when user asks to "check plan drift", "compare docs to code", "verify roadmap", "scan for reality gaps". Analyzes documentation vs actual code to detect drift and outdated plans.'],
     ['delivery-approval', 'next-task', 'delivery-approval.md',
       'Use when user asks to "validate delivery", "approve for shipping", "check if ready to ship", "verify task completion". Autonomous validation that tests pass, build succeeds, and requirements are met.'],
-    ['update-docs-around', 'update-docs-around', 'update-docs-around.md',
+    ['sync-docs', 'sync-docs', 'sync-docs.md',
       'Use when user asks to "update docs", "sync documentation", "fix outdated docs", "refresh README". Compares documentation to actual code and fixes discrepancies.']
   ];
 
@@ -535,7 +535,7 @@ AI_STATE_DIR = ".codex"
   console.log('\n✅ Codex CLI installation complete!');
   console.log(`   Config: ${configPath}`);
   console.log(`   Skills: ${skillsDir}`);
-  console.log('   Access via: $next-task, $ship, $deslop-around, etc.');
+  console.log('   Access via: $next-task, $ship, $deslop, etc.');
   console.log('   MCP tools: workflow_status, workflow_start, workflow_resume, task_discover, review_code, slop_detect, enhance_analyze\n');
   return true;
 }
@@ -586,7 +586,7 @@ Usage:
   awesome-slash --help       Show this help
 
 Supported Platforms:
-  1) Claude Code  - /next-task, /ship, /deslop-around, /project-review
+  1) Claude Code  - /next-task, /ship, /deslop, /audit-project
   2) OpenCode     - Same commands + MCP tools
   3) Codex CLI    - $next-task, $ship, etc. ($ prefix)
 

@@ -65,11 +65,11 @@ claude --plugin-dir /path/to/awesome-slash/plugins/next-task
 ### Available Commands
 - `/next-task` - Master workflow orchestrator
 - `/ship` - Complete PR workflow
-- `/deslop-around` - AI slop cleanup
-- `/project-review` - Multi-agent code review
-- `/reality-check:scan` - Plan drift detection
+- `/deslop` - AI slop cleanup
+- `/audit-project` - Multi-agent code review
+- `/drift-detect` - Plan drift detection
 - `/enhance` - Enhancement analyzer suite
-- `/update-docs-around` - Documentation sync
+- `/sync-docs` - Documentation sync
 
 ### Available Agents (29 Total)
 
@@ -103,7 +103,7 @@ claude --plugin-dir /path/to/awesome-slash/plugins/next-task
 | prompt-enhancer | opus | General prompt quality |
 | enhancement-reporter | sonnet | Format unified reports |
 
-**reality-check: Drift Detection (1 agent)**
+**drift-detect: Drift Detection (1 agent)**
 
 | Agent | Model | Purpose |
 |-------|-------|---------|
@@ -122,7 +122,7 @@ awesome-slash  # Select option 2 for OpenCode
 
 This installs:
 - MCP server for tools (`workflow_status`, `slop_detect`, etc.)
-- Slash commands (`/next-task`, `/ship`, `/deslop-around`, `/project-review`, `/update-docs-around`)
+- Slash commands (`/next-task`, `/ship`, `/deslop`, `/audit-project`, `/sync-docs`)
 - **Native OpenCode plugin** with advanced features:
 
 ### Native Plugin Features
@@ -220,7 +220,7 @@ npm install -g awesome-slash@latest
 awesome-slash  # Select option 3 for Codex CLI
 ```
 
-This installs MCP server config in `~/.codex/config.toml` and skills (`$next-task`, `$ship`, `$deslop-around`, `$project-review`, `$update-docs-around`).
+This installs MCP server config in `~/.codex/config.toml` and skills (`$next-task`, `$ship`, `$deslop`, `$audit-project`, `$sync-docs`).
 
 ### Option 2: Manual MCP Config
 
@@ -281,7 +281,7 @@ lib/
 │   ├── slop-patterns.js       # Regex patterns (HIGH certainty)
 │   └── slop-analyzers.js      # Multi-pass analyzers (MEDIUM)
 ├── platform/                  # Project type detection
-├── reality-check/             # Drift detection collectors
+├── drift-detect/             # Drift detection collectors
 ├── schemas/                   # JSON schemas for validation
 ├── sources/                   # Task source discovery
 ├── state/                     # Workflow state management

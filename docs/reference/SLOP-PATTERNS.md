@@ -1,6 +1,6 @@
 # Slop Pattern Reference
 
-Complete reference for patterns detected by `/deslop-around`.
+Complete reference for patterns detected by `/deslop`.
 
 **TL;DR:** 60+ patterns across 5 languages. HIGH certainty = safe to auto-fix. Uses regex (fast) not LLM calls.
 
@@ -21,7 +21,7 @@ Complete reference for patterns detected by `/deslop-around`.
 **Design principle:** Detection uses pre-indexed regex for O(1) lookup. LLM context is spent on judgment calls, not pattern matching that code can do better.
 
 **Related docs:**
-- [/deslop-around in README](../../README.md#deslop-around) - Command usage
+- [/deslop in README](../../README.md#deslop) - Command usage
 - [MCP Tools - slop_detect](./MCP-TOOLS.md#slop_detect) - Programmatic access
 
 ---
@@ -322,7 +322,7 @@ Thoroughness levels control which phases run:
 **Usage:**
 
 ```bash
-/deslop-around --thoroughness=deep
+/deslop --thoroughness=deep
 ```
 
 ---
@@ -358,6 +358,6 @@ This avoids scanning all 60+ patterns on every check.
 [← Back to Documentation Index](../README.md) | [Main README](../../README.md)
 
 **Related:**
-- [/deslop-around Command](../../README.md#deslop-around) - How to use the command
+- [/deslop Command](../../README.md#deslop) - How to use the command
 - [MCP Tools - slop_detect](./MCP-TOOLS.md#slop_detect) - Programmatic access
 - [Agent Reference - deslop-work](./AGENTS.md#deslop-work) - The cleanup agent
