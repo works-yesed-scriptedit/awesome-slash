@@ -451,6 +451,10 @@ Multi-agent collection wastes tokens on coordination. JavaScript collectors are 
 
 **Purpose:** Sync documentation with actual code changes—find outdated refs, update CHANGELOG, flag stale examples.
 
+**The problem it solves:**
+
+You refactor `auth.js` into `auth/index.js`. Your README still says `import from './auth'`. You rename a function. Three docs still reference the old name. You ship a feature. CHANGELOG doesn't mention it. Documentation drifts from code. This command finds the drift.
+
 **What happens when you run it:**
 
 1. **Get Changed Files** - Finds files changed since last commit to main (or use `--all` for full scan)
@@ -459,12 +463,22 @@ Multi-agent collection wastes tokens on coordination. JavaScript collectors are 
 4. **Check CHANGELOG** - Identifies commits that may need CHANGELOG entries
 5. **Report/Apply** - Shows findings (report mode) or fixes safe issues (apply mode)
 
-**Modes:**
+**What it detects:**
 
-| Mode | What it does |
-|------|--------------|
-| `report` (default) | Shows findings without making changes |
-| `apply` | Fixes auto-fixable issues, flags others for review |
+| Category | Examples |
+|----------|----------|
+| Broken references | Imports to moved/renamed files, deleted exports |
+| Version mismatches | Doc says v2.0, package.json says v2.1 |
+| Stale code examples | Import paths that no longer exist |
+| Missing CHANGELOG | `feat:` and `fix:` commits without entries |
+
+**Auto-fixable vs flagged:**
+
+| Auto-fixable (apply mode) | Flagged for review |
+|---------------------------|-------------------|
+| Version number updates | Removed exports referenced in docs |
+| CHANGELOG entries for commits | Code examples needing context |
+| | Function renames |
 
 **Usage:**
 
@@ -475,6 +489,12 @@ Multi-agent collection wastes tokens on coordination. JavaScript collectors are 
 /update-docs-around --all        # Full codebase scan
 ```
 
+**Scope options:**
+
+- `--recent` (default) - Files changed since last commit to main
+- `--all` - Scan all docs against all code
+- `path` - Specific file or directory
+
 ---
 
 ## How Commands Work Together
@@ -482,8 +502,9 @@ Multi-agent collection wastes tokens on coordination. JavaScript collectors are 
 **Standalone use:**
 
 ```bash
-/deslop-around apply    # Just clean up your code
-/ship                   # Just ship this branch
+/deslop-around apply       # Just clean up your code
+/update-docs-around        # Just check if docs need updates
+/ship                      # Just ship this branch
 ```
 
 **Integrated workflow:**
