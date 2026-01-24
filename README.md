@@ -1,5 +1,9 @@
 # awesome-slash
 
+[![npm version](https://img.shields.io/npm/v/awesome-slash.svg)](https://www.npmjs.com/package/awesome-slash)
+[![CI](https://github.com/avifenesh/awesome-slash/actions/workflows/ci.yml/badge.svg)](https://github.com/avifenesh/awesome-slash/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 AI models can write code. That's not the hard part anymore. The hard part is everything else—picking what to work on, managing branches, reviewing output, cleaning up artifacts, handling CI, addressing comments, deploying. **awesome-slash automates the entire workflow**, not just the coding.
 
 **Works with:** Claude Code | OpenCode | Codex CLI

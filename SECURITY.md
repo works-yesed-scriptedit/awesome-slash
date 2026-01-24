@@ -25,7 +25,7 @@ If you discover a security vulnerability:
 
 Always review changes with `git status` and `git diff` before running commands that commit or push.
 
-## Security Measures (v2.5.0+)
+## Security Measures (v3.0.0+)
 
 The plugin includes basic protections:
 
