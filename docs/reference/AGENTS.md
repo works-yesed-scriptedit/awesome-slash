@@ -2,7 +2,7 @@
 
 Complete reference for all agents in awesome-slash.
 
-**TL;DR:** 31 agents across 4 plugins. opus for reasoning, sonnet for patterns, haiku for execution. Each agent does one thing well.
+**TL;DR:** 31 agents across 4 plugins. opus for reasoning, sonnet for patterns, haiku for execution. Each agent does one thing well. <!-- AGENT_COUNT_TOTAL: 31 -->
 
 ---
 
@@ -34,8 +34,8 @@ awesome-slash uses 31 specialized agents across 4 plugins. Each agent is optimiz
 | haiku | Mechanical execution, no judgment | Low |
 
 **Agent types:**
-- **File-based agents** (21) - Defined in `plugins/*/agents/*.md` with frontmatter
-- **Role-based agents** (10) - Defined inline via Task tool with specialized prompts
+- **File-based agents** (21) - Defined in `plugins/*/agents/*.md` with frontmatter <!-- AGENT_COUNT_FILE_BASED: 21 -->
+- **Role-based agents** (10) - Defined inline via Task tool with specialized prompts <!-- AGENT_COUNT_ROLE_BASED: 10 -->
 
 ---
 

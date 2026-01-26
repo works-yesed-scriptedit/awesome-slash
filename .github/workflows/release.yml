@@ -27,6 +27,7 @@ jobs:
     outputs:
       version: ${{ steps.version.outputs.version }}
       tag: ${{ steps.version.outputs.tag }}
+      npm_tag: ${{ steps.version.outputs.npm_tag }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -48,9 +49,22 @@ jobs:
             VERSION=$(node -p "require('./package.json').version")
             TAG="v${VERSION}"
           fi
+          if [[ "$VERSION" == *"-"* ]]; then
+            PRE_ID="${VERSION#*-}"
+            PRE_ID="${PRE_ID%%.*}"
+            case "$PRE_ID" in
+              beta) NPM_TAG="beta";;
+              rc) NPM_TAG="rc";;
+              *) NPM_TAG="next";;
+            esac
+          else
+            NPM_TAG="latest"
+          fi
           echo "version=${VERSION}" >> $GITHUB_OUTPUT
           echo "tag=${TAG}" >> $GITHUB_OUTPUT
+          echo "npm_tag=${NPM_TAG}" >> $GITHUB_OUTPUT
           echo "📦 Release version: ${VERSION} (tag: ${TAG})"
+          echo "📦 npm tag: ${NPM_TAG}"
 
       - name: Validate version format
         run: |
@@ -76,7 +90,11 @@ jobs:
           fi
 
           # Check MCP server
-          MCP_VERSION=$(grep "version:" mcp-server/index.js | head -1 | grep -oE "[0-9]+\.[0-9]+\.[0-9]+")
+          MCP_VERSION=$(node -e "const fs=require('fs');const content=fs.readFileSync('mcp-server/index.js','utf8');const match=content.match(/version:\s*'([^']+)'/);console.log(match?match[1]:'');")
+          if [ -z "$MCP_VERSION" ]; then
+            echo "❌ mcp-server/index.js version not found"
+            exit 1
+          fi
           if [ "$MCP_VERSION" != "$VERSION" ]; then
             echo "❌ mcp-server/index.js version ($MCP_VERSION) doesn't match release version ($VERSION)"
             exit 1
@@ -139,7 +157,7 @@ jobs:
 
       - name: Publish to npm
         if: ${{ !inputs.dry_run }}
-        run: npm publish --provenance --access public
+        run: npm publish --provenance --access public --tag "${{ needs.validate.outputs.npm_tag }}"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -147,7 +165,7 @@ jobs:
         if: ${{ inputs.dry_run }}
         run: |
           echo "🏃 Dry run - skipping actual publish"
-          npm publish --dry-run
+          npm publish --dry-run --tag "${{ needs.validate.outputs.npm_tag }}"
 
   create-release:
     name: Create GitHub Release
